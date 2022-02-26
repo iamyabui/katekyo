@@ -11,7 +11,7 @@ export default function TopTeacherDetail() {
         <div className="flex max-w-5xl mx-auto py-10">
           <StudentLeftMenu />
           <StudentProfileDetail />
-          <div className="flex-column mx-10 w-[30rem] text-gray-700">
+          <div className="flex-column mx-10 w-[40rem] bg-white p-8 rounded text-gray-700">
             <p>自己紹介</p>
             <p>
               桜学院の山田です。 部活はバトン部に所属していました。
