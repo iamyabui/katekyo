@@ -6,12 +6,16 @@ export default function Header() {
           <p className="text-origin-purple text-2xl pr-9">KATEKYO</p>
         </div>
         <div className="flex items-center">
-          <p className="hover: text-origin-purple text-base">先生を探す</p>
+          <p className="hover: text-origin-purple text-base hover:cursor-pointer">
+            先生を探す
+          </p>
         </div>
       </div>
 
       <div className="flex items-center">
-        <p className="hover: text-origin-purple text-base">マイページ</p>
+        <p className="hover: text-origin-purple text-base hover:cursor-pointer">
+          マイページ
+        </p>
       </div>
     </nav>
   );
