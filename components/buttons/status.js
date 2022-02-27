@@ -1,7 +1,9 @@
 export default function Status() {
   return (
     <>
-      <button className="bg-origin-blue text-white px-1 rounded">受講中</button>
+      <button className="bg-origin-blue text-white px-1 h-7 rounded">
+        受講中
+      </button>
     </>
   );
 }

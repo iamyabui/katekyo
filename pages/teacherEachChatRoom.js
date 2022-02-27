@@ -4,6 +4,7 @@ import EditMessage from "../components/form/editMessage";
 import Send from "../components/buttons/send";
 import AttachFile from "../components/buttons/attachFile";
 import TeacherLeftMenu from "../components/common/teacherLeftMenu";
+import Status from "../components/buttons/status";
 
 export default function StudentChatRoom() {
   return (
@@ -14,7 +15,11 @@ export default function StudentChatRoom() {
           <TeacherLeftMenu />
           <div className="mx-auto">
             <div>
-              <h1 className="text-lg font-bold mb-5">松丸　慎吾</h1>
+              <div className="flex items-center py-2 mb-5">
+                <h1 className="text-lg font-bold mr-5">松丸　慎吾</h1>
+                <Status />
+              </div>
+
               <EditMessage />
               <div className="w-[50rem] py-2 flex justify-between mb-8">
                 <AttachFile />
