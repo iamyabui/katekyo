@@ -10,7 +10,6 @@ import Send from "../components/buttons/send";
 import Approved from "../components/buttons/status";
 import Finish from "../components/buttons/finish";
 import Login from "../components/buttons/login";
-import Switch from "../components/switch/switch";
 import Grade from "../components/pulldown/grade";
 import Name from "../components/form/profileName";
 import Category from "../components/pulldown/category";
@@ -45,7 +44,6 @@ export default function Home() {
       <Login />
       {/* <Pending />
       <Completed /> */}
-      <Switch />
       <Grade />
       <Name />
       <Category />
