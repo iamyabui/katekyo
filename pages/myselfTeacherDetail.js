@@ -1,17 +1,17 @@
-import Header from "../components/common/header";
-import StudentLeftMenu from "../components/common/studentLeftMenue";
-import StudentProfileDetail from "../components/cards/studentProfileDetail";
+import TeacherLeftMenu from "../components/common/teacherLeftMenu";
+import TeacherProfileDetail from "../components/cards/teacherProfileDetail";
 import Edit from "../components/buttons/edit";
+import Header from "../components/common/header";
 
-export default function TopTeacherDetail() {
+export default function MyselfTeacherDetail() {
   return (
-    <>
+    <div>
       <Header />
-      <div className="bg-top-bg h-screen w-screen">
-        <div className="flex max-w-5xl mx-auto py-10">
-          <StudentLeftMenu />
-          <StudentProfileDetail />
-          <div className="flex-column mx-10 w-[30rem]">
+      <div className="bg-top-bg h-screen w-screen ">
+        <div className="flex max-w-7xl mx-auto py-10">
+          <TeacherLeftMenu />
+          <TeacherProfileDetail />
+          <div className="flex-column mx-10 px-10 w-[40rem] bg-white p-8 rounded text-gray-700">
             <p>自己紹介</p>
             <p>
               桜学院の山田です。 部活はバトン部に所属していました。
@@ -32,6 +32,6 @@ export default function TopTeacherDetail() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

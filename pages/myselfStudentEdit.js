@@ -11,7 +11,7 @@ export default function TopTeacherDetail() {
         <div className="flex max-w-5xl mx-auto py-10">
           <StudentLeftMenu />
           <StudentProfileEdit />
-          <div className="flex-column min-w-[28rem] mx-10">
+          <div className="flex-column min-w-[28rem] mx-10 text-gray-700">
             <div>
               <label>自己紹介</label>
               <textarea
