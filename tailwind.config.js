@@ -19,6 +19,7 @@ module.exports = {
         "card-blue": "#DBF0FF",
         "card-gray": "#EEEEEE",
         "top-bg": "#FAFAFA",
+        "chat-list": "#F2FAFF",
       },
     },
   },
