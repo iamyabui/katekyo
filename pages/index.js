@@ -1,26 +1,7 @@
 import Head from "next/head";
-import Subject from "../components/buttons/subjects";
-import Consultation from "../components/buttons/consultation";
-import Apply from "../components/buttons/apply";
-import Approve from "../components/buttons/approve";
-import Cancel from "../components/buttons/cancel";
-import Save from "../components/buttons/save";
-import Edit from "../components/buttons/edit";
-import Send from "../components/buttons/send";
-import Approved from "../components/buttons/status";
-import Finish from "../components/buttons/finish";
-import Login from "../components/buttons/login";
-import Grade from "../components/pulldown/grade";
-import Name from "../components/form/profileName";
-import Category from "../components/pulldown/category";
-import Budget from "../components/pulldown/budget";
-import StudentProfileDetail from "../components/cards/studentProfileDetail";
-import StudentProfileEdit from "../components/cards/studentProfileEdit";
-import MyStudentProfile from "../components/cards/mystudentProfile";
-import TopProfile from "../components/cards/topProfile";
-import TeacherProfileDetail from "../components/cards/teacherProfileDetail";
-import TeacherProfileEdit from "../components/cards/teacherProfileEdit";
 import Header from "../components/common/header";
+import TopLeftMenu from "../components/common/topLeftMenu";
+import TopProfile from "../components/cards/topProfile";
 
 export default function Home() {
   return (
@@ -31,29 +12,17 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <Subject />
-      <Consultation />
-      <Apply />
-      <Approve />
-      <Cancel />
-      <Save />
-      <Edit />
-      <Send />
-      <Approved />
-      <Finish />
-      <Login />
-      {/* <Pending />
-      <Completed /> */}
-      <Grade />
-      <Name />
-      <Category />
-      {/* <Budget /> */}
-      <StudentProfileDetail />
-      <StudentProfileEdit />
-      <MyStudentProfile />
-      <TopProfile />
-      <TeacherProfileDetail />
-      <TeacherProfileEdit />
+      <div className="bg-top-bg h-screen">
+        <div className="flex max-w-5xl mx-auto">
+          <TopLeftMenu />
+          <div className="flex flex-wrap pt-10 ml-3">
+            <TopProfile />
+            <TopProfile />
+            <TopProfile />
+            <TopProfile />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
