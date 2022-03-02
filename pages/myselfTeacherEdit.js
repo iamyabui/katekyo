@@ -5,6 +5,7 @@ import Save from "../components/buttons/save";
 import ConsultMethods from "../components/checkbox/consultMethods";
 import SelectSubjects from "../components/selectButtons/selectSubjects";
 import Header from "../components/common/header";
+import Markdown from "../components/common/markdown";
 
 export default function MyselfTeacherEdit() {
   return (
@@ -47,22 +48,7 @@ export default function MyselfTeacherEdit() {
             </div>
             <div className="mb-4 flex flex-col">
               <label className="font-bold">自己紹介/経歴/料金</label>
-              <textarea
-                className="form-control
-            block
-            w-full
-            h-96
-            my-3
-            px-3
-            py-1.5
-            text-base
-            font-normal
-            text-gray-700
-            bg-white bg-clip-padding
-            border border-solid border-gray-300
-            rounded
-            "
-              ></textarea>
+              <Markdown />
             </div>
             <div className="mb-4 flex flex-col">
               <ConsultMethods />

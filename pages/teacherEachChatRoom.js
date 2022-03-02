@@ -1,10 +1,10 @@
 import Header from "../components/common/header";
 import ChatMessage from "../components/box/chatMessage";
-import EditMessage from "../components/form/editMessage";
 import Send from "../components/buttons/send";
 import AttachFile from "../components/buttons/attachFile";
 import TeacherLeftMenu from "../components/common/teacherLeftMenu";
 import Status from "../components/buttons/status";
+import Markdown from "../components/common/markdown";
 
 export default function StudentChatRoom() {
   return (
@@ -19,8 +19,7 @@ export default function StudentChatRoom() {
                 <h1 className="text-lg font-bold mr-5">松丸　慎吾</h1>
                 <Status />
               </div>
-
-              <EditMessage />
+              <Markdown />
               <div className="w-[50rem] py-2 flex justify-between mb-8">
                 <AttachFile />
                 <Send />
