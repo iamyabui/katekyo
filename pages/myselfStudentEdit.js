@@ -2,6 +2,7 @@ import Header from "../components/common/header";
 import StudentProfileEdit from "../components/cards/studentProfileEdit";
 import StudentLeftMenu from "../components/common/studentLeftMenue";
 import Save from "../components/buttons/save";
+import Markdown from "../components/common/markdown";
 
 export default function TopTeacherDetail() {
   return (
@@ -12,23 +13,9 @@ export default function TopTeacherDetail() {
           <StudentLeftMenu />
           <StudentProfileEdit />
           <div className="flex-column min-w-[28rem] mx-10 text-gray-700">
-            <div>
+            <div className="mb-5">
               <label>自己紹介</label>
-              <textarea
-                className="form-control
-            block
-            w-full
-            my-3
-            px-3
-            py-1.5
-            text-base
-            font-normal
-            text-gray-700
-            bg-white bg-clip-padding
-            border border-solid border-gray-300
-            rounded
-            h-28"
-              ></textarea>
+              <Markdown />
             </div>
             <div>
               <label>目標</label>
