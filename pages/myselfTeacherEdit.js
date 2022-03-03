@@ -6,6 +6,7 @@ import ConsultMethods from "../components/checkbox/consultMethods";
 import SelectSubjects from "../components/selectButtons/selectSubjects";
 import Header from "../components/common/header";
 import Markdown from "../components/common/markdown";
+import SwitchForm from "../components/switch/switchForm";
 
 export default function MyselfTeacherEdit() {
   return (
@@ -14,7 +15,10 @@ export default function MyselfTeacherEdit() {
       <div className="bg-top-bg w-screen">
         <div className="flex max-w-7xl mx-auto py-10">
           <TeacherLeftMenu />
-          <TeacherProfileEdit />
+          <div>
+            <TeacherProfileEdit />
+            <SwitchForm />
+          </div>
 
           <div className="flex-column mx-auto w-[40rem] px-8 text-gray-700">
             <div className="mb-4 flex flex-col">
