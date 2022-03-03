@@ -1,3 +1,5 @@
+import BurgerMenu from "./burgerMenu";
+
 export default function Header() {
   return (
     <nav className="max-w-6xl m-auto py-5 px-9 flex justify-between flex-wrap bg-blue text-gray-800">
@@ -13,9 +15,7 @@ export default function Header() {
       </div>
 
       <div className="flex items-center">
-        <p className="hover: text-origin-purple text-base hover:cursor-pointer">
-          マイページ
-        </p>
+        <BurgerMenu />
       </div>
     </nav>
   );
