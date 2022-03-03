@@ -2,7 +2,7 @@ import IconBig from "../icon/iconBig";
 
 export default function TeacherLeftMenu() {
   return (
-    <div className="min-w-[20rem] text-gray-800 flex flex-col items-center pr-20 pl-10">
+    <div className="min-w-[20rem] text-gray-800 flex flex-col items-center pl-10">
       <IconBig />
       <p className="text-lg py-2">河野　玄太郎</p>
       <ul className="mt-4">
