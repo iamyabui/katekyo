@@ -1,5 +1,5 @@
-import Header from "../components/common/header";
-import TeacherLeftMenu from "../components/common/teacherLeftMenu";
+import Header from "../components/common/header/header";
+import TeacherLeftMenu from "../components/teacher/common/TeacherLeftMenu";
 import {
   Table,
   Thead,

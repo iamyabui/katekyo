@@ -1,6 +1,6 @@
-import Header from "../components/common/header";
-import TeacherProfileDetail from "../components/cards/teacherProfileDetail";
-import Box from "../components/box/box";
+import Header from "../components/common/header/header";
+import TeacherProfileDetail from "../components/teacher/profileDetail/TeacherProfileDetailCard";
+import Apply from "../components/top/teacherDetail/ApplyButton";
 
 export default function TopTeacherDetail() {
   return (
@@ -22,8 +22,19 @@ export default function TopTeacherDetail() {
             <div className="mt-5">
               <h1>サポート内容</h1>
               <div className="mt-2">
-                <p>★チャット相談/週1ビデオ相談（30分）3000円</p>
-                <p>★チャット相談/週1ビデオ講義（50分）6000円</p>
+                <div className="flex items-center mb-5">
+                  <p className="mr-5">
+                    ★チャット相談/週1ビデオ相談（30分）3000円
+                  </p>
+                  <Apply />
+                </div>
+
+                <div className="flex items-center  mb-5">
+                  <p className="mr-5">
+                    ★チャット相談/週1ビデオ相談（50分）5000円
+                  </p>
+                  <Apply />
+                </div>
               </div>
             </div>
           </div>

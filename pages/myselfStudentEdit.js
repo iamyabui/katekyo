@@ -1,7 +1,7 @@
-import Header from "../components/common/header";
-import StudentProfileEdit from "../components/cards/studentProfileEdit";
-import StudentLeftMenu from "../components/common/studentLeftMenue";
-import Save from "../components/buttons/save";
+import Header from "../components/common/header/header";
+import StudentProfileEdit from "../components/student/profileEdit/StudentProfileEditCard";
+import StudentLeftMenu from "../components/student/common/StudentLeftMenu";
+import Save from "../components/common/buttons/SaveButton";
 import Markdown from "../components/common/markdown";
 
 export default function TopTeacherDetail() {
