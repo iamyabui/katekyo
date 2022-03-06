@@ -1,12 +1,12 @@
-import TeacherLeftMenu from "../components/common/teacherLeftMenu";
-import TeacherProfileEdit from "../components/cards/teacherProfileEdit";
-import Category from "../components/pulldown/category";
-import Save from "../components/buttons/save";
-import ConsultMethods from "../components/checkbox/consultMethods";
-import SelectSubjects from "../components/selectButtons/selectSubjects";
-import Header from "../components/common/header";
+import TeacherLeftMenu from "../components/teacher/common/TeacherLeftMenu";
+import TeacherProfileEdit from "../components/teacher/profileEdit/TeacherProfileEditCard";
+import Category from "../components/common/pulldown/CategoryPulldown";
+import Save from "../components/common/buttons/SaveButton";
+import ConsultMethods from "../components/common/checkbox/ConsultMethodCheckbox";
+import SelectSubjects from "../components/common/selectButtons/SubjectSelectButtons";
+import Header from "../components/common/header/header";
 import Markdown from "../components/common/markdown";
-import SwitchForm from "../components/switch/switchForm";
+import SwitchForm from "../components/teacher/profileEdit/SwitchForm";
 
 export default function MyselfTeacherEdit() {
   return (

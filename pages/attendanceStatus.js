@@ -1,6 +1,6 @@
-import Header from "../components/common/header";
-import StudentLeftMenu from "../components/common/studentLeftMenue";
-import MyClassContent from "../components/box/myClassContent";
+import Header from "../components/common/header/header";
+import StudentLeftMenu from "../components/student/common/StudentLeftMenu";
+import MyClassContent from "../components/student/attendanceStatus/MyClassContentBox";
 
 export default function attendanceStatus() {
   return (

@@ -1,7 +1,7 @@
 import Head from "next/head";
-import Header from "../components/common/header";
-import TopLeftMenu from "../components/common/topLeftMenu";
-import TopProfile from "../components/cards/topProfile";
+import Header from "../components/common/header/header";
+import TopLeftMenu from "../components/top/TopLeftMenu";
+import TopProfile from "../components/top/TopTeacherProfileCard";
 
 export default function Home() {
   return (

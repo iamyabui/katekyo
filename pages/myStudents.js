@@ -1,7 +1,7 @@
-import Header from "../components/common/header";
-import TeacherLeftMenu from "../components/common/teacherLeftMenu";
-import MyStudentProfile from "../components/cards/mystudentProfile";
-import FilterStatus from "../components/pulldown/status";
+import Header from "../components/common/header/header";
+import TeacherLeftMenu from "../components/teacher/common/TeacherLeftMenu";
+import MyStudentProfile from "../components/teacher/myStudentDetail/MyStudentProfileCard";
+import FilterStatus from "../components/teacher/myStudentList/StatusPulldown";
 
 export default function MyStudents() {
   return (

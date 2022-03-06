@@ -1,7 +1,7 @@
-import TeacherLeftMenu from "../components/common/teacherLeftMenu";
-import TeacherProfileDetail from "../components/cards/teacherProfileDetail";
-import Edit from "../components/buttons/edit";
-import Header from "../components/common/header";
+import TeacherLeftMenu from "../components/teacher/common/TeacherLeftMenu";
+import TeacherProfileDetail from "../components/teacher/profileDetail/TeacherProfileDetailCard";
+import Edit from "../components/common/buttons/EditButton";
+import Header from "../components/common/header/header";
 
 export default function MyselfTeacherDetail() {
   return (
