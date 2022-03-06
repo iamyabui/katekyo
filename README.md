@@ -1,5 +1,3 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
 ## Getting Started
 
 First, run the development server:
@@ -18,17 +16,37 @@ You can start editing the page by modifying `pages/index.js`. The page auto-upda
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-## Learn More
+## フォルダー構成
 
-To learn more about Next.js, take a look at the following resources:
+以下共通で利用するコンポーネント及びページ毎にフォルダーを設けている。
+・teacher：チャット以外の先生ユーザー用ページ
+-common：各ページの共通コンポーネント
+-myStudentDetail：担当生徒のプロフィールページページ
+-myStudentList：担当生徒リストページ
+-profileDetail：先生ユーザーのプロフィールページ
+-profileEdit：先生ユーザーのプロフィールページ
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+・student：チャット以外の生徒ユーザー用ページ
+-attendanceStatus：受講状況ページ
+-common：各ページの共通コンポーネント
+-profileDetail：生徒ユーザーのプロフィールページ
+-profileEdit：生徒ユーザーのプロフィールページ
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+・login：ログイン（or 新規登録）ページ
 
-## Deploy on Vercel
+・chat：チャット用ページ
+-chatList：チャットリストページ（チャットしている生徒 or 先生のリスト）
+-chatRoom：チャットルームページ
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+・common：共通コンポーネント
+以下共通で利用する部品毎にフォルダを設けている
+-buttons
+-checkbox
+-form
+-header
+-icon
+-pulldown
+-selectButtons
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+・top：トップページ（先生一覧ページ）
+　-teacherDetail：先生詳細ページ
