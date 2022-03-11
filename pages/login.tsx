@@ -4,6 +4,11 @@ import Password from "../components/login/PasswordForm";
 import Action from "../components/login/ActionButton";
 import FlagPulldown from "../components/login/FlagPulldown";
 import { useRecoilState } from "recoil";
+// import {
+//   userState,
+//   errorState,
+//   loginPageState,
+// } from "../components/common/atoms";
 import {
   userState,
   errorState,
@@ -54,7 +59,7 @@ export default function Login() {
 
             {!loginPage && <FlagPulldown />}
             <div className="mx-auto mt-5">
-              <Action loginPage={loginPage} />
+              <Action />
             </div>
             <p
               onClick={handleSwitch}
