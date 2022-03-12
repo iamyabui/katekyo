@@ -4,23 +4,14 @@ import Password from "../components/login/PasswordForm";
 import Action from "../components/login/ActionButton";
 import FlagPulldown from "../components/login/FlagPulldown";
 import { useRecoilState } from "recoil";
-// import {
-//   userState,
-//   errorState,
-//   loginPageState,
-// } from "../components/common/atoms";
-import {
-  userState,
-  errorState,
-  loginPageState,
-} from "../components/common/atoms";
+import { userState, errorState } from "../components/common/atoms";
+import { useState } from "react";
 
 export default function Login() {
   // ログインページ及び新規登録画面かを判別
-  const [loginPage, setLoginPage] = useRecoilState(loginPageState);
+  const [loginPage, setLoginPage] = useState<boolean>(true);
   const [user, setUser] = useRecoilState(userState);
   const [error, setError] = useRecoilState(errorState);
-  console.log(user);
 
   // ログインと新規登録ページへ切り替え、切替時にエラーメッセージとフォーム入力値を初期化
   const handleSwitch = () => {
@@ -59,7 +50,7 @@ export default function Login() {
 
             {!loginPage && <FlagPulldown />}
             <div className="mx-auto mt-5">
-              <Action />
+              <Action loginPage={loginPage} setLoginPage={setLoginPage} />
             </div>
             <p
               onClick={handleSwitch}

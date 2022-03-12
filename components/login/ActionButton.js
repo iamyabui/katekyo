@@ -15,14 +15,14 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useRecoilValue, useRecoilState } from "recoil";
-import { userState, errorState, loginPageState } from "../common/atoms";
+import { userState, errorState } from "../common/atoms";
 import Router from "next/router";
 
-export default function Action() {
+export default function Action(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const user = useRecoilValue(userState);
   const [error, setError] = useRecoilState(errorState);
-  const [loginPage, setLoginPage] = useRecoilState(loginPageState);
+  const { loginPage, setLoginPage } = props;
 
   //ログイン処理
   const handleLogin = () => {
@@ -106,7 +106,7 @@ export default function Action() {
 
   // 新規登録：名前と学年が空欄でないことを確認後、新規ユーザーのパスワードとemailをAuthenticationに登録
   const handleCreateUser = () => {
-    console.log(user.email);
+    // ユーザが登録成功した場合、モーダルをクローズしてログイン画面へ遷移する。
     if (user.name !== "" && user.grade !== "") {
       const auth = getAuth();
       createUserWithEmailAndPassword(auth, user.email, user.password);

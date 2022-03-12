@@ -39,15 +39,3 @@ export const errorState = atom<error>({
     gradeError: "",
   },
 });
-
-//loginPage
-type loginPage = {
-  loginPage: boolean;
-};
-
-export const loginPageState = atom<loginPage>({
-  key: "loginPage",
-  default: {
-    loginPage: true,
-  },
-});
