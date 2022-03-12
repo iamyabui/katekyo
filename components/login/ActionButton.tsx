@@ -7,8 +7,9 @@ import {
   ModalContent,
   ModalCloseButton,
   useDisclosure,
+  flexbox,
 } from "@chakra-ui/react";
-import db from "../../src/firabase";
+import { db } from "../../src/firabase";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -17,8 +18,15 @@ import {
 import { useRecoilValue, useRecoilState } from "recoil";
 import { userState, errorState } from "../common/atoms";
 import Router from "next/router";
+import { initializeApp, getApps } from "firebase/app";
+import { Dispatch, SetStateAction } from "react";
 
-export default function Action(props) {
+type loginPageType = {
+  loginPage: boolean;
+  setLoginPage: Dispatch<SetStateAction<boolean>>;
+};
+
+export default function Action(props: loginPageType) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const user = useRecoilValue(userState);
   const [error, setError] = useRecoilState(errorState);
@@ -106,12 +114,40 @@ export default function Action(props) {
 
   // 新規登録：名前と学年が空欄でないことを確認後、新規ユーザーのパスワードとemailをAuthenticationに登録
   const handleCreateUser = () => {
-    // ユーザが登録成功した場合、モーダルをクローズしてログイン画面へ遷移する。
+    // ユーザが登録成功した場合、モーダルをクローズしてログイン画面へ遷移する。また、ユーザ情報のStateを初期化する。
     if (user.name !== "" && user.grade !== "") {
+      if (!getApps().length) {
+        initializeApp({
+          apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
+          authDomain: process.env.NEXT_PUBLIC_FIREBASE_DOMAIN,
+          databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE,
+          projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+          storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BACKET,
+          messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_SENDER_ID,
+          appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+        });
+      }
+
       const auth = getAuth();
-      createUserWithEmailAndPassword(auth, user.email, user.password);
-      onClose();
-      setLoginPage(true);
+      createUserWithEmailAndPassword(auth, user.email, user.password)
+        .then(
+          () => onClose(),
+          () => setLoginPage(true)
+        )
+        .catch((error: any) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode);
+          console.log(errorMessage);
+
+          if (errorCode == "auth/email-already-in-use") {
+            setError({
+              ...error,
+              emailError: "既に登録されているメールアドレスです。",
+            });
+            onClose();
+          }
+        });
     } else if (user.name !== "" && user.grade == "") {
       setError({
         ...error,
@@ -163,7 +199,7 @@ export default function Action(props) {
           <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
 
-            <ModalContent w="400px">
+            <ModalContent className="w-{400px}">
               <p className="mx-auto text-lg text-gray-700 my-8 font-bold">
                 生徒さん、ようこそ！
               </p>
