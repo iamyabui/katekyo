@@ -1,10 +1,14 @@
 import IconBig from "../../common/icon/BigIcon";
+import { useRecoilValue } from "recoil";
+import { userState } from "../../common/atoms";
 
 export default function StudentLeftMenu() {
+  const user = useRecoilValue(userState);
+
   return (
     <div className="min-w-[15rem] text-gray-800 flex flex-col items-center pr-20 pl-10">
       <IconBig />
-      <p className="text-lg py-2">山田　花子</p>
+      <p className="text-lg py-2">{user.name}</p>
       <ul className="mt-4">
         <li className="list-none text-base py-2 flex items-center">
           <img src="/profile.png" />

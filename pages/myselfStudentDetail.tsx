@@ -1,7 +1,7 @@
 import Header from "../components/common/header/header";
-import ProfileContent from "../components/student/profileDetail/ProfileContentBox";
-import StudentProfileDetail from "../components/student/profileDetail/StudentProfileDetailCard";
+import StudentProfileDetailCard from "../components/student/profileDetail/StudentProfileDetailCard";
 import StudentLeftMenu from "../components/student/common/StudentLeftMenu";
+import ProfileContentBox from "../components/student/profileDetail/ProfileContentBox";
 
 export default function TopTeacherDetail() {
   return (
@@ -10,8 +10,8 @@ export default function TopTeacherDetail() {
       <div className="bg-top-bg h-screen w-screen">
         <div className="flex max-w-5xl mx-auto py-10">
           <StudentLeftMenu />
-          <StudentProfileDetail />
-          <ProfileContent />
+          <StudentProfileDetailCard />
+          <ProfileContentBox />
         </div>
       </div>
     </>
