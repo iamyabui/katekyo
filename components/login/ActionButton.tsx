@@ -7,9 +7,8 @@ import {
   ModalContent,
   ModalCloseButton,
   useDisclosure,
-  flexbox,
 } from "@chakra-ui/react";
-import { db } from "../../src/firabase";
+import { auth } from "../../src/firabase";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -18,7 +17,6 @@ import {
 import { useRecoilValue, useRecoilState } from "recoil";
 import { userState, errorState } from "../common/atoms";
 import Router from "next/router";
-import { initializeApp, getApps } from "firebase/app";
 import { Dispatch, SetStateAction } from "react";
 
 type loginPageType = {
@@ -116,19 +114,6 @@ export default function Action(props: loginPageType) {
   const handleCreateUser = () => {
     // ユーザが登録成功した場合、モーダルをクローズしてログイン画面へ遷移する。また、ユーザ情報のStateを初期化する。
     if (user.name !== "" && user.grade !== "") {
-      if (!getApps().length) {
-        initializeApp({
-          apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
-          authDomain: process.env.NEXT_PUBLIC_FIREBASE_DOMAIN,
-          databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE,
-          projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-          storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BACKET,
-          messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_SENDER_ID,
-          appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-        });
-      }
-
-      const auth = getAuth();
       createUserWithEmailAndPassword(auth, user.email, user.password)
         .then(
           () => onClose(),
