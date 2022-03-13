@@ -123,6 +123,7 @@ export default function Action(props: loginPageType) {
         ).then((userCredential) => {
           const userId = userCredential.user.uid;
           setDoc(doc(db, "StudentUsers", userId), {
+            email: user.email,
             name: user.name,
             school: user.school,
             grade: user.grade,
