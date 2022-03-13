@@ -70,7 +70,7 @@ export default function TopTeacherDetail() {
               ></textarea>
             </div>
             <div>
-              <label>先生への要望</label>
+              <label>先生へのリクエスト</label>
               <textarea
                 className="form-control
             block

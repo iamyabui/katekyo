@@ -1,7 +1,7 @@
 import Name from "../../common/form/NameForm";
-import School from "./SchoolNameForm";
-import Grade from "./GradePulldown";
 import IconBig from "../../common/icon/BigIcon";
+import GradePulldown from "./GradePulldown";
+import SchoolNameForm from "./SchoolNameForm";
 
 export default function StudentProfileEditCard() {
   return (
@@ -9,8 +9,8 @@ export default function StudentProfileEditCard() {
       <p className="my-1">Profile</p>
       <IconBig />
       <Name />
-      <School />
-      <Grade />
+      <SchoolNameForm />
+      <GradePulldown />
     </div>
   );
 }

@@ -1,6 +1,4 @@
 import NameForm from "../common/form/NameForm";
-import School from "../student/profileEdit/SchoolNameForm";
-import Grade from "../student/profileEdit/GradePulldown";
 import {
   Modal,
   ModalOverlay,
@@ -19,6 +17,8 @@ import { useRecoilValue, useRecoilState } from "recoil";
 import { userState, errorState } from "../common/atoms";
 import Router from "next/router";
 import { Dispatch, SetStateAction } from "react";
+import SchoolNameForm from "../student/profileEdit/SchoolNameForm";
+import GradePulldown from "../student/profileEdit/GradePulldown";
 
 type loginPageType = {
   loginPage: boolean;
@@ -198,8 +198,8 @@ export default function Action(props: loginPageType) {
               <ModalCloseButton onClick={handleResetError} />
               <div className="mx-auto">
                 <NameForm />
-                <School />
-                <Grade />
+                <SchoolNameForm />
+                <GradePulldown />
               </div>
 
               <button

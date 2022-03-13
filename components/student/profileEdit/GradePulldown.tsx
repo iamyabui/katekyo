@@ -1,7 +1,7 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import { userState, errorState } from "../../common/atoms";
 
-export default function Grade() {
+export default function GradePulldown() {
   const [user, setUser] = useRecoilState(userState);
   const error = useRecoilValue(errorState);
 
@@ -42,7 +42,7 @@ export default function Grade() {
           </svg>
         </div>
       </div>
-      {!error.gradeError == "" && (
+      {error.gradeError !== "" && (
         <p className="text-red-500 text-xs pl-2 mt-3">{error.gradeError}</p>
       )}
     </div>

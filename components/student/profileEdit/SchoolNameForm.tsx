@@ -1,7 +1,7 @@
 import { useRecoilState } from "recoil";
 import { userState } from "../../common/atoms";
 
-export default function School() {
+export default function SchoolNameForm() {
   const [user, setUser] = useRecoilState(userState);
 
   const handleSchool = (e) => {
