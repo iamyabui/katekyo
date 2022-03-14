@@ -2,22 +2,22 @@ import Header from "../components/common/header/header";
 import StudentLeftMenu from "../components/student/common/StudentLeftMenu";
 import Save from "../components/common/buttons/SaveButton";
 import { useRecoilState } from "recoil";
-import { userState } from "../components/common/atoms";
+import { editUserState } from "../components/common/atoms";
 import StudentProfileEditCard from "../components/student/profileEdit/StudentProfileEditCard";
 
 export default function TopTeacherDetail() {
-  const [user, setUser] = useRecoilState(userState);
+  const [editUser, setEditUser] = useRecoilState(editUserState);
 
   const handleText = (e) => {
-    setUser({ ...user, text: e.target.value });
+    setEditUser({ ...editUser, text: e.target.value });
   };
 
   const handleGoal = (e) => {
-    setUser({ ...user, goal: e.target.value });
+    setEditUser({ ...editUser, goal: e.target.value });
   };
 
   const handleRequest = (e) => {
-    setUser({ ...user, request: e.target.value });
+    setEditUser({ ...editUser, request: e.target.value });
   };
 
   return (
@@ -45,7 +45,7 @@ export default function TopTeacherDetail() {
             border border-solid border-gray-300
             rounded
             "
-                value={user.text}
+                value={editUser.text}
                 onChange={handleText}
               ></textarea>
             </div>
@@ -65,7 +65,7 @@ export default function TopTeacherDetail() {
             border border-solid border-gray-300
             rounded
             "
-                value={user.goal}
+                value={editUser.goal}
                 onChange={handleGoal}
               ></textarea>
             </div>
@@ -85,7 +85,7 @@ export default function TopTeacherDetail() {
             border border-solid border-gray-300
             rounded
             "
-                value={user.request}
+                value={editUser.request}
                 onChange={handleRequest}
               ></textarea>
             </div>
