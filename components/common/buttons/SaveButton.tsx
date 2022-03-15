@@ -1,22 +1,23 @@
-import { useRecoilValue } from "recoil";
-import { userState } from "../atoms";
+import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil";
+import { userState, editUserState } from "../atoms";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../src/firabase";
 import Router from "next/router";
 
 export default function Save() {
-  const user = useRecoilValue(userState);
+  const [user, setUser] = useRecoilState(userState);
+  const editUser = useRecoilValue(editUserState);
 
   async function handleSave() {
-    console.log(user.id);
+    await setUser(editUser);
     try {
       await updateDoc(doc(db, "StudentUsers", user.id), {
-        name: user.name,
-        school: user.school,
-        grade: user.grade,
-        text: user.text,
-        goal: user.goal,
-        request: user.request,
+        name: editUser.name,
+        school: editUser.school,
+        grade: editUser.grade,
+        text: editUser.text,
+        goal: editUser.goal,
+        request: editUser.request,
       });
       await Router.push("/myselfStudentDetail");
     } catch (error) {

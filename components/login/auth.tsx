@@ -14,8 +14,6 @@ export const userAuth = () => {
         const docRef = doc(db, "StudentUsers", user.uid);
 
         getDoc(docRef).then((snapshot) => {
-          console.log(snapshot.data());
-          console.log(snapshot.id);
           const user = snapshot.data();
           setLoginUser({
             ...LoginUser,
