@@ -1,4 +1,7 @@
 import { atom } from "recoil";
+import { recoilPersist } from "recoil-persist";
+
+const { persistAtom } = recoilPersist();
 
 //user
 type user = {
@@ -30,6 +33,8 @@ export const userState = atom<user>({
     request: "",
     photo_url: "",
   },
+
+  effects_UNSTABLE: [persistAtom],
 });
 
 export const editUserState = atom<user>({
