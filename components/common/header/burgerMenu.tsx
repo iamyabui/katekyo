@@ -20,10 +20,11 @@ export default function BurgerMenu() {
       .then(
         await Router.push("/login"),
         setUser({
+          ...user,
           id: "",
           email: "",
           password: "",
-          flag: "student",
+          flag: "",
           name: "",
           school: "",
           grade: "",
@@ -31,6 +32,8 @@ export default function BurgerMenu() {
           goal: "",
           request: "",
           photo_url: "",
+          occupation: "",
+          occupationName: "",
         })
       )
       .catch((error) => {

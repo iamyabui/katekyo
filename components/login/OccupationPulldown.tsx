@@ -1,27 +1,27 @@
-import { useRecoilState } from "recoil";
-import { userState } from "../common/atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { userState, errorState } from "../common/atoms";
 
-export default function FlagPulldown() {
+export default function OccupationPulldown() {
   const [user, setUser] = useRecoilState(userState);
+  const error = useRecoilValue(errorState);
 
-  const handleFlag = (e) => {
-    setUser({ ...user, flag: e.target.value });
+  const handleOccupation = (e) => {
+    setUser({ ...user, occupation: e.target.value });
   };
 
   return (
     <div className="inline-block mb-5">
-      <label className="block text-gray-700 mb-2">
-        生徒、講師どちらで登録しますか？
-      </label>
+      <label className="block text-gray-700 mb-2">大学生/大学院/社会人 ※</label>
       <div className="relative w-32">
         <select
-          onChange={handleFlag}
-          defaultValue={user.flag}
+          onChange={handleOccupation}
+          defaultValue={user.occupation}
           className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
         >
           <option value="">選択</option>
-          <option value="student">生徒</option>
-          <option value="teacher">先生</option>
+          <option value="college">大学生</option>
+          <option value="master">大学院生</option>
+          <option value="society">社会人</option>
         </select>
         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
           <svg
@@ -33,6 +33,11 @@ export default function FlagPulldown() {
           </svg>
         </div>
       </div>
+      {error.occupationError !== "" && (
+        <p className="text-red-500 text-xs pl-2 mt-3 mb-3">
+          {error.occupationError}
+        </p>
+      )}
     </div>
   );
 }

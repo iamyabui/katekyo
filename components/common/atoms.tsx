@@ -16,6 +16,8 @@ type user = {
   goal: string;
   request: string;
   photo_url: string;
+  occupation: string;
+  occupationName: string;
 };
 
 export const userState = atom<user>({
@@ -24,7 +26,7 @@ export const userState = atom<user>({
     id: "",
     email: "",
     password: "",
-    flag: "student",
+    flag: "",
     name: "",
     school: "",
     grade: "",
@@ -32,6 +34,8 @@ export const userState = atom<user>({
     goal: "",
     request: "",
     photo_url: "",
+    occupation: "",
+    occupationName: "",
   },
 
   effects_UNSTABLE: [persistAtom],
@@ -43,7 +47,7 @@ export const editUserState = atom<user>({
     id: "",
     email: "",
     password: "",
-    flag: "student",
+    flag: "",
     name: "",
     school: "",
     grade: "",
@@ -51,6 +55,8 @@ export const editUserState = atom<user>({
     goal: "",
     request: "",
     photo_url: "",
+    occupation: "",
+    occupationName: "",
   },
 });
 
@@ -60,6 +66,8 @@ type error = {
   passwordError: string;
   nameError: string;
   gradeError: string;
+  occupationError: string;
+  occupationNameError: string;
 };
 
 export const errorState = atom<error>({
@@ -69,5 +77,7 @@ export const errorState = atom<error>({
     passwordError: "",
     nameError: "",
     gradeError: "",
+    occupationError: "",
+    occupationNameError: "",
   },
 });
