@@ -3,10 +3,14 @@ import { db, auth } from "../../src/firabase";
 import { doc, getDoc, getDocs, collection } from "firebase/firestore";
 import { useRecoilState } from "recoil";
 import { userState } from "../common/atoms";
+import { studentUserState } from "../common/StudentAtoms";
+import { teacherUserState } from "../common/TeacherAtoms";
 
-export const userAuth = () => {
-  const [LoginUser, setLoginUser] = useRecoilState(userState);
+export const UserAuth = () => {
+  // const [LoginUser, setLoginUser] = useRecoilState(userState);
   const [isLoading, setIsLoading] = useState(true);
+  const [teacher, setTeacher] = useRecoilState(teacherUserState)
+  const [student, setStudent] = useRecoilState(studentUserState)
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -17,8 +21,8 @@ export const userAuth = () => {
         getDoc(studentRef).then((snapshot) => {
           if (snapshot.data()) {
             const user = snapshot.data();
-            setLoginUser({
-              ...LoginUser,
+            setStudent({
+              ...student,
               id: snapshot.id,
               email: user.email,
               flag: "student",
@@ -36,8 +40,8 @@ export const userAuth = () => {
         getDoc(teacherRef).then((snapshot) => {
           if (snapshot.data()) {
             const user = snapshot.data();
-            setLoginUser({
-              ...LoginUser,
+            setTeacher({
+              ...teacher,
               id: snapshot.id,
               email: user.email,
               name: user.name,
@@ -53,7 +57,7 @@ export const userAuth = () => {
         setIsLoading(false);
       }
     });
-  }, [setLoginUser]);
+  }, [setIsLoading]);
 
   return isLoading;
 };

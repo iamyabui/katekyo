@@ -1,7 +1,7 @@
 import Category from "../common/pulldown/CategoryPulldown";
-import ConsultMethod from "../common/checkbox/ConsultMethodCheckbox";
 import SelectSubjects from "../common/selectButtons/SubjectSelectButtons";
 import Budget from "./BudgetPulldown";
+import ConsultMethodCheckbox from "./ConsultMethodCheckbox"
 
 export default function TopLeftMenu() {
   return (
@@ -17,7 +17,7 @@ export default function TopLeftMenu() {
         </div>
       </div>
 
-      <ConsultMethod />
+      <ConsultMethodCheckbox />
       <Budget />
     </div>
   );

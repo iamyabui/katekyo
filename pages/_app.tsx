@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import { RecoilRoot } from "recoil";
-import { userAuth } from "../components/login/auth";
+import { UserAuth } from "../components/login/auth";
 import { ChakraProvider } from "@chakra-ui/react";
 import { AppProps } from "next/app";
 
@@ -9,7 +9,7 @@ type Props = {
 };
 
 function AppInit({ children }: Props): JSX.Element {
-  const isLoading = userAuth();
+  const isLoading = UserAuth();
   return isLoading ? <p>loading...</p> : children;
 }
 

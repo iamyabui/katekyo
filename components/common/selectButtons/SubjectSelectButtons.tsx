@@ -1,6 +1,9 @@
 import Subject from "./SubjectButton";
+import { useState } from "react";
 
-export default function SelectSubjects() {
+export default function SelectSubjects(props) {
+  const { selected, setSelected } = props;
+
   const subjects = [
     "#算数",
     "#国語",
@@ -19,10 +22,12 @@ export default function SelectSubjects() {
     "#古典",
     "#漢文",
   ];
+
   return (
     <>
+    {console.log(selected)}
       {subjects.map((subject, index) => (
-        <Subject subject={subject} key={index} />
+          <Subject subject={subject} key={index} selectedSubjects={selected} setSelectedSubjects={setSelected} />          
       ))}
     </>
   );

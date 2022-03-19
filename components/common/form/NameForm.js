@@ -1,12 +1,14 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import { userState, errorState } from "../atoms";
 
-export default function Name() {
-  const [user, setUser] = useRecoilState(userState);
+export default function Name(props) {
+  // const [user, setUser] = useRecoilState(userState);
+  const { userName, setUserName } = props;
   const error = useRecoilValue(errorState);
 
   const handleName = (e) => {
-    setUser({ ...user, name: e.target.value });
+    // setUser({ ...user, name: e.target.value });
+    setUserName(e.target.value);
   };
 
   return (
@@ -21,7 +23,8 @@ export default function Name() {
           id="name"
           type="text"
           placeholder=""
-          value={user.name}
+          // value={user.name}
+          value={userName}
         />
         {!error.nameError == "" && (
           <p className="text-red-500 text-xs pl-2 mt-3 mb-3">

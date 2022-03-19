@@ -1,8 +1,10 @@
-export default function ConsultMethod() {
+export default function ConsultMethodCheckbox() {
+
+
   return (
     <>
       <label className="font-bold">相談方法</label>
-      <div className="mt-2 ml-2 mb-5">
+      <div className="mt-2 ml-2 mb-5" >
         <div>
           <input
             type="checkbox"

@@ -5,10 +5,14 @@ import { getAuth, signOut } from "firebase/auth";
 import { auth } from "../../../src/firabase";
 import Router from "next/router";
 import IconSmall from "../icon/SmallIcon";
+import { teacherUserState } from "../TeacherAtoms";
+import { studentUserState } from "../StudentAtoms";
 
 export default function BurgerMenu() {
   const [menuAppear, setMenuAppear] = useState(false);
-  const [user, setUser] = useRecoilState(userState);
+  // const [user, setUser] = useRecoilState(userState);
+  const [teacher, setTeacher] = useRecoilState(teacherUserState)
+  const [student, setStudent] = useRecoilState(studentUserState)
 
   const handleAppearMenu = () => {
     menuAppear ? setMenuAppear(false) : setMenuAppear(true);
@@ -19,22 +23,33 @@ export default function BurgerMenu() {
     signOut(auth)
       .then(
         await Router.push("/login"),
-        setUser({
-          ...user,
+        setTeacher({
           id: "",
           email: "",
-          password: "",
           flag: "",
           name: "",
-          school: "",
-          grade: "",
-          text: "",
-          goal: "",
-          request: "",
+          status: false,
           photo_url: "",
           occupation: "",
           occupationName: "",
-        })
+          category: "",
+          subjects: [],
+          title: "",
+          detail: "",
+          consult: { video: false, chat: false },
+      }),
+      setStudent({
+        id: "",
+        email: "",
+        flag: "",
+        name: "",
+        school: "",
+        grade: "",
+        text: "",
+        goal: "",
+        request: "",
+        photo_url: "",
+      }),
       )
       .catch((error) => {
         alert("ログアウトできませんでした。");
@@ -43,7 +58,9 @@ export default function BurgerMenu() {
 
   return (
     <>
-      {user.id !== "" ? (
+    {console.log(teacher)}
+    {console.log(student)}
+      {teacher.id !== "" || student.id !== "" ? (
         <div onClick={handleAppearMenu}>
           <IconSmall />
         </div>
@@ -55,7 +72,7 @@ export default function BurgerMenu() {
         />
       )}
       {menuAppear &&
-        (user.id !== "" ? (
+        (teacher.id !== "" || student.id !== "" ? (
           <div className="absolute top-16">
             <nav className="relative -left-[8em] text-gray-700 bg-white w-[10rem] border border-gray-400 rounded-md">
               <ul className="ml-4 my-5">
@@ -65,12 +82,21 @@ export default function BurgerMenu() {
                 >
                   HOME
                 </li>
-                <li
-                  className="my-5 hover:text-origin-purple hover:cursor-pointer"
-                  onClick={() => Router.push("/myselfStudentDetail")}
-                >
-                  マイページ
-                </li>
+                {student.id !== "" ? (
+                  <li
+                    className="my-5 hover:text-origin-purple hover:cursor-pointer"
+                    onClick={() => Router.push("/myselfStudentDetail")}
+                  >
+                    マイページ
+                  </li>
+                ) : (
+                  <li
+                    className="my-5 hover:text-origin-purple hover:cursor-pointer"
+                    onClick={() => Router.push("/myselfTeacherDetail")}
+                  >
+                    マイページ
+                  </li>
+                )}
                 <li
                   className="my-5 hover:text-origin-purple hover:cursor-pointer"
                   onClick={handleLogout}
