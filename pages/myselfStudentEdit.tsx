@@ -1,23 +1,26 @@
 import Header from "../components/common/header/header";
 import StudentLeftMenu from "../components/student/common/StudentLeftMenu";
-import Save from "../components/common/buttons/SaveButton";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { editUserState, userState } from "../components/common/atoms";
 import StudentProfileEditCard from "../components/student/profileEdit/StudentProfileEditCard";
 import { useEffect, useState } from "react";
 import Router from "next/router";
+import { studentUserState } from "../components/common/StudentAtoms";
+import { editUserState } from "../components/common/atoms";
+import SaveButton from "../components/student/profileEdit/SaveButton";
 
 export default function TopTeacherDetail() {
   const [editUser, setEditUser] = useRecoilState(editUserState);
   const [isLoading, setIsLoading] = useState(true);
-  const loginUser = useRecoilValue(userState);
+  const loginUser = useRecoilValue(studentUserState);
   const userId = loginUser.id;
+  const flag = loginUser.flag;
 
   useEffect(() => {
     // ログインユーザを確認し、ログインできてなかったらLoginページへ遷移する。
     userId == "" && Router.push("/login");
+    flag !== "student" && Router.push("/");
     setIsLoading(false);
-  }, []);
+  }, [setIsLoading]);
 
   const handleText = (e) => {
     setEditUser({ ...editUser, text: e.target.value });
@@ -103,7 +106,7 @@ export default function TopTeacherDetail() {
                   ></textarea>
                 </div>
                 <div className="mt-5 flex justify-end">
-                  <Save />
+                  <SaveButton />
                 </div>
               </div>
             </div>

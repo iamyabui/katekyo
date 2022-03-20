@@ -1,4 +1,4 @@
-import NameForm from "../common/form/NameForm";
+import NameForm from "../login/NameForm";
 import {
   Modal,
   ModalOverlay,
