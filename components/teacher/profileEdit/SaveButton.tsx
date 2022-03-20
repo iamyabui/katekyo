@@ -3,37 +3,38 @@ import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../src/firabase";
 import Router from "next/router";
 import { teacherUserState } from "../../common/TeacherAtoms";
+import { editUserState } from "../../common/atoms";
 
-export default function Save(props) {
+export default function Save() {
   const [teacher, setTeacher] = useRecoilState(teacherUserState);
-  const { userName, status, category, subjects, title, detail, consult } = props;
+  const [editUser, setEditUser] = useRecoilState(editUserState);
 
   async function handleSave() {
     try {
-      await updateDoc(doc(db, "TeacherUsers", teacher.id), {
-        name: userName,
-        status: status,
-        // photo_url: ,
-        // occupation: ,
-        // occupationName: "",
-        category: category,
-        subjects: subjects,
-        title: title,
-        detail: detail,
-        consult: consult,
-      });
       await setTeacher({...teacher,
-        name: userName,
-        status: status,
+        name: editUser.name,
+        status: editUser.status,
         // photo_url: ,
         // occupation: ,
         // occupationName: "",
-        category: category,
-        subjects: subjects,
-        title: title,
-        detail: detail,
-        consult: consult,
+        category: editUser.category,
+        subjects: editUser.subjects,
+        title: editUser.title,
+        detail: editUser.detail,
+        consult: editUser.consult,
     })
+      await updateDoc(doc(db, "TeacherUsers", teacher.id), {
+        name: editUser.name,
+        status: editUser.status,
+        // photo_url: ,
+        // occupation: ,
+        // occupationName: "",
+        category: editUser.category,
+        subjects: editUser.subjects,
+        title: editUser.title,
+        detail: editUser.detail,
+        consult: editUser.consult,
+      });
       await Router.push("/myselfTeacherDetail");
     } catch (error) {
       alert("編集内容が保存できませんでした。");

@@ -3,8 +3,7 @@ import TeacherProfileDetail from "../components/teacher/profileDetail/TeacherPro
 import Header from "../components/common/header/header";
 import DetailBox from "../components/teacher/profileDetail/DetailBox"
 import { useState, useEffect } from "react";
-import { useRecoilValue, useRecoilState } from "recoil";
-// import { userState } from "../components/common/atoms";
+import { useRecoilState } from "recoil";
 import Router from "next/router";
 import { teacherUserState } from "../components/common/TeacherAtoms";
 import { doc, getDoc } from "firebase/firestore";
@@ -14,11 +13,8 @@ export default function MyselfTeacherDetail() {
   const [isLoading, setIsLoading] = useState(true);
   const [teacher, setTeacher] = useRecoilState(teacherUserState)
   console.log(teacher)
-  // const loginUser = useRecoilValue(teacherUserState);
   const userId = teacher.id;
-  const teacherRef = doc(db, "TeacherUsers", userId);
-  // const [teacher, setTeacher] = useState({})
-  
+  const teacherRef = doc(db, "TeacherUsers", userId);  
 
   useEffect(() => {
     // ログインユーザを確認し、ログインできてなかったらLoginページへ遷移する。
@@ -49,14 +45,14 @@ export default function MyselfTeacherDetail() {
 
   return (
     <>
-      {(isLoading || userId || flag == "teacher" ) && (
+      {(isLoading || userId || teacher.flag == "teacher" ) && (
         <>
           <Header />
           <div className="bg-top-bg h-screen w-screen ">
             <div className="flex max-w-7xl mx-auto py-10">
               <TeacherLeftMenu />
-              <TeacherProfileDetail teacher={teacher} />
-              <DetailBox teacher={teacher} />
+              <TeacherProfileDetail />
+              <DetailBox />
             </div>
           </div>
         </>

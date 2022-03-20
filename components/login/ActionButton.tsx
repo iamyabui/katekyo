@@ -172,8 +172,7 @@ export default function Action(props: loginPageType) {
     console.log(user);
     // 生徒としてユーザ登録した場合
     if (user.flag == "student") {
-      console.log(user);
-      // ユーザが登録成功した場合、モーダルをクローズしてログイン画面へ遷移する。また、ユーザ情報のStateを初期化する。
+      // ユーザが登録成功した場合
       if (user.name !== "" && user.grade !== "") {
         try {
           await createUserWithEmailAndPassword(
@@ -224,9 +223,9 @@ export default function Action(props: loginPageType) {
           gradeError: "学年を選択してください。",
         });
       }
+    //  先生としてユーザ登録した場合
     } else {
-      //  先生としてユーザ登録した場合
-      console.log(user);
+      // ユーザが登録成功した場合
       if (user.name !== "" && user.occupation !== "") {
         try {
           await createUserWithEmailAndPassword(

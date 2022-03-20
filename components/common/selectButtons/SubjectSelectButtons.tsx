@@ -1,8 +1,9 @@
+import { useRecoilState } from "recoil";
+import { editUserState } from "../atoms";
 import Subject from "./SubjectButton";
-import { useState } from "react";
 
-export default function SelectSubjects(props) {
-  const { selected, setSelected } = props;
+export default function SelectSubjects() {
+  const [editUser, setEditUser] = useRecoilState(editUserState);
 
   const subjects = [
     "#算数",
@@ -25,9 +26,9 @@ export default function SelectSubjects(props) {
 
   return (
     <>
-    {console.log(selected)}
+    {console.log(editUser.subjects)}
       {subjects.map((subject, index) => (
-          <Subject subject={subject} key={index} selectedSubjects={selected} setSelectedSubjects={setSelected} />          
+          <Subject subject={subject} key={index} />          
       ))}
     </>
   );

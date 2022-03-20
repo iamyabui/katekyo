@@ -1,14 +1,11 @@
-// import { useState } from "react";
-// import { useRecoilState } from "recoil";
-// import { teacherUserState } from "../TeacherAtoms";
+import { useRecoilState } from "recoil";
+import { editUserState } from "../atoms";
 
-export default function Category(props) {
-  const { category, setCategory } = props;
-  // const [teacher, setTeacher] = useRecoilState(teacherUserState);
+export default function Category() {
+  const [editUser, setEditUser] = useRecoilState(editUserState);
 
   const handleCategory = (e) => {
-    setCategory(e.target.value)
-    // setTeacher({...teacher, category: e.target.value});
+    setEditUser({ ...editUser, category: e.target.value });
   }
 
   return (

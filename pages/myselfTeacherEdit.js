@@ -8,23 +8,25 @@ import Header from "../components/common/header/header";
 import Markdown from "../components/common/markdown";
 import SwitchForm from "../components/teacher/profileEdit/SwitchForm";
 import { useState, useEffect } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import Router from "next/router";
 import TitleForm from "../components/teacher/profileEdit/TitleForm"
 import { teacherUserState } from "../components/common/TeacherAtoms";
+import { editUserState } from "../components/common/atoms";
 
 export default function MyselfTeacherEdit() {
+  const [editUser, setEditUser] = useRecoilState(editUserState);
   const [isLoading, setIsLoading] = useState(true);
   const loginUser = useRecoilValue(teacherUserState);
   const userId = loginUser.id;
   const flag = loginUser.flag;
-  const [userName, setUserName] = useState(loginUser.name)
-  const [status, setStatus] = useState(loginUser.status)
-  const [category, setCategory] = useState(loginUser.category)
-  const [subjects, setSubjects] = useState(loginUser.subjects)
-  const [title, setTitle] = useState(loginUser.title)
-  const [detail, setDetail] = useState(loginUser.detail)
-  const [consult, setConsult] = useState(loginUser.consult)
+  // const [userName, setUserName] = useState(loginUser.name)
+  // const [status, setStatus] = useState(loginUser.status)
+  // const [category, setCategory] = useState(loginUser.category)
+  // const [subjects, setSubjects] = useState(loginUser.subjects)
+  // const [title, setTitle] = useState(loginUser.title)
+  // const [detail, setDetail] = useState(loginUser.detail)
+  // const [consult, setConsult] = useState(loginUser.consult)
 
   useEffect(() => {
     // ログインユーザを確認し、ログインできてなかったらLoginページへ遷移する。
@@ -43,29 +45,29 @@ export default function MyselfTeacherEdit() {
             <div className="flex max-w-7xl mx-auto py-10">
               <TeacherLeftMenu />
               <div>
-                <TeacherProfileEdit  userName={userName} setUserName={setUserName}/>
-                <SwitchForm status={status} setStatus={setStatus}/>
+                <TeacherProfileEdit />
+                <SwitchForm />
               </div>
 
               <div className="flex-column mx-auto w-[40rem] px-8 text-gray-700">
                 <div className="mb-4 flex flex-col">
                   <label className="mb-2 font-bold">サポートカテゴリ</label>
-                  <Category category={category} setCategory={setCategory} />
+                  <Category />
                 </div>
                 <div className="mb-4 flex flex-col">
                   <label className="mb-2 font-bold">サポート科目</label>
                   <form></form>
                   <div>
-                    <SelectSubjects selected={subjects} setSelected={setSubjects}/>
+                    <SelectSubjects />
                   </div>
                 </div>
-                <TitleForm title={title} setTitle={setTitle} />
+                <TitleForm />
                 <div className="mb-4 flex flex-col">
                   <label className="font-bold">自己紹介/経歴/料金</label>
-                  <Markdown detail={detail} setDetail={setDetail} />
+                  <Markdown />
                 </div>
                 <div className="mb-4 flex flex-col">
-                  <ConsultMethods consult={consult} setConsult={setConsult}/>
+                  <ConsultMethods />
                 </div>
                 <div className="mb-4 flex flex-col">
                   <label className="font-bold">コースと料金</label>
@@ -97,7 +99,7 @@ export default function MyselfTeacherEdit() {
                   </div>
                 </div>
                 <div className="mt-10 flex justify-end">
-                  <Save userName={userName} status={status} category={category} subjects={subjects} title={title} detail={detail} consult={consult}/>
+                  <Save />
                 </div>
               </div>
             </div>

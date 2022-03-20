@@ -1,9 +1,11 @@
 import { FormControl, FormLabel, Switch } from "@chakra-ui/react";
+import { useRecoilState } from "recoil";
+import { editUserState } from "../../common/atoms";
 
-export default function SwitchForm(props) {
-  const { status, setStatus } = props;
+export default function SwitchForm() {
+  const [editUser, setEditUser] = useRecoilState(editUserState);
   const handleSwitch = () => {
-    status ? setStatus(false) : setStatus(true);
+    editUser.status ? setEditUser({ ...editUser, status: false }) : setStatus({ ...editUser, status: true });
   }
 
   return (

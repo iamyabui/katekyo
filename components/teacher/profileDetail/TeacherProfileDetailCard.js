@@ -1,8 +1,10 @@
 import Consultation from "../../top/teacherDetail/ConsultationButton";
 import IconBig from "../../common/icon/BigIcon";
+import { teacherUserState } from "../../common/TeacherAtoms";
+import { useRecoilValue } from "recoil";
 
-export default function TeacherProfileDetail(props) {
-  const { teacher } = props;
+export default function TeacherProfileDetail() {
+  const teacher = useRecoilValue(teacherUserState)
   const buttonStyle = "bg-white text-origin-purple px-1 my-1 mx-1 rounded"
 
   return (
@@ -17,7 +19,7 @@ export default function TeacherProfileDetail(props) {
       <p className={buttonStyle}>{teacher.category}</p>
 
       <p className="my-1">担当科目</p>
-      <div className="flex">
+      <div className="justify-center flex flex-wrap">
       {teacher.subjects.map((subject, index) => (
         <p key={index} className={buttonStyle}>{subject}</p>
       ))}

@@ -1,12 +1,11 @@
 import { useRecoilState, useRecoilValue } from "recoil";
-import { userState } from "../../common/atoms";
+import { editUserState, userState } from "../../common/atoms";
 
-export default function TitleForm(props) {
-  // const [user, setUser] = useRecoilState(userState);
-  const { title, setTitle } = props;
+export default function TitleForm() {
+  const [editUser, setEditUser] = useRecoilState(editUserState);
 
   const handleTitle = (e) => {
-    setTitle(e.target.value);
+    setEditUser({ ...editUser, title: e.target.value });
   };
 
   return (
@@ -27,7 +26,7 @@ export default function TitleForm(props) {
             rounded
             "
             onChange={handleTitle}
-            value={title}
+            value={editUser.title}
           ></input>
     </div>
   );
