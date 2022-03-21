@@ -5,7 +5,7 @@ import { editUserState } from "../../common/atoms";
 export default function SwitchForm() {
   const [editUser, setEditUser] = useRecoilState(editUserState);
   const handleSwitch = () => {
-    editUser.status ? setEditUser({ ...editUser, status: false }) : setStatus({ ...editUser, status: true });
+    editUser.status ? setEditUser({ ...editUser, status: false }) : setEditUser({ ...editUser, status: true });
   }
 
   return (
