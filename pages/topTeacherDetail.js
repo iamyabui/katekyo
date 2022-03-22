@@ -1,20 +1,53 @@
 import Header from "../components/common/header/header";
-import TeacherProfileDetail from "../components/teacher/profileDetail/TeacherProfileDetailCard";
+import TopTeacherProfileDetailCard from "../components/top/teacherDetail/TopTeacherProfileDetailCard";
 import Apply from "../components/top/teacherDetail/ApplyButton";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { db } from "../src/firabase";
+import { doc, getDoc } from "firebase/firestore";
 
 export default function TopTeacherDetail() {
+  const router = useRouter();
+  const id = router.query.id;
+  const [teacher, setTeacher] = useState({});
+  const [isDisplay, setIsDisplay] = useState(false)
+
+  useEffect(() => {
+  const teacherRef = doc(db, "TeacherUsers", id);
+
+    getDoc(teacherRef).then((snapshot) => {
+      if (snapshot.data()) {
+        const user = snapshot.data();
+        console.log(user)
+        setTeacher({
+          id: snapshot.id,
+          name: user.name,
+          photo_url: user.photo_url,
+          occupation: user.occupation,
+          occupationName: user.occupationName,
+          category: user.category,
+          subjects: user.subjects,
+          title: user.title,
+          detail: user.detail,
+          consult: user.consult,
+        });
+      }
+    });
+    setIsDisplay(true);
+  },[]);
+
   return (
     <>
       <Header />
       <div className="bg-top-bg h-screen">
         <div className="flex max-w-4xl m-auto py-10">
-          <TeacherProfileDetail />
+          <TopTeacherProfileDetailCard teacher={teacher}/>
           <div className="flex-column mx-10 px-10 w-[40rem] bg-white p-8 rounded text-gray-700">
-            <h1>全科目苦手克服方法を目指します！</h1>
+            <h1>{teacher.title}</h1>
             <div className="mt-5">
               <h1>自己紹介</h1>
               <p className="mt-2">
-                東京大学3年生の松丸慎吾です。偏差値30から現役で東大に入学することができました！
+                東京大学3年生の渚カヲルです。偏差値30から現役で東大に入学することができました！
                 個人に合わせた勉強方法を一緒に考えて、希望大学に合わせて一緒に勉強しませんか？
                 ご連絡お待ちしております！！
               </p>
