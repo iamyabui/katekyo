@@ -10,6 +10,7 @@ export default function TopTeacherDetail() {
   const router = useRouter();
   const id = router.query.id;
   const [teacher, setTeacher] = useState({});
+  const [isDisplay, setIsDisplay] = useState(false)
 
   useEffect(() => {
   const teacherRef = doc(db, "TeacherUsers", id);
@@ -19,6 +20,7 @@ export default function TopTeacherDetail() {
         const user = snapshot.data();
         console.log(user)
         setTeacher({
+          id: snapshot.id,
           name: user.name,
           photo_url: user.photo_url,
           occupation: user.occupation,
@@ -31,7 +33,8 @@ export default function TopTeacherDetail() {
         });
       }
     });
-  }, [setTeacher]);
+    setIsDisplay(true);
+  },[]);
 
   return (
     <>
@@ -44,7 +47,7 @@ export default function TopTeacherDetail() {
             <div className="mt-5">
               <h1>自己紹介</h1>
               <p className="mt-2">
-                東京大学3年生の松丸慎吾です。偏差値30から現役で東大に入学することができました！
+                東京大学3年生の渚カヲルです。偏差値30から現役で東大に入学することができました！
                 個人に合わせた勉強方法を一緒に考えて、希望大学に合わせて一緒に勉強しませんか？
                 ご連絡お待ちしております！！
               </p>

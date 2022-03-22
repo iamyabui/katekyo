@@ -10,7 +10,7 @@ export default function TopTeacherProfileDetailCard(props) {
       <p className="my-1">Profile</p>
       <IconBig />
       <p className="mt-3 mb-1">{teacher.name}</p>
-      <Consultation />
+      <Consultation teacher={teacher}/>
       <p className="my-1">実績</p>
 
       <p className="my-1">専門</p>
@@ -18,16 +18,16 @@ export default function TopTeacherProfileDetailCard(props) {
 
       <p className="my-1">担当科目</p>
       <div className="justify-center flex flex-wrap">
-      {(teacher.subjects.length > 0) && teacher.subjects.map((subject, index) => (
+      {teacher.subjects?.length > 0 && teacher.subjects.map((subject, index) => (
         <p key={index} className={buttonStyle}>{subject}</p>
       ))}
       </div>
 
       <p className="my-1">相談方法</p>
-        {teacher.consult.chat && (
+        {teacher.consult?.chat && (
           <p className={buttonStyle}>チャット</p>
         )}
-        {teacher.consult.video && (
+        {teacher.consult?.video && (
           <p className={buttonStyle}>ビデオ通話</p>
         )}
     </div>
