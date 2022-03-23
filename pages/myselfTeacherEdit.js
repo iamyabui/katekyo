@@ -11,6 +11,7 @@ import { useState, useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Router from "next/router";
 import TitleForm from "../components/teacher/profileEdit/TitleForm"
+import CourseEditForm from "../components/teacher/profileEdit/CourseEditForm"
 import { teacherUserState } from "../components/common/TeacherAtoms";
 import { editUserState } from "../components/common/atoms";
 
@@ -20,13 +21,6 @@ export default function MyselfTeacherEdit() {
   const loginUser = useRecoilValue(teacherUserState);
   const userId = loginUser.id;
   const flag = loginUser.flag;
-  // const [userName, setUserName] = useState(loginUser.name)
-  // const [status, setStatus] = useState(loginUser.status)
-  // const [category, setCategory] = useState(loginUser.category)
-  // const [subjects, setSubjects] = useState(loginUser.subjects)
-  // const [title, setTitle] = useState(loginUser.title)
-  // const [detail, setDetail] = useState(loginUser.detail)
-  // const [consult, setConsult] = useState(loginUser.consult)
 
   useEffect(() => {
     // ログインユーザを確認し、ログインできてなかったらLoginページへ遷移する。
@@ -70,33 +64,7 @@ export default function MyselfTeacherEdit() {
                   <ConsultMethods />
                 </div>
                 <div className="mb-4 flex flex-col">
-                  <label className="font-bold">コースと料金</label>
-                  <div>
-                    <input
-                      className="w-80 my-2 px-2 py-1 border border-solid border-gray-300 rounded"
-                      placeholder="コース名"
-                    ></input>
-                    <input
-                      className="w-20 my-2 ml-2 mr-1 px-2 py-1 border border-solid border-gray-300 rounded"
-                      placeholder="料金"
-                    ></input>
-                    円
-                    <button className="bg-card-purple hover:bg-origin-deepPurple px-3 py-1 ml-2 rounded">
-                      追加
-                    </button>
-                    <div>
-                      <ul>
-                        <li className="py-1 flex items-center">
-                          <p>チャット相談/週1ビデオ相談（30分）　3000円</p>
-                          <img src="/close.png" className="h-4 w-4 ml-3" />
-                        </li>
-                        <li className="py-1 flex items-center">
-                          <p>チャット相談/週1ビデオ講義（50分）　6000円</p>
-                          <img src="/close.png" className="h-4 w-4 ml-3" />
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
+                  <CourseEditForm />
                 </div>
                 <div className="mt-10 flex justify-end">
                   <Save />
