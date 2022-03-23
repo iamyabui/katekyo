@@ -26,7 +26,6 @@ export default function SelectSubjects() {
 
   return (
     <>
-    {console.log(editUser.subjects)}
       {subjects.map((subject, index) => (
           <Subject subject={subject} key={index} />          
       ))}

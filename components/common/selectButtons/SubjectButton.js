@@ -12,26 +12,25 @@ export default function Subject(props) {
   const handleStyleButton = (subject) => {
     if (editUser.subjects.includes(subject)) {
       const index = editUser.subjects.indexOf(subject)
-      console.log(index)
-      setEditUser({...editUser, subjects: test.splice(index, 1)})
+      const NewSubjects = [...editUser.subjects]
+      NewSubjects.splice(index, 1)
+      setEditUser({...editUser, subjects: NewSubjects})
      } else {
-      console.log(editUser.subject)
-      // setEditUser.subject([...editUser.subject, subject])
       setEditUser({ ...editUser, subjects: [...editUser.subjects, subject] })
      }
   };
 
   return (
     <>
-    {/* {editUser.subject.includes(subject) ? ( */}
+    {editUser.subjects.includes(subject) ? (
       <p key={index} onClick={() => handleStyleButton(subject)} className={selected}>
         {subject}
       </p>
-    {/* ):(
+     ):(
       <p key={index} onClick={() => handleStyleButton(subject)} className={normal}>
         {subject}
       </p>
-    )} */}
+    )}
     </>
   );
 }
