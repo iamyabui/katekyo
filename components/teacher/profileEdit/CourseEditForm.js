@@ -1,4 +1,4 @@
-import { collection, deleteDoc, doc, getDocs, setDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs, setDoc } from "firebase/firestore";
 import { useEffect, useState } from "react"
 import { useRecoilValue } from "recoil";
 import { db } from "../../../src/firabase";
@@ -47,13 +47,20 @@ export default function CourseEditForm() {
                 courseError: "",
                 priceError: "",
             })
-            // コースの追加
+            // 先生コレクション内サブコレクションにてコースの追加
             const newCourse = { name: course, price: price }
             setCourseList([...courseList, newCourse])
             const teacherRef = doc(db, "TeacherUsers", loginUser.id);
-            const courseRef = doc(collection(teacherRef, "courses"));
-            setDoc(courseRef, newCourse)
-            
+            const courseRef = collection(teacherRef, "courses");
+            addDoc(courseRef, newCourse).then(snapshot => {
+                // Coursesコレクションに先程追加したコースIDを登録
+                const coursesRef = doc(db, "Courses", snapshot.id);
+                setDoc(coursesRef, {
+                    name: course, price: price, teacherID: loginUser.id  
+                })
+                console.log(coursesRef)
+            })
+
             // 追加後の設定コース一覧を取得
             const NewCoursesRef = getDocs(collection(teacherRef, "courses"));
             NewCoursesRef.then(snapshot => {
@@ -76,11 +83,14 @@ export default function CourseEditForm() {
         const teacherRef = doc(db, "TeacherUsers", loginUser.id, "courses", id);
         deleteDoc(teacherRef);
 
+        const courseRef = doc(db, "Courses", id)
+        deleteDoc(courseRef);
+
         const NewTeacherRef = doc(db, "TeacherUsers", loginUser.id);
-        const courseRef = getDocs(collection(NewTeacherRef, "courses"));
+        const NewCoursesRef = getDocs(collection(NewTeacherRef, "courses"));
        
         // コース削除後の設定コース一覧を取得
-        courseRef.then(snapshot => {
+        NewCoursesRef.then(snapshot => {
             const courses = snapshot.docs.map((doc) => {
                 const id = doc.id;
                 const name = doc.data().name;
