@@ -1,4 +1,5 @@
-import { addDoc, collection, deleteDoc, doc, getDocs, setDoc } from "firebase/firestore";
+import { Table, Tbody, Td, Tfoot, Th, Thead, Tr } from "@chakra-ui/react";
+import { addDoc, collection, deleteDoc, doc, getDocs, setDoc, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react"
 import { useRecoilValue } from "recoil";
 import { db } from "../../../src/firabase";
@@ -10,6 +11,8 @@ export default function CourseEditForm() {
     const loginUser = useRecoilValue(teacherUserState);
     const [courseList, setCourseList] = useState([]);
     const [error, setError] = useState({ courseError: "", priceError: "" });
+    const [isEdit, setIsEdit] = useState(false);
+    const [editId, setEditId] = useState("");
     
     useEffect(() => {
         const teacherRef = doc(db, "TeacherUsers", loginUser.id);
@@ -47,21 +50,40 @@ export default function CourseEditForm() {
                 courseError: "",
                 priceError: "",
             })
-            // 先生コレクション内サブコレクションにてコースの追加
-            const newCourse = { name: course, price: price }
-            setCourseList([...courseList, newCourse])
-            const teacherRef = doc(db, "TeacherUsers", loginUser.id);
-            const courseRef = collection(teacherRef, "courses");
-            addDoc(courseRef, newCourse).then(snapshot => {
-                // Coursesコレクションに先程追加したコースIDを登録
-                const coursesRef = doc(db, "Courses", snapshot.id);
-                setDoc(coursesRef, {
-                    name: course, price: price, teacherID: loginUser.id  
-                })
-                console.log(coursesRef)
-            })
 
-            // 追加後の設定コース一覧を取得
+            if( isEdit == true ) {
+                // 該当コースの編集
+                // TeacherUsersコレクション内該当coursesコレクションの該当ドキュメント更新
+                const teacherRef = doc(db, "TeacherUsers", loginUser.id, "courses", editId);
+                updateDoc(teacherRef, {
+                    name: course, 
+                    price: price,
+                });
+                // Coursesコレクション内該当CourseIDドキュメント更新
+                const courseRef = doc(db, "Courses", editId);
+                updateDoc(courseRef, {
+                    name: course, 
+                    price: price,
+                })
+                setIsEdit(false);
+
+            } else {
+                // 先生コレクション内サブコレクションにてコースの追加
+                const newCourse = { name: course, price: price }
+                // setCourseList([...courseList, newCourse])
+                const teacherRef = doc(db, "TeacherUsers", loginUser.id);
+                const courseRef = collection(teacherRef, "courses");
+                addDoc(courseRef, newCourse).then(snapshot => {
+                    // Coursesコレクションに先程追加したコースIDを登録
+                    const coursesRef = doc(db, "Courses", snapshot.id);
+                    setDoc(coursesRef, {
+                        name: course, price: price, teacherID: loginUser.id  
+                    })
+                })
+            }            
+
+            // 編集追加後の設定コース一覧を取得
+            const teacherRef = doc(db, "TeacherUsers", loginUser.id);
             const NewCoursesRef = getDocs(collection(teacherRef, "courses"));
             NewCoursesRef.then(snapshot => {
             const courses = snapshot.docs.map((doc) => {
@@ -100,6 +122,13 @@ export default function CourseEditForm() {
             setCourseList(courses);
         })
     }
+
+    const handleEditCourse = (course) => {
+        setCourse(course.name);
+        setPrice(course.price);
+        setEditId(course.id);
+        setIsEdit(true);
+    }
     
     return (
         <>
@@ -127,7 +156,7 @@ export default function CourseEditForm() {
                 <button 
                     onClick={handleAddCourse}
                     className="flex items-center h-8 bg-card-purple hover:bg-origin-deepPurple px-3 py-1 ml-2 rounded">
-                    追加
+                    { isEdit ? "保存" : "追加" }
                 </button>
                 </div>
                 <div>
@@ -145,12 +174,27 @@ export default function CourseEditForm() {
                
                 <div>
                     <ul>
-                    {courseList.map((value, index) => (
-                        <li key={index} className="py-1 flex items-center">
-                        <p>{value.name} {value.price}円</p>
-                        <img onClick={()=>handleDeleteCourse(value.id, index)} src="/close.png" className="h-4 w-4 ml-3" />
-                        </li>
-                    ))}
+                    <Table size='sm' w={400} >
+                    <Thead>
+                        <Tr>
+                        <Th>コース名</Th>
+                        <Th>値段</Th>
+                        <Th></Th>
+                        <Th></Th>
+                        </Tr>
+                    </Thead>
+                    <Tbody>
+                        {courseList.map((course, index) => (
+                            <Tr key={index}>
+                            <Td>{course.name}</Td>
+                            <Td>{course.price}円</Td>
+                            <Td><img onClick={()=>handleDeleteCourse(course.id, index)} src="/trash.png" className="h-4 w-4 ml-3" /></Td>
+                            <Td><img onClick={()=>handleEditCourse(course)} src="/edit.png" className="h-4 w-4 ml-3" /></Td>
+                            </Tr>
+                        ))}
+                        
+                    </Tbody>
+                    </Table>
                     </ul>
                 </div>
             </div>
