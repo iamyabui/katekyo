@@ -42,15 +42,16 @@ export default function TeacherChatRoom() {
         })
         
         // contact1とcontact2に、先生IDと生徒DIが該当するChatを検索して、そのChatIDを取得
-        chats.forEach((chat) => {
+        const chat = chats.map((chat) => {
           if((chat.contact1 == studentId && chat.contact2 == teacherId) || (chat.contact1 == teacherId && chat.contact2 == studentId)) {
             setChatId(chat.id);
+            return chat.id;
           }
-        })
+        }).filter(Boolean);
 
         // ChatIDからメッセージIDを全部取得
         // const MessageRef = collection(db, "Chats", chatId, "Messages");
-        const ChatRef = doc(db, "Chats", chatId);
+        const ChatRef = doc(db, "Chats", chat[0]);
         const MessageRef = collection(ChatRef, "Messages");
         const q = query(MessageRef, orderBy("time", "desc"));
 
