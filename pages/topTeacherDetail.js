@@ -1,25 +1,30 @@
 import Header from "../components/common/header/header";
 import TopTeacherProfileDetailCard from "../components/top/teacherDetail/TopTeacherProfileDetailCard";
-import Apply from "../components/top/teacherDetail/ApplyButton";
+import DetailBox from "../components/top/teacherDetail/DetailBox";
+import Apply from "../components/top/teacherDetail/ApplyButton"
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { db } from "../src/firabase";
-import { doc, getDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
+import { Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { studentUserState } from "../components/common/StudentAtoms";
+import { useRecoilValue } from "recoil";
 
 export default function TopTeacherDetail() {
   const router = useRouter();
   const id = router.query.id;
   const [teacher, setTeacher] = useState({});
-  const [isDisplay, setIsDisplay] = useState(false)
+  const [courseList, setCourseList] = useState([]);
+  const student = useRecoilValue(studentUserState);
+  const [coursesStatus, setCoursesStatus] = useState([]);
 
   useEffect(() => {
   const teacherRef = doc(db, "TeacherUsers", id);
 
-    getDoc(teacherRef).then((snapshot) => {
+    getDoc(teacherRef).then(snapshot => {
       if (snapshot.data()) {
         const user = snapshot.data();
-        console.log(user)
-        setTeacher({
+        const teacherInfo = { 
           id: snapshot.id,
           name: user.name,
           photo_url: user.photo_url,
@@ -30,45 +35,93 @@ export default function TopTeacherDetail() {
           title: user.title,
           detail: user.detail,
           consult: user.consult,
-        });
+        }
+        setTeacher(teacherInfo)
       }
     });
-    setIsDisplay(true);
+
+    const coursesRef = collection(db, "Courses");
+    const myCoursesRef = query(coursesRef, where("teacherID", "==", id));
+
+    getDocs(myCoursesRef).then(snapshot => {
+        const courses = snapshot.docs.map((doc) => {
+            const id = doc.id
+            const name = doc.data().name;
+            const price = doc.data().price;
+            return { id: id, name: name, price: price }
+        })
+        setCourseList(courses);
+    })
+ 
+     // 該当courseIDを取得できたら、またCoursesコレクションから該当courseID＞生徒コレクション内情報を取得
+     getDocs(myCoursesRef).then(snapshot => {
+           snapshot.docs.map((courseDoc) => {              
+             // ログイン先生ユーザ担当コースを受講した生徒を全て取得
+             const courseId = courseDoc.id;
+             const allStudentsRef = collection(db, "Courses", courseId, "students");
+            // const studentRef = (async function() {
+            //   await getDoc(doc(db, "Courses", courseId, "students", student.id));
+            // })();
+            // console.log(studentRef.data());
+            
+             
+             // 担当コース受講生徒の中から、指定した生徒が受講したもしくは受講済のコース内容と生徒の情報を取得
+             getDocs(allStudentsRef).then(snapshot => {
+               const courses = snapshot.docs.map((studentDoc) => {
+                 const id = studentDoc.id;
+                 const studentRef = studentDoc.data()
+                 if (id == student.id) {
+                   return {...studentRef, courseId};
+                 }
+               }).filter(Boolean);
+               setCoursesStatus(courses);
+             })
+
+           })
+     })
+
   },[]);
 
   return (
     <>
+    {console.log(coursesStatus)}
       <Header />
       <div className="bg-top-bg h-screen">
         <div className="flex max-w-4xl m-auto py-10">
           <TopTeacherProfileDetailCard teacher={teacher}/>
-          <div className="flex-column mx-10 px-10 w-[40rem] bg-white p-8 rounded text-gray-700">
-            <h1>{teacher.title}</h1>
-            <div className="mt-5">
-              <h1>自己紹介</h1>
-              <p className="mt-2">
-                東京大学3年生の渚カヲルです。偏差値30から現役で東大に入学することができました！
-                個人に合わせた勉強方法を一緒に考えて、希望大学に合わせて一緒に勉強しませんか？
-                ご連絡お待ちしております！！
-              </p>
-            </div>
-            <div className="mt-5">
-              <h1>サポート内容</h1>
-              <div className="mt-2">
-                <div className="flex items-center mb-5">
-                  <p className="mr-5">
-                    ★チャット相談/週1ビデオ相談（30分）3000円
-                  </p>
-                  <Apply />
-                </div>
+          <div className="flex-column mx-10 px-10 w-[40rem] text-gray-700">
+            {/* <DetailBox teacher={teacher} /> */}
 
-                <div className="flex items-center  mb-5">
-                  <p className="mr-5">
-                    ★チャット相談/週1ビデオ相談（50分）5000円
-                  </p>
-                  <Apply />
-                </div>
-              </div>
+            <div className="mb-5 flex-column p-5">
+              <p className="font-bold">{teacher.title}</p>
+            </div>
+            <p className="mb-5 ml-2">自己紹介</p>
+            <div className="mb-5 flex-column bg-white p-5 rounded ">
+              <p className="whitespace-pre-wrap text-sm">{teacher.detail}</p>
+            </div>
+      
+            <p className="mb-5 ml-2">コース内容</p>
+            <div className="mb-5 flex-column bg-white p-5 rounded ">
+            <Table>
+              <Thead>
+                <Tr>
+                  <Th>コース名</Th>
+                  <Th>値段</Th>
+                  <Th></Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+              {courseList.map((value, index) => (
+                <Tr key={index}>
+                <Th>{value.name}</Th>
+                <Th>{value.price}円</Th>
+                <Th>{ student.id !== "" && 
+                <Apply courseName={value.name} courseId={value.id} />
+                }</Th>
+                </Tr>
+              ))}
+              </Tbody>
+            </Table>
             </div>
           </div>
         </div>
