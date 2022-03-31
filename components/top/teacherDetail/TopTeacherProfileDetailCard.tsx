@@ -1,8 +1,11 @@
 import Consultation from "../../top/teacherDetail/ConsultationButton";
 import IconBig from "../../common/icon/BigIcon";
+import { useRecoilValue } from "recoil";
+import { teacherUserState } from "../../common/TeacherAtoms";
 
 export default function TopTeacherProfileDetailCard(props) {
   const { teacher } = props;
+  const teacherUser = useRecoilValue(teacherUserState);
   const buttonStyle = "bg-white text-origin-purple px-1 my-1 mx-1 rounded"
   
   return (
@@ -10,7 +13,9 @@ export default function TopTeacherProfileDetailCard(props) {
       <p className="my-1">Profile</p>
       <IconBig />
       <p className="mt-3 mb-1">{teacher.name}</p>
+      {teacherUser.id == "" && (
       <Consultation teacher={teacher}/>
+      )}
       <p className="my-1">実績</p>
 
       <p className="my-1">専門</p>
