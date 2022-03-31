@@ -3,55 +3,16 @@ import { recoilPersist } from "recoil-persist";
 
 const { persistAtom } = recoilPersist();
 
-//user
-type user = {
-  id: string;
-  email: string;
-  password: string;
-  flag: string;
-  name: string;
-  school: string;
-  grade: string;
-  text: string;
-  goal: string;
-  request: string;
-  photo_url: string;
-};
-
-export const userState = atom<user>({
+export const userState = atom<any>({
   key: "user",
-  default: {
-    id: "",
-    email: "",
-    password: "",
-    flag: "student",
-    name: "",
-    school: "",
-    grade: "",
-    text: "",
-    goal: "",
-    request: "",
-    photo_url: "",
-  },
-
-  effects_UNSTABLE: [persistAtom],
+  default: {},
 });
 
-export const editUserState = atom<user>({
+export const editUserState = atom<any>({
   key: "editUser",
-  default: {
-    id: "",
-    email: "",
-    password: "",
-    flag: "student",
-    name: "",
-    school: "",
-    grade: "",
-    text: "",
-    goal: "",
-    request: "",
-    photo_url: "",
-  },
+  default: {},
+
+  effects_UNSTABLE: [persistAtom],
 });
 
 //error
@@ -60,6 +21,8 @@ type error = {
   passwordError: string;
   nameError: string;
   gradeError: string;
+  occupationError: string;
+  occupationNameError: string;
 };
 
 export const errorState = atom<error>({
@@ -69,5 +32,7 @@ export const errorState = atom<error>({
     passwordError: "",
     nameError: "",
     gradeError: "",
+    occupationError: "",
+    occupationNameError: "",
   },
 });

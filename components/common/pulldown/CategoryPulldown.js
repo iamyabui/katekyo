@@ -1,10 +1,23 @@
+import { useRecoilState } from "recoil";
+import { editUserState } from "../atoms";
+
 export default function Category() {
+  const [editUser, setEditUser] = useRecoilState(editUserState);
+
+  const handleCategory = (e) => {
+    setEditUser({ ...editUser, category: e.target.value });
+  }
+
   return (
+    <>
     <div className="inline-block relative w-32">
-      <select className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-        <option>大学受験</option>
-        <option>中学受験</option>
-        <option>高校受験</option>
+      <select onChange={handleCategory} value={editUser.category} className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+        <option value="">選択</option>
+        <option value="大学受験">大学受験</option>
+        <option value="中学受験">中学受験</option>
+        <option value="高校受験">高校受験</option>
+        <option value="中間期末試験対策">中間期末試験対策</option>
+        <option value="センター試験対策">センター試験対策</option>
       </select>
       <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
         <svg
@@ -16,5 +29,6 @@ export default function Category() {
         </svg>
       </div>
     </div>
+    </>
   );
 }

@@ -1,12 +1,26 @@
 import Header from "../components/common/header/header";
 import StudentLeftMenu from "../components/student/common/StudentLeftMenu";
-import Save from "../components/common/buttons/SaveButton";
-import { useRecoilState } from "recoil";
-import { editUserState } from "../components/common/atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
 import StudentProfileEditCard from "../components/student/profileEdit/StudentProfileEditCard";
+import { useEffect, useState } from "react";
+import Router from "next/router";
+import { studentUserState } from "../components/common/StudentAtoms";
+import { editUserState } from "../components/common/atoms";
+import SaveButton from "../components/student/profileEdit/SaveButton";
 
 export default function TopTeacherDetail() {
   const [editUser, setEditUser] = useRecoilState(editUserState);
+  const [isLoading, setIsLoading] = useState(true);
+  const loginUser = useRecoilValue(studentUserState);
+  const userId = loginUser.id;
+  const flag = loginUser.flag;
+
+  useEffect(() => {
+    // ログインユーザを確認し、ログインできてなかったらLoginページへ遷移する。
+    userId == "" && Router.push("/login");
+    flag !== "student" && Router.push("/");
+    setIsLoading(false);
+  }, [setIsLoading]);
 
   const handleText = (e) => {
     setEditUser({ ...editUser, text: e.target.value });
@@ -22,16 +36,18 @@ export default function TopTeacherDetail() {
 
   return (
     <>
-      <Header />
-      <div className="bg-top-bg h-screen w-screen">
-        <div className="flex max-w-5xl mx-auto py-10">
-          <StudentLeftMenu />
-          <StudentProfileEditCard />
-          <div className="flex-column min-w-[28rem] mx-10 text-gray-700">
-            <div className="mb-5">
-              <label>自己紹介</label>
-              <textarea
-                className="form-control
+      {(isLoading || userId) && (
+        <>
+          <Header />
+          <div className="bg-top-bg h-screen w-screen">
+            <div className="flex max-w-5xl mx-auto py-10">
+              <StudentLeftMenu />
+              <StudentProfileEditCard />
+              <div className="flex-column min-w-[28rem] mx-10 text-gray-700">
+                <div className="mb-5">
+                  <label>自己紹介</label>
+                  <textarea
+                    className="form-control
             block
             w-full
             h-[130px]
@@ -45,14 +61,14 @@ export default function TopTeacherDetail() {
             border border-solid border-gray-300
             rounded
             "
-                value={editUser.text}
-                onChange={handleText}
-              ></textarea>
-            </div>
-            <div>
-              <label>目標</label>
-              <textarea
-                className="form-control
+                    value={editUser.text}
+                    onChange={handleText}
+                  ></textarea>
+                </div>
+                <div>
+                  <label>目標</label>
+                  <textarea
+                    className="form-control
             block
             w-full
             my-3
@@ -65,14 +81,14 @@ export default function TopTeacherDetail() {
             border border-solid border-gray-300
             rounded
             "
-                value={editUser.goal}
-                onChange={handleGoal}
-              ></textarea>
-            </div>
-            <div>
-              <label>先生へのリクエスト</label>
-              <textarea
-                className="form-control
+                    value={editUser.goal}
+                    onChange={handleGoal}
+                  ></textarea>
+                </div>
+                <div>
+                  <label>先生へのリクエスト</label>
+                  <textarea
+                    className="form-control
             block
             w-full
             my-3
@@ -85,16 +101,19 @@ export default function TopTeacherDetail() {
             border border-solid border-gray-300
             rounded
             "
-                value={editUser.request}
-                onChange={handleRequest}
-              ></textarea>
-            </div>
-            <div className="mt-5 flex justify-end">
-              <Save />
+                    value={editUser.request}
+                    onChange={handleRequest}
+                  ></textarea>
+                </div>
+                <div className="mt-5 flex justify-end">
+                  <SaveButton />
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
+      ;
     </>
   );
 }

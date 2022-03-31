@@ -1,6 +1,10 @@
+import { useRecoilState } from "recoil";
+import { editUserState } from "../atoms";
 import Subject from "./SubjectButton";
 
 export default function SelectSubjects() {
+  const [editUser, setEditUser] = useRecoilState(editUserState);
+
   const subjects = [
     "#算数",
     "#国語",
@@ -19,10 +23,11 @@ export default function SelectSubjects() {
     "#古典",
     "#漢文",
   ];
+
   return (
     <>
       {subjects.map((subject, index) => (
-        <Subject subject={subject} key={index} />
+          <Subject subject={subject} key={index} />          
       ))}
     </>
   );

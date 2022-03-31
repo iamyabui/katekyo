@@ -2,8 +2,31 @@ import Head from "next/head";
 import Header from "../components/common/header/header";
 import TopLeftMenu from "../components/top/TopLeftMenu";
 import TopProfile from "../components/top/TopTeacherProfileCard";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { db } from "../src/firabase"
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [teachers, setTeachers] = useState([])
+
+  useEffect(() => {
+    const teacherRef = getDocs(collection(db, "TeacherUsers"));
+    console.log(teacherRef)
+    teacherRef.then(snapshot => {
+     const teachers = snapshot.docs.map((doc) => {
+        const id = doc.id;
+        const name = doc.data().name;
+        const title = doc.data().title;
+        const status = doc.data().status;
+         return { id, name, title, status }
+      })
+      setTeachers(teachers.filter(function(teacher) {
+        return teacher.status == true;
+      }))
+
+    })
+  }, [])
+
   return (
     <div>
       <Head>
@@ -16,10 +39,9 @@ export default function Home() {
         <div className="flex max-w-5xl mx-auto">
           <TopLeftMenu />
           <div className="flex flex-wrap pt-10 ml-3">
-            <TopProfile />
-            <TopProfile />
-            <TopProfile />
-            <TopProfile />
+            {teachers.map((teacher, index) => (
+              <TopProfile key={index} teacher={teacher} />
+            ))}
           </div>
         </div>
       </div>

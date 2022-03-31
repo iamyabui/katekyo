@@ -20,10 +20,12 @@ export default function Login() {
       ...user,
       email: "",
       password: "",
-      flag: "student",
+      flag: "",
       name: "",
       school: "",
       grade: "",
+      occupation: "",
+      occupationName: "",
     });
     setError({
       ...error,
@@ -31,6 +33,8 @@ export default function Login() {
       passwordError: "",
       nameError: "",
       gradeError: "",
+      occupationError: "",
+      occupationNameError: "",
     });
   };
 
