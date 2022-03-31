@@ -2,8 +2,8 @@ import Header from "../components/common/header/header";
 import MyStudentProfileDetailCard from "../components/teacher/myStudentDetail/MyStudentProfileDetailCard"
 import TeacherLeftMenu from "../components/teacher/common/TeacherLeftMenu";
 import ShowProfileContent from "../components/teacher/myStudentDetail/ShowProfileContentBox";
-// import MyStudentProfile from "../components/teacher/myStudentDetail/MyStudentProfileCard";
 import { useRouter } from "next/router";
+import Router from "next/router";
 import { useEffect, useState } from "react";
 import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { db } from "../src/firabase";
@@ -60,7 +60,11 @@ export default function TopTeacherDetail() {
         <div className="flex max-w-6xl mx-auto py-10">
           <TeacherLeftMenu />
           <div className="max-w-3xl mx-auto">
-            <p className="text-gray-700 mb-5 underline">生徒一覧に戻る</p>
+            <p 
+            onClick={() => Router.push("/myStudents")}
+            className="text-gray-700 mb-5 underline cursor-pointer">
+              生徒一覧に戻る
+            </p>
             <div className="flex">
               <MyStudentProfileDetailCard student={student}/>
               <ShowProfileContent courses={courses} student={student} />
