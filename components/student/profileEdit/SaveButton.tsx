@@ -3,13 +3,35 @@ import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../src/firabase";
 import Router from "next/router";
 import { studentUserState } from "../../common/StudentAtoms";
-import { editUserState } from "../../common/atoms";
+import { editUserState, errorState } from "../../common/atoms";
 
 export default function SaveButton() {
   const [student, setStudent] = useRecoilState(studentUserState);
   const [editUser, setEditUser] = useRecoilState(editUserState);
+  const [error, setError] = useRecoilState(errorState);
 
   async function handleSave() {
+    if(editUser.grade == "" && editUser.name == "") {
+      return setError({...error, 
+        nameError: "名前を入力してください。", 
+        gradeError: "学年を選択してください。"
+      })
+    }
+
+    if(editUser.grade == "") {
+      return setError({...error, 
+        nameError:"", 
+        gradeError: "学年を選択してください。"
+      })
+    }
+
+    if(editUser.name == "") {
+      return setError({...error, 
+        nameError: "名前を入力してください。",
+        gradeError:""
+      })
+    }
+
     await setStudent({ ...student, 
         name: editUser.name,
         school: editUser.school,
@@ -28,6 +50,9 @@ export default function SaveButton() {
         request: editUser.request,
       });
       await Router.push("/myselfStudentDetail");
+      if(editUser.grade !== "" && editUser.name !== "") {
+        setError({...error, nameError:"", gradeError:""})
+      }
     } catch (error) {
       alert("編集内容が保存できませんでした。");
     }
