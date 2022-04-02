@@ -12,7 +12,7 @@ import {
   query,
   where,
 } from 'firebase/firestore';
-import { Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
+import { Table, Tbody, Th, Thead, Tr } from '@chakra-ui/react';
 import { studentUserState } from '../components/common/StudentAtoms';
 import { useRecoilValue } from 'recoil';
 
@@ -109,7 +109,6 @@ export default function TopTeacherDetail() {
         <div className='flex max-w-4xl m-auto py-10'>
           <TopTeacherProfileDetailCard teacher={teacher} />
           <div className='flex-column mx-10 px-10 w-[40rem] text-gray-700'>
-            {/* <DetailBox teacher={teacher} /> */}
 
             <div className='mb-5 flex-column p-5'>
               <p className='font-bold'>{teacher.title}</p>
@@ -135,10 +134,12 @@ export default function TopTeacherDetail() {
                       <Th>{value.name}</Th>
                       <Th>{value.price}円</Th>
                       <Th>
-                      {value.status == "undefined" ? (
-                        <Apply key={index} courseName={value.name} courseId={value.courseId} coursePrice={value.price} teacherId={id} setCourseList={setCourseList} />
-                      ) : (
-                        <p>{value.status}</p>
+                      {student.id !== "" && (
+                        value.status == "undefined" ? (
+                          <Apply key={index} courseName={value.name} courseId={value.courseId} coursePrice={value.price} teacherId={id} setCourseList={setCourseList} />
+                        ) : (
+                          <p>{value.status}</p>
+                        )
                       )}
                       </Th>
                     </Tr>
