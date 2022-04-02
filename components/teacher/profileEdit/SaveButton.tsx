@@ -3,13 +3,28 @@ import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../src/firabase";
 import Router from "next/router";
 import { teacherUserState } from "../../common/TeacherAtoms";
-import { editUserState } from "../../common/atoms";
+import { editUserState, errorState } from "../../common/atoms";
 
 export default function Save() {
   const [teacher, setTeacher] = useRecoilState(teacherUserState);
   const [editUser, setEditUser] = useRecoilState(editUserState);
+  const [error, setError] = useRecoilState(errorState);
 
   async function handleSave() {
+    if(editUser.name == "") {
+      return setError({...error, 
+        nameError: "名前を入力してください。",
+      })
+    }
+
+    console.log(editUser)
+
+    if(editUser.status == true) {
+      if( editUser.category == "" || editUser.subjects.length == 0 || editUser.title == "" || (editUser.consult.chat==false && editUser.consult.video==false) || editUser.detail == "") {
+      return alert("表示ステータスをONにする場合は、全てのフォームの入力を完了させてください。")
+      }
+    }
+
     try {
       await setTeacher({...teacher,
         name: editUser.name,
@@ -36,6 +51,9 @@ export default function Save() {
         consult: editUser.consult,
       });
       await Router.push("/myselfTeacherDetail");
+      if(editUser.name !== "") {
+        setError({...error, nameError:""})
+      }
     } catch (error) {
       alert("編集内容が保存できませんでした。");
     }

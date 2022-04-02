@@ -26,12 +26,13 @@ export default function DetailBox() {
 
     return(
         <div className="mx-10 w-[40rem] text-gray-700">
-        <p className="mb-5 ml-2">自己紹介</p>
+        <p className="whitespace-pre-wrap text-base font-bold mb-5">{teacher.title}</p>
+        <p className="mb-5 ml-2 text-sm bold">自己紹介</p>
         <div className="mb-5 flex-column bg-white p-5 rounded ">
           <p className="whitespace-pre-wrap text-sm">{teacher.detail}</p>
         </div>
   
-        <p className="mb-5 ml-2">コース内容</p>
+        <p className="mb-5 ml-2 text-sm bold">コース内容</p>
         <div className="mb-5 flex-column bg-white p-5 rounded ">
           <ul>
           {courseList.map((value, index) => (

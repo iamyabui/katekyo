@@ -24,7 +24,6 @@ export default function MyselfTeacherDetail() {
     getDoc(teacherRef).then((snapshot) => {
       if (snapshot.data()) {
         const getUserInfo = snapshot.data();
-        console.log(getUserInfo)
         setTeacher({...teacher,
           name: getUserInfo.name,
           status: getUserInfo.status,
