@@ -1,6 +1,5 @@
 import Header from '../components/common/header/header';
 import TopTeacherProfileDetailCard from '../components/top/teacherDetail/TopTeacherProfileDetailCard';
-// import DetailBox from "../components/top/teacherDetail/DetailBox";
 import Apply from '../components/top/teacherDetail/ApplyButton';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -13,7 +12,7 @@ import {
   query,
   where,
 } from 'firebase/firestore';
-import { Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
+import { Table, Tbody, Th, Thead, Tr } from '@chakra-ui/react';
 import { studentUserState } from '../components/common/StudentAtoms';
 import { useRecoilValue } from 'recoil';
 
@@ -23,97 +22,93 @@ export default function TopTeacherDetail() {
   const [teacher, setTeacher] = useState({});
   const [courseList, setCourseList] = useState([]);
   const student = useRecoilValue(studentUserState);
-  const [coursesStatus, setCoursesStatus] = useState([]);
+  const [loginStudentStatus, setLoginStudentStatus] = useState([]);
 
+  // ①コース情報を各コースオブジェクト毎に配列で取得。
   useEffect(() => {
     (async () => {
       const teacherRef = doc(db, 'TeacherUsers', id);
 
-      const teacher = await getDoc(teacherRef).then((snapshot) => {
-        if (snapshot.data()) {
-          const user = snapshot.data();
-          const teacherInfo = {
-            id: snapshot.id,
-            name: user.name,
-            photo_url: user.photo_url,
-            occupation: user.occupation,
-            occupationName: user.occupationName,
-            category: user.category,
-            subjects: user.subjects,
-            title: user.title,
-            detail: user.detail,
-            consult: user.consult,
-          };
-          setTeacher(teacherInfo);
-          return { user, teacherInfo };
-        }
+      const teacherInfo = await getDoc(teacherRef).then((snapshot) => {
+        const user = snapshot.data();
+        return {
+          id: snapshot.id,
+          name: user.name,
+          photo_url: user.photo_url,
+          occupation: user.occupation,
+          occupationName: user.occupationName,
+          category: user.category,
+          subjects: user.subjects,
+          title: user.title,
+          detail: user.detail,
+          consult: user.consult,
+        };
       });
-
-      console.log('teacher', teacher);
+      setTeacher(teacherInfo);
 
       const coursesRef = collection(db, 'Courses');
       const myCoursesRef = query(coursesRef, where('teacherID', '==', id));
 
       const coursesInfo = await getDocs(myCoursesRef).then((snapshot) => {
-        const courses = snapshot.docs.map((doc) => {
+        const coursesArray = [];
+        snapshot.docs.forEach((doc) => {
           const id = doc.id;
           const name = doc.data().name;
           const price = doc.data().price;
-          return { id: id, name: name, price: price };
+          coursesArray.push({ id, name, price });
         });
-        return courses;
+        return coursesArray;
       });
+
       setCourseList(coursesInfo);
-
-      console.log('corces', coursesInfo);
-
-      // 該当courseIDを取得できたら、またCoursesコレクションから該当courseID＞生徒コレクション内情報を取得
-      getDocs(myCoursesRef).then((snapshot) => {
-        snapshot.docs.map((courseDoc) => {
-          // ログイン先生ユーザ担当コースを受講した生徒を全て取得
-          const courseId = courseDoc.id;
-          const allStudentsRef = collection(
-            db,
-            'Courses',
-            courseId,
-            'students'
-          );
-          console.log(allStudentsRef);
-          // const studentRef = (async function() {
-          //   await getDoc(doc(db, "Courses", courseId, "students", student.id));
-          // })();
-          // console.log(studentRef.data());
-
-          // 担当コース受講生徒の中から、指定した生徒が受講したもしくは受講済のコース内容と生徒の情報を取得
-          getDocs(allStudentsRef).then((snapshot) => {
-            console.log(snapshot.docs);
-            const courses = snapshot.docs
-              .map((studentDoc) => {
-                console.log(studentDoc.data());
-                const id = studentDoc.id;
-                const studentRef = studentDoc.data();
-                // if (id == student.id) {
-                return { ...studentRef, courseId };
-                // }
-              })
-              .filter(Boolean);
-            console.log(courses);
-            setCoursesStatus(courses);
-          });
-        });
-      });
     })();
   }, []);
 
+  // ②各コースについて、コース名、値段、コースID、ログイン生徒ユーザーの受講状況をオブジェクトで取得。
+  useEffect(() => {
+    (async() => {
+    const courseListWithStudentInfo =  await Promise.all(courseList.map(async (course) => {
+
+      // 先生idで絞ったコース、１コースに対しての受講生徒情報を取得
+      const allStudentsRef = collection(db, 'Courses', course.id, 'students');
+      const q = query(allStudentsRef);
+      const courseStudents = await getDocs(q);
+
+      // courseWithStudentsArray：
+      // 上記で取得した受講生徒一人ずつの情報(複数）と、コース情報（１）をオブジェクトとして取得
+      // 受講生徒分作成し、配列に格納している
+      const courseWithStudentsArray = courseStudents.docs.map((doc) => {
+        const studentId = doc.id;
+        return { ...doc.data(), studentId }
+      });
+
+      // ログイン生徒ユーザーのオブジェクトを取得。
+      const loginStudentRef = courseWithStudentsArray.find(function (value) {
+          return value.studentId == student.id
+      })
+
+      if (loginStudentRef == undefined) {
+        return { courseId: course.id, name: course.name, price: course.price, status: "undefined" }
+      } else {
+        return { courseId: course.id, name: course.name, price: course.price, status: loginStudentRef.status }
+       }
+
+    }));
+
+    console.log('courseListWithStudentInfo', courseListWithStudentInfo);
+    setLoginStudentStatus(courseListWithStudentInfo);
+    })();
+  }, [courseList]);
+
+  if(loginStudentStatus.length < 0) return
+
   return (
     <>
-      {/* {console.log(coursesStatus)} */}
       <Header />
       <div className='bg-top-bg h-screen'>
         <div className='flex max-w-4xl m-auto py-10'>
           <TopTeacherProfileDetailCard teacher={teacher} />
           <div className='flex-column mx-10 px-10 w-[40rem] text-gray-700'>
-            {/* <DetailBox teacher={teacher} /> */}
 
             <div className='mb-5 flex-column p-5'>
               <p className='font-bold'>{teacher.title}</p>
@@ -134,14 +129,18 @@ export default function TopTeacherDetail() {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {courseList.map((value, index) => (
+                  {loginStudentStatus.map((value, index) => (
                     <Tr key={index}>
                       <Th>{value.name}</Th>
                       <Th>{value.price}円</Th>
                       <Th>
-                        {student.id !== '' && (
-                          <Apply courseName={value.name} courseId={value.id} />
-                        )}
+                      {student.id !== "" && (
+                        value.status == "undefined" ? (
+                          <Apply key={index} courseName={value.name} courseId={value.courseId} coursePrice={value.price} teacherId={id} setCourseList={setCourseList} />
+                        ) : (
+                          <p>{value.status}</p>
+                        )
+                      )}
                       </Th>
                     </Tr>
                   ))}
