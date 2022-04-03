@@ -2,7 +2,8 @@ import Approved from "../../common/buttons/StatusButton";
 import IconBig from "../../common/icon/BigIcon";
 
 export default function MyStudentProfile(props) {
-  const { student } = props; 
+  const { student } = props;
+  console.log(student)
   const month = student.apply_date.toDate().getMonth()+1;
   const date = student.apply_date.toDate().getDate();
   const apply_date = `${month}月${date}日`;

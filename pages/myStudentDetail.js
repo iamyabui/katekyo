@@ -22,10 +22,13 @@ export default function TopTeacherDetail() {
     const StudentRef = getDoc(doc(db, "StudentUsers", studentId))
     StudentRef.then(snapshot => {
       if (snapshot.data()) {
+        const studentId = snapshot.id;
         const student = snapshot.data();
-        setStudent(student);
+        setStudent({studentId, student});
     }})
+  },[])
 
+  useEffect(() => {
     // 該当ログイン先生ユーザーIDを持つcourseIDを全て取得
     const coursesRef = collection(db, "Courses")
     const myCourses = query(coursesRef, where("teacherID", "==", teacher.id));
@@ -44,14 +47,14 @@ export default function TopTeacherDetail() {
                 const studentRef = studentDoc.data()
                 const courseRef = courseDoc.data();
                 if (id == studentId) {
-                  return {...studentRef, courseRef};
+                  return {...studentRef, courseRef, courseId};
                 }
               }).filter(Boolean);
               setCourses(courses);
             })
           })
     })
-  },[])
+  },[student])
 
   return (
     <>
@@ -67,7 +70,7 @@ export default function TopTeacherDetail() {
             </p>
             <div className="flex">
               <MyStudentProfileDetailCard student={student}/>
-              <ShowProfileContent courses={courses} student={student} />
+              <ShowProfileContent courses={courses} student={student} setStudent={setStudent} />
             </div>
           </div>
         </div>
