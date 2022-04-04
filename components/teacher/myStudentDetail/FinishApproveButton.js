@@ -1,15 +1,15 @@
 import { doc, getDoc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { db } from "../../../src/firabase";
 
-export default function Approve(props) {
-  const { course, student, setStudent } = props;
+export default function FinishApprove(props) {
+  const { course, setStudent } = props;
 
   const handleApprove = () => {
-    const CourseRef = doc(db, "Courses", course.courseId, "students", student.studentId);
-    updateDoc(CourseRef, { status: "受講中", start_date: serverTimestamp()})
+    const CourseRef = doc(db, "Courses", course.courseId, "students", course.studentId);
+    updateDoc(CourseRef, { status: "終了", finish_date: serverTimestamp()})
 
     // 生徒情報を取得
-    const StudentRef = getDoc(doc(db, "StudentUsers", student.studentId))
+    const StudentRef = getDoc(doc(db, "StudentUsers", course.studentId))
     StudentRef.then(snapshot => {
       if (snapshot.data()) {
         const studentId = snapshot.id;
