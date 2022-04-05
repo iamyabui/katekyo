@@ -7,19 +7,19 @@ export default function ProfileContentBox() {
 
   return (
     <div className="mx-10 w-[40rem] text-gray-700">
-      <p className="mb-5 ml-2">自己紹介</p>
+      <p className="mb-5 ml-2 font-bold text-sm">自己紹介</p>
       <div className="mb-5 flex-column bg-white p-8 rounded ">
-        <p className="whitespace-pre-wrap">{student.text}</p>
+        <p className="whitespace-pre-wrap text-sm">{student.text}</p>
       </div>
 
-      <p className="mb-5 ml-2">目標</p>
+      <p className="mb-5 ml-2 font-bold text-sm">目標</p>
       <div className="mb-5 flex-column bg-white p-8 rounded ">
-        <p className="whitespace-pre-wrap">{student.goal}</p>
+        <p className="whitespace-pre-wrap text-sm">{student.goal}</p>
       </div>
 
-      <p className="mb-5 ml-2">先生へのリクエスト</p>
+      <p className="mb-5 ml-2 font-bold text-sm">先生へのリクエスト</p>
       <div className="mb-5 flex-column bg-white p-8 rounded ">
-        <p className="whitespace-pre-wrap">{student.request}</p>
+        <p className="whitespace-pre-wrap text-sm">{student.request}</p>
       </div>
 
       <div className="mt-10 flex justify-end">

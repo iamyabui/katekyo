@@ -41,7 +41,7 @@ export default function StudentChatRoom() {
           <StudentLeftMenu />
           <div className="mx-auto">
           {contactList.map((teacher, index) => (
-              <div onClick={() => handleMoveToChatroom(teacher.id)} key={index}>
+              <div onClick={() => handleMoveToChatroom(teacher.id)} key={index} className="text-sm my-2">
               <ChatNameList teacher={teacher}/>
               </div>
           ))}

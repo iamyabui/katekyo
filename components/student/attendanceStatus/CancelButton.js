@@ -33,7 +33,7 @@ export default function Cancel(props) {
   return (
     <>
       <button 
-      className="bg-origin-gray hover:bg-origin-deepGray text-white px-2 py-1 rounded mr-5"
+      className="bg-origin-gray hover:bg-origin-deepGray text-white px-2 py-1 rounded my-5"
       onClick={handleCancelApply}
       >
         <p className="text-sm">申請をキャンセル</p>

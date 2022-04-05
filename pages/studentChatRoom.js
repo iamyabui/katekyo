@@ -36,14 +36,14 @@ export default function StudentChatRoom() {
     ChatsRef.then(snapshot => {
         const chats = snapshot.docs.map((doc) => {
             const id = doc.id;
-            const contact1 = doc.data().contact1;
-            const contact2 = doc.data().contact2;
-            return { id: id, contact1: contact1, contact2: contact2 };
+            const contact1 = doc.data().sender_user;
+            const contact2 = doc.data().receive_user;
+            return { id: id, sender_user: contact1, receive_user: contact2 };
         })
         
         // contact1とcontact2に、先生IDと生徒DIが該当するChatを検索して、そのChatIDを取得
         const chat = chats.map((chat) => {
-          if((chat.contact1 == studentId && chat.contact2 == teacherId) || (chat.contact1 == teacherId && chat.contact2 == studentId)) {
+          if((chat.sender_user == studentId && chat.receive_user == teacherId) || (chat.sender_user == teacherId && chat.receive_user == studentId)) {
             setChatId(chat.id);
             return chat.id;
           }
@@ -73,7 +73,7 @@ export default function StudentChatRoom() {
     <>
       <Header />
       <div className="bg-top-bg h-screen w-screen text-gray-700">
-        <div className="flex max-w-6xl mx-auto py-10 h-screen">
+        <div className="flex max-w-5xl mx-auto py-10 h-screen">
           <StudentLeftMenu />
           <div className="mx-auto">
             <div>

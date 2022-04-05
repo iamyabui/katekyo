@@ -15,27 +15,27 @@ export default function Finish(props) {
     getDoc(CourseRef).then((snapshot) => {
       console.log(snapshot.data());
     })
-    // updateDoc(CourseRef, { status: "終了申請中", finish_date: serverTimestamp()})
+    updateDoc(CourseRef, { status: "終了申請中", finish_date: serverTimestamp()})
 
     // 生徒情報を取得
-    // (async () => {
-    //   const coursesRef = collection(db, "Courses")
-    //   const coursesInfo = await getDocs(coursesRef).then((snapshot) => {
-    //         const coursesArray = [];
-    //         snapshot.docs.forEach((courseDoc) => {              
-    //           const courseId = courseDoc.id;
-    //           const course = courseDoc.data();
-    //           coursesArray.push({ courseId, course })
-    //         })
-    //         return coursesArray;
-    //   })
-    //   setCourses(coursesInfo);
-    // })();
+    (async () => {
+      const coursesRef = collection(db, "Courses")
+      const coursesInfo = await getDocs(coursesRef).then((snapshot) => {
+            const coursesArray = [];
+            snapshot.docs.forEach((courseDoc) => {              
+              const courseId = courseDoc.id;
+              const course = courseDoc.data();
+              coursesArray.push({ courseId, course })
+            })
+            return coursesArray;
+      })
+      setCourses(coursesInfo);
+    })();
   }
 
   return (
     <>
-      <button className="bg-origin-gray hover:bg-origin-deepGray text-white px-2 py-1 rounded mr-5">
+      <button className="bg-origin-gray hover:bg-origin-deepGray text-white px-2 py-1 rounded my-5">
       <p 
       className="text-sm" onClick={handleFinish}>終了</p>
       </button>
