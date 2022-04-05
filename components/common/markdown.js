@@ -20,7 +20,6 @@ function Markdown() {
 
   return (
     <div className="mt-4">
-      {console.log(editUser.detail)}
       <MDEditor value={detail} onChange={handelDetail} />
     </div>
   );
