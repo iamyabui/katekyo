@@ -37,11 +37,18 @@ export default function Send(props) {
 
   return (  
     <>
-      <button 
-      onClick={() => handleSendMessage()}
-      className="bg-origin-blue hover:bg-origin-deepBlue text-white px-4 py-1 rounded">
-        送信
-      </button>
+     { message !== "" ? (
+        <button 
+        onClick={() => handleSendMessage()}
+        className="bg-origin-blue hover:bg-origin-deepBlue text-white px-4 py-1 rounded">
+          送信
+        </button>
+      ) : (
+        <button 
+        className="bg-gray-300 text-white px-4 py-1 rounded">
+          送信
+        </button>
+      )}
     </>
   );
 }

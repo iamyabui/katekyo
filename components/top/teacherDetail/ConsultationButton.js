@@ -14,7 +14,7 @@ export default function Consultation(props) {
   const student = useRecoilValue(studentUserState);
   const login_teacher = useRecoilValue(teacherUserState);
 
-  const handleMessageSend = () => {
+  const handleMessageSend = async() => {
     // 先生と生徒両方に対して連絡先リストに追加
     const contactsStudentCollectionRef = doc(db, "StudentUsers", student.id, "contacts", teacher.id);
     const contactsTeacherCollectionRef = doc(db, "TeacherUsers", teacher.id, "contacts", student.id);
@@ -27,11 +27,31 @@ export default function Consultation(props) {
       name: student.name,
     });
 
-    // 先生と生徒のチャットリストに両ユーザを追加。また、メッセージを追加できる。
-    addDoc(collection(db, "Chats"), {
+    // Chatsコレクション内sender_userとreceive_userに、生徒と先生が既に登録されていないかを確認する。
+    // （既にあるのに、新しいドキュメントが作成するのを防ぐため）
+    const ChatsRef = await collection(db, "Chats")
+    const registrationCheck = await getDocs(ChatsRef).then(snapshot => {
+      const resultArray = snapshot.docs.map((chat) => {
+        const contact1 = chat.data().sender_user;
+        const contact2 = chat.data().receive_user;
+
+        if((contact1 == student.id && contact2 == teacher.id) || (contact1 == teacher.id && contact2 == student.id)) {
+          return true;
+        }
+      })
+
+      // もし既に登録されている場合は、trueを返し、登録されていない場合はundefinedが返される。
+      const result = resultArray.find(value => {return value == true})
+      return result;
+    })
+
+    // 登録有無のチェックの結果、登録されていない場合は、新しいドキュメントが作成されてsender_userとreceive_userが登録される。
+    await registrationCheck !== true && (
+      addDoc(collection(db, "Chats"), {
       sender_user: student.id, 
       receive_user: teacher.id,
-    });
+    })
+    )
 
     Router.push({
       pathname: "/studentChatRoom",
