@@ -6,12 +6,10 @@ import FinishCancel from "./FinishCancelButton";
 export default function ShowProfileContent(props) {
   const { courses, student, setStudent } = props;
   console.log(courses, student)
-  const apply_status = courses.filter(course => course.studentInfo.status == "申請中");
-  const pending_status = courses.filter(course => course.studentInfo.status == "受講中");
-  const finishApply_status = courses.filter(course => course.studentInfo.status == "終了申請中");
-  const finish_status = courses.filter(course => course.studentInfo.status == "終了");
-  console.log(apply_status)
-
+  const apply_status = courses.filter(course => course.studentInfo?.status == "申請中");
+  const pending_status = courses.filter(course => course.studentInfo?.status == "受講中");
+  const finishApply_status = courses.filter(course => course.studentInfo?.status == "終了申請中");
+  const finish_status = courses.filter(course => course.studentInfo?.status == "終了");
 
   return (
     <div className="flex-column mx-10 w-[40rem] bg-white p-8 rounded text-gray-700">
@@ -55,7 +53,7 @@ export default function ShowProfileContent(props) {
                 <Tr key={index}>
                 <Td><p className="text-sm">{course.courseName}</p></Td>
                 <Td><p className="text-sm">{course.coursePrice}円</p></Td>
-                <Td>{`${course.studentInfo.start_date.toDate().getMonth()+1}月${course.studentInfo.start_date.toDate().getDate()}日`}</Td>
+                <Td><p className="text-sm">{`${course.studentInfo.start_date?.toDate().getMonth()+1}月${course.studentInfo.start_date.toDate().getDate()}日`}</p></Td>
                 <Td></Td>
                 </Tr>
               ))}
@@ -109,8 +107,8 @@ export default function ShowProfileContent(props) {
                 <Tr key={index}>
                 <Td><p className="text-sm">{course.courseName}</p></Td>
                 <Td><p className="text-sm">{course.coursePrice}円</p></Td>
-                <Td>{`${course.studentInfo.start_date.toDate().getMonth()+1}月${course.studentInfo.start_date.toDate().getDate()}日`}</Td>
-                <Td>{`${course.studentInfo.finish_date.toDate().getMonth()+1}月${course.studentInfo.finish_date.toDate().getDate()}日`}</Td>
+                <Td><p className="text-sm">{`${course.studentInfo.start_date.toDate().getMonth()+1}月${course.studentInfo.start_date.toDate().getDate()}日`}</p></Td>
+                <Td><p className="text-sm">{`${course.studentInfo.finish_date.toDate().getMonth()+1}月${course.studentInfo.finish_date.toDate().getDate()}日`}</p></Td>
                 </Tr>
               ))}
             </Tbody>

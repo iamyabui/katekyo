@@ -12,7 +12,7 @@ import {
   query,
   where,
 } from 'firebase/firestore';
-import { Table, Tbody, Th, Thead, Tr } from '@chakra-ui/react';
+import { Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { studentUserState } from '../components/common/StudentAtoms';
 import { useRecoilValue } from 'recoil';
 
@@ -87,7 +87,7 @@ export default function TopTeacherDetail() {
           return value.studentId == student.id
       })
 
-      if (loginStudentRef == undefined) {
+      if (loginStudentRef == undefined || loginStudentRef.status == "終了") {
         return { courseId: course.id, name: course.name, price: course.price, status: "undefined" }
       } else {
         return { courseId: course.id, name: course.name, price: course.price, status: loginStudentRef.status }
@@ -109,6 +109,7 @@ export default function TopTeacherDetail() {
         <div className='flex max-w-4xl m-auto py-10'>
           <TopTeacherProfileDetailCard teacher={teacher} />
           <div className='flex-column mx-10 px-10 w-[40rem] text-gray-700'>
+            {/* <DetailBox teacher={teacher} /> */}
 
             <div className='mb-5 flex-column p-5'>
               <p className='font-bold'>{teacher.title}</p>

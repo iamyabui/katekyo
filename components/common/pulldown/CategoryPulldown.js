@@ -1,5 +1,5 @@
-import { useRecoilState } from "recoil";
-import { editUserState } from "../atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { editUserState, errorState } from "../atoms";
 
 export default function Category() {
   const [editUser, setEditUser] = useRecoilState(editUserState);

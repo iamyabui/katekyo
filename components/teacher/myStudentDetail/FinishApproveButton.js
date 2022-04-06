@@ -6,7 +6,7 @@ export default function FinishApprove(props) {
 
   const handleApprove = () => {
     const CourseRef = doc(db, "Courses", course.courseId, "students", course.studentId);
-    updateDoc(CourseRef, { status: "終了", finish_date: serverTimestamp()})
+    updateDoc(CourseRef, { status: "終了" })
 
     // 生徒情報を取得
     const StudentRef = getDoc(doc(db, "StudentUsers", course.studentId))

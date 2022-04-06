@@ -133,12 +133,12 @@ export default function CourseEditForm() {
     return (
         <>
         <label className="font-bold">コースと料金</label>
-            <div>
+            <div className="text-sm">
                 <div className="flex items-center">
                 <div>
                     <input
                         onChange={(e) => (setCourse(e.target.value))}
-                        className="w-80 my-2 px-2 py-1 border border-solid border-gray-300 rounded"
+                        className="w-[250px] my-2 px-2 py-1 border border-solid border-gray-300 rounded"
                         placeholder="コース名"
                         value={course}
                     ></input>
@@ -147,7 +147,7 @@ export default function CourseEditForm() {
                     <input
                         type="number"
                         onChange={(e) => (setPrice(e.target.value))}
-                        className="w-20 my-2 ml-2 mr-1 px-2 py-1 border border-solid border-gray-300 rounded"
+                        className="w-16 my-2 ml-2 mr-1 px-2 py-1 border border-solid border-gray-300 rounded"
                         placeholder="料金"
                         value={price}
                     ></input>
@@ -155,8 +155,8 @@ export default function CourseEditForm() {
                 </div>
                 <button 
                     onClick={handleAddCourse}
-                    className="flex items-center h-8 bg-card-purple hover:bg-origin-deepPurple px-3 py-1 ml-2 rounded">
-                    { isEdit ? "保存" : "追加" }
+                    className="flex items-center h-8 w-[50px] bg-card-purple hover:bg-origin-deepPurple px-1 py-1 ml-2 rounded">
+                    <p className="mx-auto">{ isEdit ? "保存" : "追加" }</p>
                 </button>
                 </div>
                 <div>

@@ -55,7 +55,6 @@ export default function Apply(props) {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalCloseButton />
           <ModalBody mt={5}>
             {courseName}のコースを申請しますか？
           </ModalBody>

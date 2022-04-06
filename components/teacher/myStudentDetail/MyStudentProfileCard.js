@@ -1,20 +1,30 @@
-import Approved from "../../common/buttons/StatusButton";
+import Router from "next/router";
+import Status from "../../common/buttons/StatusButton";
 import IconBig from "../../common/icon/BigIcon";
+import IconSmall from "../../common/icon/SmallIcon";
 
 export default function MyStudentProfile(props) {
-  const { student } = props;
-  console.log(student)
-  const month = student.apply_date.toDate().getMonth()+1;
-  const date = student.apply_date.toDate().getDate();
-  const apply_date = `${month}月${date}日`;
+  const { course } = props;
+  const month = course.studentRef.start_date.toDate().getMonth()+1;
+  const date = course.studentRef.start_date.toDate().getDate();
+  const start_date = `${month}月${date}日`;
 
-  console.log(student.apply_date.toDate().getDate());
+  const handleMoveToStudentDetail = (id) => {
+    Router.push({
+      pathname: "/myStudentDetail",
+      query: { id: id }
+    });
+  }
+
   return (
-    <div className="mx-2 w-48 h-64 py-4 bg-card-blue rounded-md flex flex-col justify-center items-center text-gray-700">
+    <div 
+    className="mx-2 w-40 h-56 py-4 bg-card-blue rounded-md flex flex-col justify-center items-center text-gray-700"
+    onClick={() =>handleMoveToStudentDetail(course.studentId)}
+    >
       <IconBig />
-      <p className="mt-3 mb-3">{student.name}</p>
-      <Approved />
-      <p className="mt-2 mb-1 text-sm">{apply_date}に申請</p>
+      <p className="mt-3 mb-3">{course.studentRef.name}</p>
+      <Status />
+      <p className="mt-2 mb-1 text-sm">{start_date}から受講</p>
     </div>
   );
 }
