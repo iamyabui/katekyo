@@ -8,14 +8,21 @@ export default function ChatNameList(props) {
       <div className="flex items-center py-2 mb-2">
         <div className="flex pl-4 mr-5 items-center">
           <IconSmall />
-          <p className="ml-4">{teacher.name}</p>
+          <p className="ml-4">{teacher.teacherName}</p>
         </div>
-        <Status />
+        {/* <Status /> */}
       </div>
 
-      <p className="px-5">
-        
-      </p>
+      {teacher.latestMessage ? (
+        <p className="px-5">
+          {teacher.latestMessage.message}
+        </p>
+      ) : (
+        <p className="px-5">
+          メッセージはまだありません。
+        </p>
+      )
+      }
     </div>
   );
 }

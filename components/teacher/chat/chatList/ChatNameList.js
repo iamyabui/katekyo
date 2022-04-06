@@ -13,9 +13,16 @@ export default function ChatNameList(props) {
         {/* <Status /> */}
       </div>
 
-      <p className="px-5">
-        {student.latestMessage.message}
-      </p>
+      {student.latestMessage ? (
+        <p className="px-5">
+          {student.latestMessage.message}
+        </p>
+      ) : (
+        <p className="px-5">
+          メッセージはまだありません。
+        </p>
+      )
+      }
     </div>
   );
 }
