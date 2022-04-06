@@ -88,9 +88,9 @@ export default function MyStudents() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    {applyStatus.map((course) => (
-                    <>
+                  
+                    {applyStatus.map((course, index) => (
+                    <tr key={index}>
                     <td className="py-2">{course.name}</td>
                     <td
                     onClick={() => handleMoveToStudentDetail(course.studentId)}
@@ -99,12 +99,12 @@ export default function MyStudents() {
                     <td>{`${course.studentRef.apply_date.toDate().getMonth()+1}月${course.studentRef.apply_date.toDate().getDate()}日`}</td>
                     <td><ApplyStatus /></td>
                     <td><SendMessageButton studentName={course.studentRef.name} studentId={course.studentId} /></td>
-                    </>
+                    </tr>
                     ))}
-                  </tr>
-                  <tr>
-                    {finishApplyStatus.map((course) => (
-                    <>
+                  
+                  
+                    {finishApplyStatus.map((course, index) => (
+                    <tr key={index}>
                     <td className="py-2">{course.name}</td>
                     <td 
                     onClick={() => handleMoveToStudentDetail(course.studentId)}
@@ -112,9 +112,10 @@ export default function MyStudents() {
                     >{course.studentRef.name}</td>
                     <td>{`${course.studentRef.finish_date.toDate().getMonth()+1}月${course.studentRef.finish_date.toDate().getDate()}日`}</td>
                     <td><FinishApplyStatus /></td>
-                    </>
+                    <td><SendMessageButton studentName={course.studentRef.name} studentId={course.studentId} /></td>
+                    </tr>
                     ))}
-                  </tr>
+                  
                 </tbody>
               </table>
             </div>

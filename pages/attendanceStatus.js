@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { db } from "../src/firabase";
 import { studentUserState } from "../components/common/StudentAtoms";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import Cancel from "../components/student/attendanceStatus/CancelButton";
 import Finish from "../components/student/attendanceStatus/FinishButton";
@@ -130,7 +130,7 @@ export default function AttendanceStatus() {
                     <Finish course={course} setCourses={setCourses} />
                     )}
                     {course.studentInfo.status == "終了申請中" && (
-                    <p>終了申請中</p>
+                    <p className="text-sm text-origin-pink">終了申請中</p>
                     )}
                   </div>
                 </div>
@@ -161,8 +161,8 @@ export default function AttendanceStatus() {
                     <Tr key={index} className="text-sm">
                     <Td><p>{course.courseInfo.name}</p></Td>
                     <Td><p>{course.courseInfo.price}</p></Td>
-                    <Td px={1}>{`${course.studentInfo.start_date.toDate().getMonth()+1}月${course.studentInfo.start_date.toDate().getDate()}日`}</Td>
-                    <Td px={1}>{`${course.studentInfo.finish_date.toDate().getMonth()+1}月${course.studentInfo.finish_date.toDate().getDate()}日`}</Td>
+                    <Td>{`${course.studentInfo.start_date.toDate().getMonth()+1}月${course.studentInfo.start_date.toDate().getDate()}日`}</Td>
+                    <Td>{`${course.studentInfo.finish_date.toDate().getMonth()+1}月${course.studentInfo.finish_date.toDate().getDate()}日`}</Td>
                     </Tr>
                   ))}
                 </Tbody>
