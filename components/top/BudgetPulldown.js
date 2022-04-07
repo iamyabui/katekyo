@@ -6,7 +6,7 @@ export default function Budget() {
   const [highestCost, setHighestCost] = useRecoilState(highestBudgetState);
 
   const lowestCostArray = [
-    { display: "-", value: null },
+    { display: "-", value: "" },
     { display: 1000 , value: 1000 },
     { display: 3000 , value: 3000 },
     { display: 5000 , value: 5000 },
@@ -15,7 +15,7 @@ export default function Budget() {
   ];
   
   const highestCostArray = [
-    { display: "-", value: null },
+    { display: "-", value: "" },
     { display: 3000 , value: 3000 },
     { display: 5000 , value: 5000 },
     { display: 7000 , value: 7000 },
