@@ -4,7 +4,7 @@ import { db } from "../../src/firabase";
 import { categoryState, consultState, highestBudgetState, lowestBudgetState, subjectsState, topState } from "../common/TopAtoms";
 
 export default function SearchButton() {
-    const [test, setTeachers] = useRecoilState(topState);
+    const [teachers, setTeachers] = useRecoilState(topState);
     const category = useRecoilValue(categoryState);
     const subjects = useRecoilValue(subjectsState);
     const consult = useRecoilValue(consultState);
@@ -12,123 +12,156 @@ export default function SearchButton() {
     const highestCost = useRecoilValue(highestBudgetState);
 
     const handleFilter = () => {
-        const teacherRef = collection(db, "TeacherUsers");
-        const displayList = query(teacherRef, where("status", "==", true));
-        const coursesRef = collection(db, "Courses");
+        (async() => {
+            const teacherRef = collection(db, "TeacherUsers");
+            const displayList = query(teacherRef, where("status", "==", true));
 
-        getDocs(displayList).then(snapshot => {
-        const teachers = snapshot.docs.map((doc) => {
-            const id = doc.id;
-            const name = doc.data().name;
-            const title = doc.data().title;
-            const category = doc.data().category;
-            const subjects = doc.data().subjects;
-            const method = doc.data().method;
-            const status = doc.data().status;
-            const consult = doc.data().consult;
-            return { id, name, title, category, subjects, method, status, consult }
-        })
-        
-        if(category !== "" ){
-            const categoryFilter = teachers.filter(function (teacher) {
-                return teacher.category == category;
+            const resetFilter = await getDocs(displayList).then(snapshot => {
+            const teachers = snapshot.docs.map((doc) => {
+                const id = doc.id;
+                const name = doc.data().name;
+                const title = doc.data().title;
+                const category = doc.data().category;
+                const subjects = doc.data().subjects;
+                const method = doc.data().method;
+                const status = doc.data().status;
+                const consult = doc.data().consult;
+                return { id, name, title, category, subjects, method, status, consult }
+            })
+            return teachers
             })
 
-            if(consult.chat == false && consult.video == false){
-                const consultFilter = categoryFilter.filter(function (teacher) {
-                    if(teacher.consult.chat == true && teacher.consult.video == false) {
-                        return teacher.consult.chat == true 
-                    } else if (teacher.consult.chat == false && teacher.consult.video == true) {
-                        return teacher.consult.video == true
-                    } else if (teacher.consult.chat == true && teacher.consult.video == true) {
-                        return teacher.consult.chat == true && teacher.consult.video == true 
+        // 科目のフィルター
+        function subjectFilter() {
+            if (subjects.length !== 0){
+                // filteredSubjects: 選択した科目に該当する先生を出力。
+                const filteredSubjects = subjects.map((subject) => {
+                    const checkInclude = resetFilter.filter(function (teacher) {
+                        return teacher.subjects.includes(subject)
+                    })
+                    return checkInclude
+                })
+
+                // 複数選択されていた場合に、一つでも合致しない教科があるか確認。（もし、合致しない場合は、条件に当てはまらないとしてから配列を後で返すため。）
+                const test3 = filteredSubjects.map((value) => {
+                    if (value.length == 0) {
+                        return "NG"
+                    }else{
+                        return "OK"
                     }
                 })
-                setTeachers(consultFilter);
-            }
-            // 教科フィルター
-            // const add_subjectFilter = subjects.map((subject) => {
-            //     const test = categoryFilter.map((teacher) => {
-            //         const mySubjects = teacher.subjects;
-            //         console.log(teacher.id)
-            //         if (mySubjects.includes(subject)) {
-            //             console.log(teacher)
-            //             return teacher;
-            //         }
-            //     }).filter(Boolean);
-            //     console.log(test)
-            // })
-            // console.log(add_subjectFilter);    
-            
-            } else {
 
-                // 相談方法フィルター
-                // if(consult.chat == true || consult.video == true){
-                //     console.log("test")
-                //     const consultFilter = teachers.filter(function (teacher) {
-                //         if(consult.chat == true && consult.video == true) {
-                //             return teacher.consult.chat == true && teacher.consult.video == true; 
-                //         } else if (consult.chat == true) {
-                //             return teacher.consult.chat == true
-                //         } else if (consult.video == true) {
-                //             return teacher.consult.video == true
-                //         }
-                //     })
-                //     setTeachers(consultFilter);
-                // }else{
-                //     setTeachers(teachers);
-                // }
-
-                // 予算フィルター
-                if(lowestCost !== null || highestCost !== null){
-                    getDocs(coursesRef).then(snapshot => {
-                        const courses = snapshot.docs.map((doc) => {
-                            const courseID = doc.id;
-                            const teacherID = doc.data().teacherID;
-                            const price = doc.data().price;
-                            return { courseID, teacherID, price };
-                        })
-
-                        console.log(courses);
-
-                        const budgetFilter = courses.filter((course) => {
-                            // return course.price > 8000;
-                            if(lowestCost !== null && highestCost == null) {
-                                console.log(lowestCost)
-                                return course.price > lowestCost;
-                            } else if (lowestCost == null && highestCost !== null){
-                                return course.price < 7000;
-                            } else if (lowestCost !== null && highestCost !== null){
-                                return course.price > lowestCost && course.price < highestCost;
-                            }
-                        })
-
-                        // 予算フィルターをmapで試したもの
-                        // const budgetFilter = courses.map((course) => {
-                        //     console.log(course)
-                        //     if(lowestCost !== null && highestCost == null) {
-                        //             console.log(lowestCost)
-                        //             if(course.price > 7000){
-                        //                 return course
-                        //             }
-                        //         } else if (lowestCost == null && highestCost !== null){
-                        //             return course.price < 7000;
-                        //         } else if (lowestCost !== null && highestCost !== null){
-                        //             return course.price > lowestCost && course.price < highestCost;
-                        //         }
-                        // })
-
-                        console.log(budgetFilter);
-
-
-                        })
-                    
+                // もしひとつでも合致しなかった科目がある場合は、から配列を返す。
+                // 合致した場合は、最初に出力したフィルター結果を返す。
+                if (test3.includes("NG")) {
+                    return [];
+                } else {
+                    return filteredSubjects[0];
                 }
+            } else {
+                return resetFilter;
             }
+
+        }
+
+        // カテゴリのフィルター
+        function categoryFilter(filter1st) {
+            if(category !== "" ){
+                const categoryFilter = filter1st.filter(function (teacher) {
+                    return teacher.category == category;
+                })
+                return categoryFilter;
+            }else{
+                return filter1st;
+            }
+        }
+
+        // 相談方法のフィルター
+        function consultFilter(filter2nd) {
+            if(consult.chat !== false || consult.video !== false){
+
+            const consultFilter = filter2nd.filter(function (teacher) {
+                if(consult.chat == true && consult.video == false) {
+                    return teacher.consult.chat == true 
+                } else if (consult.chat == false && consult.video == true) {
+                    return teacher.consult.video == true
+                } else if (consult.chat == true && consult.video == true) {
+                    return teacher.consult.chat == true && teacher.consult.video == true 
+                }
+            })
+            return consultFilter;
+            }else{
+                return filter2nd;
+            }
+        }
+
+
+        // 予算（上限と下限）のフィルター
+        function budgetFilter (filter3rd) {
+            if(lowestCost !== "" || highestCost !== ""){
+                // 一旦Coursesコレクションから全てのコースIDと値段、先生IDを取得する
+                const coursesRef = collection(db, "Courses");
+                getDocs(coursesRef).then(snapshot => {
+                    const courses = snapshot.docs.map((doc) => {
+                        const courseID = doc.id;
+                        const teacherID = doc.data().teacherID;
+                        const price = doc.data().price;
+                        return { courseID, teacherID, price };
+                    })
+
+
+                    // 取得したCoursesコレクションに対して、上限と下限フィルターを実施
+                    const budgetFilter = courses.filter((course) => {
+                        if(lowestCost !== "" && highestCost == "") {
+                            return course.price >= Number(lowestCost);
+                        } else if (lowestCost == "" && highestCost !== ""){
+                            return course.price <= Number(highestCost);
+                        } else if (lowestCost !== "" && highestCost !== ""){
+                            return course.price >= Number(lowestCost) && course.price <= Number(highestCost);
+                        }
+                    })
+    
+                    // フィルター後、予算に合致したコースを持っている先生のIDだけ、配列で結果として取得する
+                    const filteredTeachersList = budgetFilter.map((course) => {
+                        return course.teacherID;
+                    })
+    
+                    // 上で取得した配列を重複削除
+                    const filteredTeacherArray = filteredTeachersList.filter(function(value, i, course) {
+                        return i == course.indexOf(value);
+                    })
+
+                    // 最後に、カテゴリフィルターと相談フィルターが終わった結果から、予算フィルターをかける
+                    const result = filteredTeacherArray.map((teacherId) => {
+                        const id = filter3rd.find(teacher => {
+                            return teacher.id == teacherId;
+                        })
+                        return id;
+                    }).filter(Boolean);
+
+                    setTeachers(result)
+    
+                })
+                
+            }else{
+                setTeachers(filter3rd)
+            }
+            
+
+        }
+       
+
+        const filter1st = await subjectFilter();
+        if (filter1st !== []){
+        const filter2nd = await categoryFilter(filter1st);
+        const filter3rd = await consultFilter(filter2nd);
+        await budgetFilter(filter3rd);
+        }else{
+            await setTeachers([]);
+        }
         
-        })
-        
-        
+    })()
+
     }
     
     return (

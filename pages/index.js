@@ -5,8 +5,8 @@ import TopProfile from "../components/top/TopTeacherProfileCard";
 import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { db } from "../src/firabase"
 import { useEffect } from "react";
-import { topState } from "../components/common/TopAtoms"
-import { useRecoilState } from "recoil";
+import { categoryState, consultState, topState } from "../components/common/TopAtoms"
+import { useRecoilState, useRecoilValue } from "recoil";
 
 export default function Home() {
   const [teachers, setTeachers] = useRecoilState(topState);
@@ -27,9 +27,9 @@ export default function Home() {
         const consult = doc.data().consult;
          return { id, name, title, category, subjects, method, status, consult };
       })
+      console.log(teachers);
       setTeachers(teachers);
-    })
-    
+    })   
   }, [])
 
   return (
@@ -41,7 +41,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <div className="bg-top-bg h-screen">
+      <div className="bg-top-bg">
         <div className="flex max-w-5xl mx-auto">
           <TopLeftMenu />
           <div className="flex flex-wrap pt-10 ml-3">

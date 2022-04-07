@@ -20,12 +20,12 @@ export const consultState = atom<any>({
     default: {chat: false, video: false},
     });
 
-export const lowestBudgetState = atom<number>({
+export const lowestBudgetState = atom({
   key: "lowestBudget",
-  default: null,
+  default: "",
   });
 
-export const highestBudgetState = atom<number>({
+export const highestBudgetState = atom({
   key: "highestBudget",
-  default: null,
+  default: "",
   });

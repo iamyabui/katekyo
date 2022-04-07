@@ -15,7 +15,7 @@ export default function TopProfile(props) {
   return (
     <div 
       onClick={() => handleMoveToDetailPage(teacher.id)}
-      className="w-52 h-72 py-3 mx-3 mb-3 bg-card-gray rounded-md flex flex-col justify-center items-center text-gray-700">
+      className="w-52 h-72 py-3 mx-3 mb-3 bg-card-gray rounded-md flex flex-col justify-center items-center text-gray-700 shadow">
         <IconBig />
         <p className="mt-3 mb-1">{teacher.name}</p>
         <p className="my-1 px-6 text-center">{teacher.title}</p>
