@@ -121,7 +121,7 @@ export default function MyStudents() {
             </div>
             <div className="mt-5">
             <h1 className="font-bold text-sm">受講中の生徒</h1>
-                <div className="mt-5">
+                <div className="mt-5 flex">
                 {pendingStatus.map((course) => (
                 <>
                 <MyStudentProfile course={course} />

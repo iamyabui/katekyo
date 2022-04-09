@@ -17,6 +17,7 @@ export default function TopTeacherDetail() {
   const [coursesList, setCoursesList] = useState([]);
   const [student, setStudent] = useState({});
   const [courses, setCourses] = useState([]);
+  const [records, setRecords] = useState([]);
 
   useEffect(() => {
     // 生徒情報を取得
@@ -64,9 +65,21 @@ export default function TopTeacherDetail() {
       
     }))
     setCourses(courseListWithStudentInfo)
-    console.log(courseListWithStudentInfo)
   })()
   },[coursesList])
+
+  // 生徒の受講履歴を取得
+  useEffect(() => {
+    const RecordsRef = collection(db, "Records");
+    const q1 = query(RecordsRef, where("studentID", "==", studentId));
+    const q2 = query(q1, where("teacherID", "==", teacher.id))
+    getDocs(q2).then((snapshot) => {
+      const records = snapshot.docs.map((doc) => {
+        return doc.data();
+      })
+      setRecords(records);
+    })
+  },[courses]);
 
   return (
     <>
@@ -82,7 +95,7 @@ export default function TopTeacherDetail() {
             </p>
             <div className="flex">
               <MyStudentProfileDetailCard student={student}/>
-              <ShowProfileContent courses={courses} student={student} setStudent={setStudent} />
+              <ShowProfileContent courses={courses} student={student} records={records} setStudent={setStudent} />
             </div>
           </div>
         </div>

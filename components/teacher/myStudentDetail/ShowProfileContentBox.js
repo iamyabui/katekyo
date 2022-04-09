@@ -4,12 +4,11 @@ import FinishApprove from "./FinishApproveButton";
 import FinishCancel from "./FinishCancelButton";
 
 export default function ShowProfileContent(props) {
-  const { courses, student, setStudent } = props;
-  console.log(courses, student)
+  const { courses, student, records, setStudent } = props;
+
   const apply_status = courses.filter(course => course.studentInfo?.status == "申請中");
   const pending_status = courses.filter(course => course.studentInfo?.status == "受講中");
   const finishApply_status = courses.filter(course => course.studentInfo?.status == "終了申請中");
-  const finish_status = courses.filter(course => course.studentInfo?.status == "終了");
 
   return (
     <div className="flex-column mx-10 w-[40rem] bg-white p-8 rounded text-gray-700">
@@ -27,7 +26,6 @@ export default function ShowProfileContent(props) {
                 <Tr key={index}>
                 <Td><p className="text-sm">{course.courseName}</p></Td>
                 <Td><p className="text-sm">{course.coursePrice}円</p></Td>
-                {console.log(course)}
                 <Td px={1}><Approve course={course} student={student} setStudent={setStudent} /></Td>
                 </Tr>
               ))}
@@ -38,7 +36,7 @@ export default function ShowProfileContent(props) {
 
         { pending_status.length > 0 && (
           <>
-          <h1 className="mb-3 font-bold">受講中のコース</h1> 
+          <h1 className="my-5 font-bold">受講中のコース</h1> 
             <Table>
             <Thead>
               <Tr>
@@ -90,7 +88,7 @@ export default function ShowProfileContent(props) {
           </>
         )}
 
-        { finish_status.length > 0 && (
+        { records.length > 0 && (
           <>
           <h1 className="my-5 font-bold">受講履歴</h1> 
             <Table>
@@ -103,12 +101,12 @@ export default function ShowProfileContent(props) {
               </Tr>
             </Thead>
             <Tbody>
-              {finish_status.map((course, index) => (
+              {records.map((record, index) => (
                 <Tr key={index}>
-                <Td><p className="text-sm">{course.courseName}</p></Td>
-                <Td><p className="text-sm">{course.coursePrice}円</p></Td>
-                <Td><p className="text-sm">{`${course.studentInfo.start_date.toDate().getMonth()+1}月${course.studentInfo.start_date.toDate().getDate()}日`}</p></Td>
-                <Td><p className="text-sm">{`${course.studentInfo.finish_date.toDate().getMonth()+1}月${course.studentInfo.finish_date.toDate().getDate()}日`}</p></Td>
+                <Td><p className="text-sm">{record.course_name}</p></Td>
+                <Td><p className="text-sm">{record.course_price}円</p></Td>
+                <Td><p className="text-sm">{`${record.start_date.toDate().getMonth()+1}月${record.start_date.toDate().getDate()}日`}</p></Td>
+                <Td><p className="text-sm">{`${record.finish_date.toDate().getMonth()+1}月${record.finish_date.toDate().getDate()}日`}</p></Td>
                 </Tr>
               ))}
             </Tbody>

@@ -10,8 +10,8 @@ export default function Finish(props) {
   const student = useRecoilValue(studentUserState)
 
   const handleFinish = async() => {
-    const CourseRef = await doc(db, "Courses", course.id, "students", student.id);
-    await updateDoc(CourseRef, { status: "終了申請中", finish_date: serverTimestamp()})
+    const CourseRef = await doc(db, "Courses", course.id, "students", student.id); 
+    await updateDoc(CourseRef, { status: "終了申請中", finish_date: serverTimestamp()}) 
 
     // 生徒情報を取得
     (async () => {
