@@ -1,7 +1,7 @@
 import Header from "../components/common/header/header";
 import StudentLeftMenu from "../components/student/common/StudentLeftMenu";
 import { useEffect, useState } from "react";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { db } from "../src/firabase";
 import { studentUserState } from "../components/common/StudentAtoms";
 import { useRecoilValue } from "recoil";
@@ -56,8 +56,20 @@ export default function AttendanceStatus() {
 
       setApplyStatus(courseListWithStudentInfo.filter(course => course.studentInfo.status == "申請中"));
       setPendingStatus(courseListWithStudentInfo.filter(course => course.studentInfo.status == "受講中" || course.studentInfo.status == "終了申請中"));
-      setFinishStatus(courseListWithStudentInfo.filter(course => course.studentInfo.status == "終了"));
     })();
+  },[courses])
+
+  useEffect(() => {
+    (async () => {
+      const RecordsRef = collection(db, "Records");
+      const q = query(RecordsRef, where("studentID", "==", student.id));
+      getDocs(q).then((snapshot) => {
+        const records = snapshot.docs.map((doc) => {
+          return doc.data();
+        })
+        setFinishStatus(records);
+    })
+    })()  
   },[courses])
 
   return (
@@ -159,10 +171,10 @@ export default function AttendanceStatus() {
                 <Tbody>
                     {finishStatus.map((course, index) => (
                     <Tr key={index} className="text-sm">
-                    <Td><p>{course.courseInfo.name}</p></Td>
-                    <Td><p>{course.courseInfo.price}</p></Td>
-                    <Td>{`${course.studentInfo.start_date.toDate().getMonth()+1}月${course.studentInfo.start_date.toDate().getDate()}日`}</Td>
-                    <Td>{`${course.studentInfo.finish_date.toDate().getMonth()+1}月${course.studentInfo.finish_date.toDate().getDate()}日`}</Td>
+                    <Td><p>{course.course_name}</p></Td>
+                    <Td><p>{course.course_price}</p></Td>
+                    <Td>{`${course.start_date.toDate().getMonth()+1}月${course.start_date.toDate().getDate()}日`}</Td>
+                    <Td>{`${course.finish_date.toDate().getMonth()+1}月${course.finish_date.toDate().getDate()}日`}</Td>
                     </Tr>
                   ))}
                 </Tbody>
