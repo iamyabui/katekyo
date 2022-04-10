@@ -10,7 +10,7 @@ export default function ChatNameList(props) {
           <IconSmall />
           <p className="ml-4">{student.studentName}</p>
         </div>
-        {/* <Status /> */}
+        {student.isStatus && <Status /> }
       </div>
 
       {student.latestMessage ? (
