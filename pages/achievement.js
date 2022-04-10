@@ -19,24 +19,16 @@ export default function Achievement() {
   const [achievement, setAchievement] = useState([]);
 
   useEffect(() => {
-    const coursesRef = collection(db, "Courses");
-    const q = query(coursesRef, where("teacherID", "==", teacher.id));
-
-    getDocs(q).then(snapshot => {
-      snapshot.docs.map((doc)=> {
-        const courseRef = doc.data();
-        const courseId = doc.id;
-
-        const studentsRef = getDocs(collection(db, "Courses", courseId, "students"));
-        studentsRef.then(snapshot => {
-          const achievement = snapshot.docs.map((doc)=> {
-            const studentRef = doc.data();
-            return { ...studentRef, courseRef }
-          })
-          setAchievement(achievement);
+    (async () => {
+      const RecordsRef = collection(db, "Records");
+      const q = query(RecordsRef, where("teacherID", "==", teacher.id));
+      getDocs(q).then((snapshot) => {
+        const records = snapshot.docs.map((doc) => {
+          return doc.data();
         })
-      })
+        setAchievement(records);
     })
+    })()  
   },[])
   
 
@@ -44,29 +36,31 @@ export default function Achievement() {
     <>
       <Header />
       <div className="bg-top-bg w-screen h-screen">
-        <div className="flex max-w-6xl mx-auto py-10">
+        <div className="flex max-w-5xl mx-auto py-10 h-screen">
           <TeacherLeftMenu />
-          <div>
-            <Table>
-              <Thead>
-                <Tr>
-                  <Th>コース名</Th>
-                  <Th>生徒</Th>
-                  <Th>開始日</Th>
-                  <Th>終了日</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
+          <div className="max-w-3xl text-sm pr-5">
+            <table>
+              <thead>
+                <tr className="font-bold text-gray-600">
+                  <td className="w-[250px]">コース名</td>
+                  <td className="w-[110px]">値段</td>
+                  <td className="w-[100px]">生徒</td>
+                  <td className="w-[100px]">開始日</td>
+                  <td className="w-[100px]">終了日</td>
+                </tr>
+              </thead>
+              <tbody>
                 {achievement.map((value, index) => (
-                  <Tr key={index}>
-                  <Td>{value.courseRef.name}</Td>
-                  <Td>{value.name}</Td>
-                  <Td>{`${value.start_date.toDate().getMonth()+1}月${value.start_date.toDate().getDate()}日`}</Td>
-                  <Td>{`${value.finish_date.toDate().getMonth()+1}月${value.finish_date.toDate().getDate()}日`}</Td>
-                  </Tr>
+                  <tr key={index}>
+                  <td>{value.course_name}</td>
+                  <td>{value.course_price}円</td>
+                  <td>{value.student_name}</td>
+                  <td>{`${value.start_date.toDate().getMonth()+1}月${value.start_date.toDate().getDate()}日`}</td>
+                  <td>{`${value.finish_date.toDate().getMonth()+1}月${value.finish_date.toDate().getDate()}日`}</td>
+                  </tr>
                 ))}
-              </Tbody>
-            </Table>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
