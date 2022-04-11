@@ -3,7 +3,8 @@ import IconBig from "../../common/icon/BigIcon";
 import { teacherUserState } from "../../common/TeacherAtoms";
 import { useRecoilValue } from "recoil";
 
-export default function TeacherProfileDetail() {
+export default function TeacherProfileDetail(props) {
+  const { countRecords } = props;
   const teacher = useRecoilValue(teacherUserState)
   const buttonStyle = "bg-white text-origin-purple px-1 my-1 mx-1 rounded"
 
@@ -14,6 +15,7 @@ export default function TeacherProfileDetail() {
       <p className="mt-3 mb-1">{teacher.name}</p>
       <Consultation />
       <p className="my-1">実績</p>
+      <p className={buttonStyle}>{countRecords}名</p>
 
       <p className="my-1">専門</p>
       <p className={buttonStyle}>{teacher.category}</p>
