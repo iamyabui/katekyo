@@ -137,7 +137,7 @@ export default function TopTeacherDetail() {
                       <Th>
                       {student.id !== "" && (
                         value.status == "undefined" ? (
-                          <Apply key={index} courseName={value.name} courseId={value.courseId} coursePrice={value.price} teacherId={id} setCourseList={setCourseList} />
+                          <Apply key={index} courseName={value.name} courseId={value.courseId} coursePrice={value.price} teacherId={id} teacherName={teacher.name} setCourseList={setCourseList} />
                         ) : (
                           <p>{value.status}</p>
                         )
