@@ -14,6 +14,7 @@ export default function FinishApprove(props) {
       const student_status = CourseSnap.data();
       const start_date = student_status.start_date.toDate();
       const finish_date = student_status.finish_date.toDate();
+      const StudentCourseRef = doc(db, "StudentUsers", course.studentId, "courses", course.courseId);
 
       const RecordsRef = doc(collection(db, "Records"));
       await setDoc(RecordsRef, { 
@@ -28,6 +29,7 @@ export default function FinishApprove(props) {
       })
 
       await deleteDoc(CourseRef)
+      await deleteDoc(StudentCourseRef)
 
       // 生徒情報を取得
       const StudentRef = getDoc(doc(db, "StudentUsers", course.studentId))
