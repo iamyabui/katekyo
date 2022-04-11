@@ -4,7 +4,7 @@ import { useRecoilValue } from "recoil";
 import { teacherUserState } from "../../common/TeacherAtoms";
 
 export default function TopTeacherProfileDetailCard(props) {
-  const { teacher } = props;
+  const { teacher, countRecords } = props;
   const teacherUser = useRecoilValue(teacherUserState);
   const buttonStyle = "bg-white text-origin-purple px-1 my-1 mx-1 rounded"
   
@@ -17,6 +17,7 @@ export default function TopTeacherProfileDetailCard(props) {
       <Consultation teacher={teacher}/>
       )}
       <p className="my-1">実績</p>
+      <p className={buttonStyle}>{countRecords}名</p>
 
       <p className="my-1">専門</p>
       <p className={buttonStyle}>{teacher.category}</p>

@@ -23,6 +23,7 @@ export default function TopTeacherDetail() {
   const [courseList, setCourseList] = useState([]);
   const student = useRecoilValue(studentUserState);
   const [loginStudentStatus, setLoginStudentStatus] = useState([]);
+  const [countRecords, setCountRecords] = useState([]);
 
   // ①コース情報を各コースオブジェクト毎に配列で取得。
   useEffect(() => {
@@ -95,21 +96,29 @@ export default function TopTeacherDetail() {
 
     }));
 
-    console.log('courseListWithStudentInfo', courseListWithStudentInfo);
     setLoginStudentStatus(courseListWithStudentInfo);
     })();
   }, [courseList]);
 
-  if(loginStudentStatus.length < 0) return
+  // ③実績数を取得
+  useEffect(() => {
+    (async () => {
+      const RecordsRef = collection(db, 'Records');
+      const q = query(RecordsRef, where("teacherID", "==", id));
+      const records = await getDocs(q);
+      const count = records.docs.length;
+      setCountRecords(count);
+    })()
+  }, [courseList])
+
 
   return (
     <>
       <Header />
       <div className='bg-top-bg h-screen'>
         <div className='flex max-w-4xl m-auto py-10'>
-          <TopTeacherProfileDetailCard teacher={teacher} />
+          <TopTeacherProfileDetailCard teacher={teacher} countRecords={countRecords} />
           <div className='flex-column mx-10 px-10 w-[40rem] text-gray-700'>
-            {/* <DetailBox teacher={teacher} /> */}
 
             <div className='mb-5 flex-column p-5'>
               <p className='font-bold'>{teacher.title}</p>

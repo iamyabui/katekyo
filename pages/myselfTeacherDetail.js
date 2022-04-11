@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import Router from "next/router";
 import { teacherUserState } from "../components/common/TeacherAtoms";
-import { doc, getDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { db } from "../src/firabase";
 
 export default function MyselfTeacherDetail() {
@@ -15,6 +15,7 @@ export default function MyselfTeacherDetail() {
   console.log(teacher)
   const userId = teacher.id;
   const teacherRef = doc(db, "TeacherUsers", userId);  
+  const [countRecords, setCountRecords] = useState([]);
 
   useEffect(() => {
     // ログインユーザを確認し、ログインできてなかったらLoginページへ遷移する。
@@ -40,7 +41,17 @@ export default function MyselfTeacherDetail() {
     });
 
     setIsLoading(false);
-  }, [setIsLoading]);
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const RecordsRef = collection(db, 'Records');
+      const q = query(RecordsRef, where("teacherID", "==", teacher.id));
+      const records = await getDocs(q);
+      const count = records.docs.length;
+      setCountRecords(count);
+    })()
+  }, [setIsLoading])
 
   return (
     <>
@@ -48,9 +59,9 @@ export default function MyselfTeacherDetail() {
         <>
           <Header />
           <div className="bg-top-bg h-screen w-screen ">
-            <div className="flex max-w-7xl mx-auto py-10">
+            <div className="flex max-w-5xl mx-auto py-10">
               <TeacherLeftMenu />
-              <TeacherProfileDetail />
+              <TeacherProfileDetail countRecords={countRecords} />
               <DetailBox />
             </div>
           </div>
