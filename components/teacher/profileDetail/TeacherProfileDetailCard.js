@@ -1,5 +1,5 @@
 import Consultation from "../../top/teacherDetail/ConsultationButton";
-import IconBig from "../../common/icon/BigIcon";
+import IconBig from "../common/BigIcon";
 import { teacherUserState } from "../../common/TeacherAtoms";
 import { useRecoilValue } from "recoil";
 

@@ -28,7 +28,7 @@ export default function MyselfTeacherDetail() {
         setTeacher({...teacher,
           name: getUserInfo.name,
           status: getUserInfo.status,
-          // photo_url: "",
+          photo_url: getUserInfo.photo_url,
           // occupation: "",
           // occupationName: "",
           category: getUserInfo.category,

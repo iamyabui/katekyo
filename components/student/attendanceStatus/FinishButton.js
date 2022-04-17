@@ -1,4 +1,4 @@
-import { collection, doc, getDoc, getDocs, serverTimestamp, updateDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 import { useRecoilValue } from "recoil";
 import { db } from "../../../src/firabase";
 import { studentUserState } from "../../common/StudentAtoms";

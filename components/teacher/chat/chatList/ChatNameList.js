@@ -1,4 +1,5 @@
 import Status from "../../../common/buttons/StatusButton";
+import NoIconSmall from "../../../common/icon/NoIconSmall";
 import IconSmall from "../../../common/icon/SmallIcon";
 
 export default function ChatNameList(props) {
@@ -7,7 +8,12 @@ export default function ChatNameList(props) {
     <div className="w-[35rem] bg-blue-100 px-5 pt-2 pb-5 rounded">
       <div className="flex items-center py-2 mb-2">
         <div className="flex pl-4 mr-5 items-center">
-          <IconSmall />
+          { !student.photo_url ? (
+            <NoIconSmall />
+          ):(
+            <IconSmall photo_url={photo_url} />
+          )}
+          
           <p className="ml-4">{student.studentName}</p>
         </div>
         {student.isStatus && <Status /> }

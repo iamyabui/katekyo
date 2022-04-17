@@ -18,6 +18,7 @@ export default function TopTeacherDetail() {
   const [student, setStudent] = useState({});
   const [courses, setCourses] = useState([]);
   const [records, setRecords] = useState([]);
+  const [photo_url, setPhoto_url] = useState([]);
 
   useEffect(() => {
     // 生徒情報を取得
@@ -81,6 +82,16 @@ export default function TopTeacherDetail() {
     })
   },[courses]);
 
+  // 生徒の写真データを取得
+  useEffect(() => {
+    (async() => {
+      const studentRef = doc(db, "StudentUsers", studentId);
+      const studentInfo = await getDoc(studentRef);
+      const photo_url = studentInfo.data().photo_url;
+      setPhoto_url(photo_url);
+    })()
+  },[records]);
+
   return (
     <>
       <Header />
@@ -94,7 +105,7 @@ export default function TopTeacherDetail() {
               生徒一覧に戻る
             </p>
             <div className="flex">
-              <MyStudentProfileDetailCard student={student}/>
+              <MyStudentProfileDetailCard student={student}  photo_url={photo_url}/>
               <ShowProfileContent courses={courses} student={student} records={records} setStudent={setStudent} />
             </div>
           </div>

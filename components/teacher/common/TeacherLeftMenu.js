@@ -1,6 +1,6 @@
 import Router from "next/router";
 import { useRecoilValue } from "recoil";
-import IconBig from "../../common/icon/BigIcon";
+import IconBig from "../common/BigIcon";
 import { teacherUserState } from "../../common/TeacherAtoms";
 
 export default function TeacherLeftMenu() {

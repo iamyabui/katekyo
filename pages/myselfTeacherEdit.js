@@ -5,18 +5,16 @@ import Save from "../components/teacher/profileEdit/SaveButton";
 import ConsultMethods from "../components/common/checkbox/ConsultMethodCheckbox";
 import SelectSubjects from "../components/common/selectButtons/SubjectSelectButtons";
 import Header from "../components/common/header/header";
-import Markdown from "../components/common/markdown";
 import SwitchForm from "../components/teacher/profileEdit/SwitchForm";
 import { useState, useEffect } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import Router from "next/router";
 import TitleForm from "../components/teacher/profileEdit/TitleForm"
 import CourseEditForm from "../components/teacher/profileEdit/CourseEditForm"
 import { teacherUserState } from "../components/common/TeacherAtoms";
-import { editUserState } from "../components/common/atoms";
+import TextForm from "../components/teacher/profileEdit/textForm";
 
 export default function MyselfTeacherEdit() {
-  const [editUser, setEditUser] = useRecoilState(editUserState);
   const [isLoading, setIsLoading] = useState(true);
   const loginUser = useRecoilValue(teacherUserState);
   const userId = loginUser.id;
@@ -36,10 +34,10 @@ export default function MyselfTeacherEdit() {
         <>
           <Header />
           <div className="bg-top-bg w-screen">
-            <div className="flex max-w-7xl mx-auto py-10">
+            <div className="flex max-w-5xl mx-auto py-10">
               <TeacherLeftMenu />
               <div>
-                <TeacherProfileEdit />
+                <TeacherProfileEdit userId={userId}/>
                 <SwitchForm />
               </div>
 
@@ -58,7 +56,7 @@ export default function MyselfTeacherEdit() {
                 <TitleForm />
                 <div className="mb-4 flex flex-col">
                   <label className="font-bold">自己紹介/経歴/料金</label>
-                  <Markdown />
+                  <TextForm />
                 </div>
                 <div className="mb-4 flex flex-col">
                   <ConsultMethods />

@@ -53,7 +53,12 @@ export default function TeacherChatRoom() {
         const teacherId = teacher.id;
         const studentName = student.name;
 
-        // １，先生の担当コースで、受講しているコースがあればステータスをtrueにしておく。
+        // 0,生徒の写真URLを取得する。
+        const studentRef = doc(db, "StudentUsers", studentId);
+        const studentInfo = await getDoc(studentRef);
+        const photo_url = studentInfo.data().photo_url;
+
+        // １,先生の担当コースで、受講しているコースがあればステータスをtrueにしておく。
         //    受講中のものがあれば、受講中というステータスを表示したいため。
         const CoursesRef = collection(db, "Courses");
         const q = query(CoursesRef, where("teacherID", "==", teacherId));
@@ -78,7 +83,7 @@ export default function TeacherChatRoom() {
 
         const isStatus = statusArray.includes("受講中");
 
-        // ２，先生との最新メッセージを取得する。
+        // ２,先生との最新メッセージを取得する。
         // chat:既にチャットリストに登録されている生徒とログイン先生ユーザーのやりとりchatを探して取得
         const chat = chatsList.map((chat) => {
           if((chat.contact1 == studentId && chat.contact2 == teacherId) || (chat.contact1 == teacherId && chat.contact2 == studentId)) {
@@ -110,12 +115,11 @@ export default function TeacherChatRoom() {
         const latestMessage = messages[0];
 
         // ３，１と２で取得した値をオブジェクトとして登録（表示で利用するため）
-        return({ studentId: studentId, studentName: studentName, latestMessage: latestMessage, isStatus: isStatus})
+        return({ studentId: studentId, studentName: studentName, latestMessage: latestMessage, isStatus: isStatus, photo_url: photo_url })
         }
 
       }));
 
-      console.log(latestMessageWithStudentInfo);
       setLatestMessageWithStudentInfo(latestMessageWithStudentInfo);
 
     })()
