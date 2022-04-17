@@ -11,7 +11,7 @@ export default function ChatNameList(props) {
           { !student.photo_url ? (
             <NoIconSmall />
           ):(
-            <IconSmall photo_url={photo_url} />
+            <IconSmall photo_url={student.photo_url} />
           )}
           
           <p className="ml-4">{student.studentName}</p>

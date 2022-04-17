@@ -36,7 +36,7 @@ export default function Achievement() {
     <>
       <Header />
       <div className="bg-top-bg w-screen h-screen">
-        <div className="flex max-w-5xl mx-auto py-10 h-screen">
+        <div className="flex max-w-6xl mx-auto py-10 h-screen">
           <TeacherLeftMenu />
           <div className="max-w-3xl text-sm pr-5">
             <table>

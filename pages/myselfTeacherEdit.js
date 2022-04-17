@@ -34,7 +34,7 @@ export default function MyselfTeacherEdit() {
         <>
           <Header />
           <div className="bg-top-bg w-screen">
-            <div className="flex max-w-5xl mx-auto py-10">
+            <div className="flex max-w-6xl mx-auto py-10">
               <TeacherLeftMenu />
               <div>
                 <TeacherProfileEdit userId={userId}/>

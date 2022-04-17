@@ -1,23 +1,22 @@
+import IconBig from "../../common/icon/BigIcon";
+import NoIcon from "../../common/icon/NoIcon";
+import { useCallback, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
 import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalOverlay, useDisclosure } from "@chakra-ui/react";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
-import { useState } from "react";
-import Name from "../../common/form/NameForm";
-import IconBig from "../common/BigIcon";
-import { useCallback } from 'react';
-import { useDropzone } from 'react-dropzone';
-import { useRecoilState } from "recoil";
-import { teacherUserState } from "../../common/TeacherAtoms";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../src/firabase";
+import { studentUserState } from "../../common/StudentAtoms";
+import { useRecoilState } from "recoil";
 
-export default function TeacherProfileEdit(props) {
-  const { userId } = props;
-  const [teacher, setTeacher] =useRecoilState(teacherUserState);
-  const [fileError, setFileError] = useState("");
+export default function UpdateIcon() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [student, setStudent] =useRecoilState(studentUserState);
+  const [fileError, setFileError] = useState("");
   const [src, setSrc] = useState("");
   const [myFiles, setMyFiles] = useState([]);
   const [progress, setProgress] = useState("");
+  const userId = student.id;
 
   const onDrop = useCallback(async(acceptedFiles) => {
     if (!acceptedFiles[0]) return;
@@ -83,11 +82,11 @@ export default function TeacherProfileEdit(props) {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((url) => {
           
-          setTeacher({...teacher,
+          setStudent({...student,
             photo_url: url,
         })
           
-          updateDoc(doc(db, "TeacherUsers", teacher.id), {
+          updateDoc(doc(db, "StudentUsers", student.id), {
             photo_url: url,
           }).then(() => {
             onClose();
@@ -102,64 +101,65 @@ export default function TeacherProfileEdit(props) {
 
   return (
     <>
-    <div className="w-52 py-5 bg-card-purple rounded-md flex flex-col justify-center items-center text-gray-700">
-      <p className="my-1">Profile</p>
-      <IconBig />
+      { !student.photo_url ? (
+        <NoIcon />
+      ):(
+        <IconBig photo_url={student.photo_url}/>
+      )}
       <button 
       className="text-sm py-1 px-2 my-3 bg-origin-gray hover:bg-origin-deepGray text-white rounded"
       onClick={onOpen}
       >
         写真を変更
       </button>
-      <Name />
-    </div>
 
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay />
-      <ModalContent>
-      <ModalCloseButton />
-        <ModalBody mt={5}>
-          <div className="flex flex-col">
-          <div 
-          className="h-52 w-52 bg-gray-200 mx-auto rounded flex"
-          {...getRootProps()}
-          >
-            <input {...getInputProps()} />
-            {myFiles.length == 0 ? (
-              <p className="m-auto text-gray-400">Drag & Drop your image.</p>
-            ):(
-              src && <img id="image" src={src} alt="icon" className="object-cover h-52 w-52" />
-            )}
-          </div>
-          { fileError && (
-            <p className="mx-auto text-xs text-red-500 mt-3">{fileError}</p>
-          )}
-          </div>
-        </ModalBody>
-         
-        <ModalFooter>
-          <div className="mx-auto mb-5 flex flex-col">
-          {progress && (
-            <p className="text-sm text-gray-500 mx-auto">
-            ...Loading {progress}%
-            </p>
-          )}
-          {myFiles.length !== 0 ? (
-            <label 
-            className="text-sm py-1 px-2 bg-origin-pink hover:bg-origin-deepPink text-white rounded"
-            onClick={() => handleUpload(myFiles)} 
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+        <ModalCloseButton />
+            <ModalBody mt={5}>
+            <div className="flex flex-col">
+            <div 
+            className="h-52 w-52 bg-gray-200 mx-auto rounded flex"
+            {...getRootProps()}
             >
-              upload
-            </label>
-          ) : (
-            <label className="text-sm py-1 px-2 bg-gray-300 text-white rounded">
-              upload
-            </label>
-          )}
-          </div>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+                <input {...getInputProps()} />
+                {myFiles.length == 0 ? (
+                <p className="m-auto text-gray-400">Drag & Drop your image.</p>
+                ):(
+                src && <img id="image" src={src} alt="icon" className="object-cover h-52 w-52" />
+                )}
+            </div>
+            { fileError && (
+                <p className="mx-auto text-xs text-red-500 mt-3">{fileError}</p>
+            )}
+            </div>
+            </ModalBody>
+            
+            <ModalFooter>
+            <div className="mx-auto mb-5 flex flex-col">
+            {progress && (
+                <p className="text-sm text-gray-500 mx-auto">
+                ...Loading {progress}%
+                </p>
+            )}
+            {myFiles.length !== 0 ? (
+                <label 
+                className="text-sm py-1 px-2 bg-origin-pink hover:bg-origin-deepPink text-white rounded mx-auto"
+                onClick={() => handleUpload(myFiles)} 
+                >
+                upload
+                </label>
+            ) : (
+                <label className="text-sm py-1 px-2 bg-gray-300 text-white rounded">
+                upload
+                </label>
+            )}
+            </div>
+            </ModalFooter>
+        </ModalContent>
+        </Modal>
     </>
+    
   );
 }

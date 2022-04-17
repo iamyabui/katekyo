@@ -73,9 +73,9 @@ export default function TeacherChatRoom() {
     <>
       <Header />
       <div className="bg-top-bg h-screen w-screen text-gray-700">
-        <div className="flex max-w-5xl mx-auto py-10 h-screen">
+        <div className="flex max-w-6xl mx-auto py-10 h-screen">
           <TeacherLeftMenu />
-          <div className="mx-auto">
+          <div>
             <div>
               <div className="flex items-center py-2 mb-5">
                 <h1 className="text-lg font-bold mr-5">{student.name}</h1>

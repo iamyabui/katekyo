@@ -69,7 +69,7 @@ export default function MyStudents() {
     <>
       <Header />
       <div className="bg-top-bg h-screen w-screen">
-        <div className="flex max-w-5xl mx-auto py-10">
+        <div className="flex max-w-6xl mx-auto py-10">
           <TeacherLeftMenu />
           <div className="max-w-3xl">
             <div className="mb-10">

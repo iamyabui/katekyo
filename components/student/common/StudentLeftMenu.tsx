@@ -1,15 +1,21 @@
 import IconBig from "../../common/icon/BigIcon";
 import { useRecoilValue } from "recoil";
-import { userState } from "../../common/atoms";
 import Router from "next/router";
+import { studentUserState } from "../../common/StudentAtoms";
+import NoIcon from "../../common/icon/NoIcon";
 
 export default function StudentLeftMenu() {
-  const user = useRecoilValue(userState);
+  const student = useRecoilValue(studentUserState);
 
   return (
-    <div className="min-w-[20rem] text-gray-800 flex flex-col items-center pr-20 pl-10">
-      <IconBig />
-      <p className="text-lg py-2">{user.name}</p>
+    <div className="min-w-[20rem] text-gray-800 flex flex-col items-center pl-10">
+      {!student.photo_url ? (
+        <NoIcon />
+      ):(
+        <IconBig photo_url={student.photo_url} />
+      )}
+      
+      <p className="text-lg py-2">{student.name}</p>
       <ul className="mt-4">
         <li 
         onClick={() => Router.push("/myselfStudentDetail")}
