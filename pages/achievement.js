@@ -38,21 +38,22 @@ export default function Achievement() {
       <div className="bg-top-bg w-screen h-screen">
         <div className="flex max-w-6xl mx-auto py-10 h-screen">
           <TeacherLeftMenu />
-          <div className="max-w-3xl text-sm pr-5">
+          <div className="max-w-3xl text-sm px-10 py-5 bg-white rounded-md">
+            <p className="text-gray-600 font-bold">実績一覧</p>
             <table>
               <thead>
-                <tr className="font-bold text-gray-600">
-                  <td className="w-[250px]">コース名</td>
+                <tr className="text-gray-600 border-b-[1px]">
+                  <td className="w-[250px] h-[50px]">コース名</td>
                   <td className="w-[110px]">値段</td>
                   <td className="w-[100px]">生徒</td>
-                  <td className="w-[100px]">開始日</td>
-                  <td className="w-[100px]">終了日</td>
+                  <td className="w-[80px]">開始日</td>
+                  <td className="w-[80px]">終了日</td>
                 </tr>
               </thead>
               <tbody>
                 {achievement.map((value, index) => (
-                  <tr key={index}>
-                  <td>{value.course_name}</td>
+                  <tr className="border-b-[1px]" key={index}>
+                  <td className="h-[50px]">{value.course_name}</td>
                   <td>{value.course_price}円</td>
                   <td>{value.student_name}</td>
                   <td>{`${value.start_date.toDate().getMonth()+1}月${value.start_date.toDate().getDate()}日`}</td>

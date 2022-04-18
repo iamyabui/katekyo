@@ -16,7 +16,6 @@ export default function MyStudents() {
   const teacher = useRecoilValue(teacherUserState);
   const [myStudentList, setMyStudentList] = useState([]);
   const [applyStatus, setApplyStatus] = useState([]);
-  const [finishApplyStatus, setFinishApplyStatus] = useState([]);
   const [pendingStatus, setPendingStatus] = useState([]);
   
   useEffect(() => {
@@ -39,21 +38,38 @@ export default function MyStudents() {
         // 受講が終了している生徒（複数）情報を取得。
         const studentsRef = collection(db, "Courses", course.courseId, "students");
         const studentFinish = await getDocs(studentsRef);
+        const studentsInfo = await getDocs(collection(db, "StudentUsers"));
+        const studentsInfoArray = studentsInfo.docs.map((doc) => {
+          const id = doc.id;
+          const photo_url = doc.data().photo_url;
+          return { id, photo_url }
+        })
 
         // 生徒一人ずつの情報とコース（course)情報をオブジェクトとして取得。
         studentFinish.docs.map((doc) => {
           const studentId = doc.id;
           const studentRef =doc.data();
-          coursesArray.push({ ...course, studentRef, studentId })
+          const studentInfo = studentsInfoArray.find((student) => student.id == studentId);
+          const photo_url = studentInfo.photo_url;
+          coursesArray.push({ ...course, studentRef, studentId, photo_url })
         })
 
       }))
-      console.log(coursesArray)
+
+      // coursesに、各生徒一人ずつの情報とコース（course)情報のオブジェクトを代入。
       setMyStudentList(coursesArray);
 
+      // 受講状況が申請中のコースをフィルター
       setApplyStatus(coursesArray.filter(course => course.studentRef.status == "申請中"));
-      setPendingStatus(coursesArray.filter(course => course.studentRef.status == "受講中"));
-      setFinishApplyStatus(coursesArray.filter(course => course.studentRef.status == "終了申請中"));
+      
+      // 受講状況が受講中かつ、生徒Idが重複するものはフィルター
+      const pendingStatus = coursesArray.filter(course => course.studentRef.status == "受講中");
+      const filtered_pendingStatus = pendingStatus.filter(function(val1, i, self){
+        return self.findIndex(function(val2) {
+          return val2.studentId == val1.studentId
+        }) == i
+      });
+      setPendingStatus(filtered_pendingStatus);
 
     })()  
 }, [])
@@ -71,12 +87,11 @@ export default function MyStudents() {
       <div className="bg-top-bg h-screen w-screen">
         <div className="flex max-w-6xl mx-auto py-10">
           <TeacherLeftMenu />
-          <div className="max-w-3xl">
-            <div className="mb-10">
-              {/* <FilterStatus /> */}
-            </div>
+          <div className="w-screen pr-20">
+            
             <div>
               <h1 className="font-bold text-sm">申請中のコース</h1>
+              {applyStatus.length > 0 ? (
               <table className="mt-5 text-sm">
                 <thead>
                   <tr>
@@ -118,16 +133,28 @@ export default function MyStudents() {
                   
                 </tbody>
               </table>
+              ):(
+                <div className="bg-gray-200 text-sm p-3 mt-3 rounded">
+                  <p>申請中の生徒はいません。</p>
+                </div>
+              )}
             </div>
+
             <div className="mt-5">
             <h1 className="font-bold text-sm">受講中の生徒</h1>
+            {pendingStatus.length > 0 ? (
                 <div className="mt-5 flex">
-                {pendingStatus.map((course) => (
-                <>
+                {pendingStatus.map((course, index) => (
+                <div key={index}>
                 <MyStudentProfile course={course} />
-                </>
+                </div>
                 ))}
                 </div>
+            ):(
+              <div className="bg-gray-200 text-sm p-3 mt-3 rounded">
+                <p>受講中の生徒はいません。</p>
+              </div>
+            )}
             </div>
           </div>
         </div>

@@ -2,13 +2,14 @@ import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalOve
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { useState } from "react";
 import Name from "../../common/form/NameForm";
-import IconBig from "../common/BigIcon";
+import IconBig from "../../common/icon/BigIcon";
 import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useRecoilState } from "recoil";
 import { teacherUserState } from "../../common/TeacherAtoms";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../src/firabase";
+import NoIcon from "../../common/icon/NoIcon";
 
 export default function TeacherProfileEdit(props) {
   const { userId } = props;
@@ -104,7 +105,11 @@ export default function TeacherProfileEdit(props) {
     <>
     <div className="w-52 py-5 bg-card-purple rounded-md flex flex-col justify-center items-center text-gray-700">
       <p className="my-1">Profile</p>
-      <IconBig />
+      { teacher.photo_url == "" ? (
+        <NoIcon />
+      ):(
+        <IconBig photo_url={teacher.photo_url} />
+      )}
       <button 
       className="text-sm py-1 px-2 my-3 bg-origin-gray hover:bg-origin-deepGray text-white rounded"
       onClick={onOpen}
