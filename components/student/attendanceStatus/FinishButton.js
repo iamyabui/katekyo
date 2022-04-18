@@ -1,4 +1,4 @@
-import { collection, doc, getDoc, getDocs, serverTimestamp, updateDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 import { useRecoilValue } from "recoil";
 import { db } from "../../../src/firabase";
 import { studentUserState } from "../../common/StudentAtoms";
@@ -10,8 +10,14 @@ export default function Finish(props) {
   const student = useRecoilValue(studentUserState)
 
   const handleFinish = async() => {
-    const CourseRef = await doc(db, "Courses", course.id, "students", student.id); 
-    await updateDoc(CourseRef, { status: "終了申請中", finish_date: serverTimestamp()}) 
+    try {
+      await updateDoc(doc(db, "Courses", course.id, "students", student.id), {
+        status: "終了申請中", 
+        finish_date: serverTimestamp(),
+      });
+    } catch (error) {
+      alert("編集内容が保存できませんでした。");
+    }
 
     // 生徒情報を取得
     (async () => {

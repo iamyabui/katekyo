@@ -2,7 +2,7 @@ export default function AttachFile() {
   return (
     <>
       <button className="hover:bg-gray-600 hover:text-white text-gray-600 border border-gray-400 px-1 py-1 rounded">
-        画像、ファイルを添付する
+        ファイルを添付する
       </button>
     </>
   );

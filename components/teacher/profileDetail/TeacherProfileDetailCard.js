@@ -2,6 +2,7 @@ import Consultation from "../../top/teacherDetail/ConsultationButton";
 import IconBig from "../../common/icon/BigIcon";
 import { teacherUserState } from "../../common/TeacherAtoms";
 import { useRecoilValue } from "recoil";
+import NoIcon from "../../common/icon/NoIcon";
 
 export default function TeacherProfileDetail(props) {
   const { countRecords } = props;
@@ -11,7 +12,11 @@ export default function TeacherProfileDetail(props) {
   return (
     <div className="w-52 py-5 bg-card-purple rounded-md flex flex-col justify-center items-center text-gray-700">
       <p className="my-1">Profile</p>
-      <IconBig />
+      { teacher.photo_url == "" ? (
+        <NoIcon />
+      ):(
+        <IconBig photo_url={teacher.photo_url} />
+      )}
       <p className="mt-3 mb-1">{teacher.name}</p>
       <Consultation />
       <p className="my-1">実績</p>

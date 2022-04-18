@@ -17,7 +17,7 @@ export default function EditNameForm() {
         </label>
         <input
           onChange={handleName}
-          className="w-40 h-9 appearance-none block border border-gray-400 text-gray-700 rounded py-3 px-4 mb-3 focus:outline-none focus:bg-white"
+          className="w-40 h-9 appearance-none block border border-gray-300 text-gray-700 rounded py-3 px-4 mb-3 focus:outline-none focus:bg-white"
           id="name"
           type="text"
           placeholder=""

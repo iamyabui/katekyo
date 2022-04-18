@@ -129,9 +129,9 @@ export default function StudentChatRoom() {
     <>
       <Header />
       <div className="bg-top-bg h-screen w-screen text-gray-700">
-        <div className="flex max-w-5xl mx-auto py-10 h-screen">
+        <div className="flex max-w-6xl mx-auto py-10 h-screen">
           <StudentLeftMenu />
-          <div className="mx-auto">
+          <div>
           {latestMessageWithStudentInfo.map((teacher, index) => (
               <div onClick={() => handleMoveToChatroom(teacher.teacherId)} key={index} className="text-sm my-2">
               <ChatNameList teacher={teacher} />

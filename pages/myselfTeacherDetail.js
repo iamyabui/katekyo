@@ -28,7 +28,7 @@ export default function MyselfTeacherDetail() {
         setTeacher({...teacher,
           name: getUserInfo.name,
           status: getUserInfo.status,
-          // photo_url: "",
+          photo_url: getUserInfo.photo_url,
           // occupation: "",
           // occupationName: "",
           category: getUserInfo.category,
@@ -59,7 +59,7 @@ export default function MyselfTeacherDetail() {
         <>
           <Header />
           <div className="bg-top-bg h-screen w-screen ">
-            <div className="flex max-w-5xl mx-auto py-10">
+            <div className="flex max-w-6xl mx-auto py-10">
               <TeacherLeftMenu />
               <TeacherProfileDetail countRecords={countRecords} />
               <DetailBox />

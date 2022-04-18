@@ -76,9 +76,9 @@ export default function AttendanceStatus() {
     <>
       <Header />
       <div className="bg-top-bg h-screen w-screen">
-        <div className="flex max-w-5xl mx-auto py-10">
+        <div className="flex max-w-6xl mx-auto py-10">
           <StudentLeftMenu />
-          <div className="w-[40rem] mx-auto text-gray-700 bg-white px-10 py-10 rounded">
+          <div className="w-[40rem] text-gray-700 bg-white px-10 py-10 rounded">
             <div className="mb-5">
               <p className="font-bold text-gray-600">申請中のコース</p>
               {applyStatus.length > 0 ? (
@@ -134,6 +134,7 @@ export default function AttendanceStatus() {
                   </div>
                   <div className="flex">
                     <p className="font-bold text-gray-600 mr-3">受講開始日</p>
+                    {console.log(course)}
                     <p>{`${course.studentInfo.start_date.toDate().getMonth()+1}月${course.studentInfo.start_date.toDate().getDate()}日`}</p>
                   </div>
                 </div>

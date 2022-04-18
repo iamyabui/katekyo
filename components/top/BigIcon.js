@@ -1,4 +1,3 @@
-
 export default function IconBig(props) {
   const { photo_url } = props;
 

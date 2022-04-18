@@ -2,13 +2,18 @@ import Router from "next/router";
 import { useRecoilValue } from "recoil";
 import IconBig from "../../common/icon/BigIcon";
 import { teacherUserState } from "../../common/TeacherAtoms";
+import NoIcon from "../../common/icon/NoIcon";
 
 export default function TeacherLeftMenu() {
   const teacher = useRecoilValue(teacherUserState);
 
   return (
     <div className="min-w-[20rem] text-gray-800 flex flex-col items-center pl-10">
-      <IconBig />
+      {!teacher.photo_url ? (
+        <NoIcon />
+      ):(
+        <IconBig photo_url={teacher.photo_url} />
+      )}
       <p className="text-lg py-2">{teacher.name}</p>
       <ul className="mt-4">
         <li 

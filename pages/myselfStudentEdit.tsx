@@ -40,7 +40,7 @@ export default function TopTeacherDetail() {
         <>
           <Header />
           <div className="bg-top-bg h-screen w-screen">
-            <div className="flex max-w-5xl mx-auto py-10">
+            <div className="flex max-w-6xl mx-auto py-10">
               <StudentLeftMenu />
               <StudentProfileEditCard />
               <div className="flex-column min-w-[28rem] mx-10 text-gray-700">

@@ -18,7 +18,7 @@ export default function StudentChatRoom() {
   const teacherId = router.query.id;
   const studentId = student.id;
   const [chatId, setChatId] = useState("");
-  const [teacherName, setTeacherName] = useState("");
+  const [teacher, setTeacher] = useState("");
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
 
@@ -28,7 +28,7 @@ export default function StudentChatRoom() {
     teacherRef.then(snapshot => {
       if (snapshot.data()) {
         const teacher = snapshot.data();
-        setTeacherName(teacher.name);
+        setTeacher(teacher);
     }})
 
     // すべてのチャット情報をFirebaseから取得
@@ -73,12 +73,12 @@ export default function StudentChatRoom() {
     <>
       <Header />
       <div className="bg-top-bg h-screen w-screen text-gray-700">
-        <div className="flex max-w-5xl mx-auto py-10 h-screen">
+        <div className="flex max-w-6xl mx-auto py-10 h-screen">
           <StudentLeftMenu />
-          <div className="mx-auto">
+          <div >
             <div>
               <div className="flex items-center py-2 mb-5">
-                <h1 className="text-lg font-bold mr-5">{teacherName}</h1>
+                <h1 className="text-lg font-bold mr-5">{teacher.name}</h1>
                 <Status />
               </div>
               <Textarea h={150} onChange={(e)=>(setNewMessage(e.target.value))} value={newMessage}></Textarea>
@@ -89,7 +89,7 @@ export default function StudentChatRoom() {
             </div>
             {messages.map((message, index) => (
               <div key={index}>
-              <ChatMessage message={message.text} senderName={message.sender_name} />
+              <ChatMessage message={message.text} senderName={message.sender_name} teacher={teacher} />
               </div>
             ))}
           </div>

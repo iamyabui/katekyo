@@ -7,6 +7,7 @@ import Router from "next/router";
 import IconSmall from "../icon/SmallIcon";
 import { teacherUserState } from "../TeacherAtoms";
 import { studentUserState } from "../StudentAtoms";
+import NoIconSmall from "../icon/NoIconSmall"
 
 export default function BurgerMenu() {
   const [menuAppear, setMenuAppear] = useState(false);
@@ -58,11 +59,22 @@ export default function BurgerMenu() {
 
   return (
     <>
-    {console.log(teacher)}
-    {console.log(student)}
       {teacher.id !== "" || student.id !== "" ? (
         <div onClick={handleAppearMenu}>
-          <IconSmall />
+          {teacher.id && (
+            !teacher.photo_url ? (
+              <NoIconSmall />
+            ):(
+              <IconSmall photo_url={teacher.photo_url} />
+            )
+          )}
+          {student.id && (
+            !student.photo_url ? (
+              <NoIconSmall />
+            ):(
+              <IconSmall photo_url={student.photo_url} />
+            )
+          )}
         </div>
       ) : (
         <img
