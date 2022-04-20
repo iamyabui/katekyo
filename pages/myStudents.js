@@ -116,21 +116,6 @@ export default function MyStudents() {
                     <td><SendMessageButton studentName={course.studentRef.name} studentId={course.studentId} /></td>
                     </tr>
                     ))}
-                  
-                  
-                    {finishApplyStatus.map((course, index) => (
-                    <tr key={index}>
-                    <td className="py-2">{course.name}</td>
-                    <td 
-                    onClick={() => handleMoveToStudentDetail(course.studentId)}
-                    className="cursor-pointer text-origin-purple"
-                    >{course.studentRef.name}</td>
-                    <td>{`${course.studentRef.finish_date.toDate().getMonth()+1}月${course.studentRef.finish_date.toDate().getDate()}日`}</td>
-                    <td><FinishApplyStatus /></td>
-                    <td><SendMessageButton studentName={course.studentRef.name} studentId={course.studentId} /></td>
-                    </tr>
-                    ))}
-                  
                 </tbody>
               </table>
               ):(
