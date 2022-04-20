@@ -12,7 +12,6 @@ import { db } from "../src/firabase";
 export default function MyselfTeacherDetail() {
   const [isLoading, setIsLoading] = useState(true);
   const [teacher, setTeacher] = useRecoilState(teacherUserState)
-  console.log(teacher)
   const userId = teacher.id;
   const teacherRef = doc(db, "TeacherUsers", userId);  
   const [countRecords, setCountRecords] = useState([]);

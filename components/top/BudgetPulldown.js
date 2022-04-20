@@ -29,8 +29,6 @@ export default function Budget() {
   return (
     <div className="flex flex-col mb-5">
       <label className="py-2 font-bold">予算</label>
-      {console.log(lowestCost)}
-      {console.log(highestCost)}
 
       <label className="py-2 pl-2 text-sm">下限</label>
       <div className="flex items-center">
