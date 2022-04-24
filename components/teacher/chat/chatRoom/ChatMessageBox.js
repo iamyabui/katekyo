@@ -4,7 +4,7 @@ import IconSmall from "../../../common/icon/SmallIcon";
 import NoIconSmall from "../../../common/icon/NoIconSmall";
 
 export default function ChatMessage(props) {
-  const { message, senderName, student } = props;
+  const { message, file_url, senderName, student } = props;
   const teacher = useRecoilValue(teacherUserState);
 
   return (
@@ -28,6 +28,14 @@ export default function ChatMessage(props) {
     </div>
       <p className="px-5 mt-5 text-sm">
         {message}
+        {file_url && (
+          <img 
+          src={file_url} 
+          alt="img" 
+          id="image" 
+          className="h-[200px]" 
+          />
+        )}
       </p>
     </div>
   );

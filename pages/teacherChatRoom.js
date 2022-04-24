@@ -21,6 +21,7 @@ export default function TeacherChatRoom() {
   const [student, setStudent] = useState({});
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [file, setFile] = useState("");
 
   useEffect(() => {
     // 生徒情報を取得
@@ -62,7 +63,8 @@ export default function TeacherChatRoom() {
           const text = doc.data().text;
           const time = doc.data().time;
           const sender_name = doc.data().sender_name;
-          return { id: id, text: text, time: time, sender_name: sender_name };
+          const file_url = doc.data().file_url;
+          return { id: id, text: text, time: time, sender_name: sender_name, file_url: file_url };
           })
           setMessages(getMessages);
         })
@@ -70,10 +72,10 @@ export default function TeacherChatRoom() {
 }, [])
 
   return (
-    <>
+    <div>
       <Header />
-      <div className="bg-top-bg h-screen w-screen text-gray-700">
-        <div className="flex max-w-6xl mx-auto py-10 h-screen">
+      <div className="w-screen text-gray-700">
+        <div className="flex max-w-6xl mx-auto py-10">
           <TeacherLeftMenu />
           <div>
             <div>
@@ -83,18 +85,18 @@ export default function TeacherChatRoom() {
               </div>
               <Textarea h={150} onChange={(e)=>(setNewMessage(e.target.value))} value={newMessage}></Textarea>
               <div className="w-[40rem] py-2 flex justify-between mb-8">
-                <AttachFile />
-                <Send message={newMessage} chatId = {chatId} setMessages={setMessages} setNewMessage={setNewMessage} />
+                <AttachFile file={file} setFile={setFile} />
+                <Send message={newMessage} file={file} chatId = {chatId} setMessages={setMessages} setNewMessage={setNewMessage} />
               </div>
             </div>
             {messages.map((message, index) => (
               <div key={index}>
-              <ChatMessage message={message.text} senderName={message.sender_name} student={student} />
+              <ChatMessage message={message.text} file_url={message.file_url} senderName={message.sender_name} student={student} />
               </div>
             ))}
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

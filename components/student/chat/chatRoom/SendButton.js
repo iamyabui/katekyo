@@ -1,42 +1,86 @@
 import { collection, doc, getDocs, orderBy, query, serverTimestamp, setDoc } from "firebase/firestore";
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
+import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { db } from "../../../../src/firabase";
 import { studentUserState } from "../../../common/StudentAtoms";
 
 export default function Send(props) {
   const student = useRecoilValue(studentUserState);
-  const { message, chatId, setMessages, setNewMessage } = props;
+  const { message, file, chatId, setChatId, setMessages, setNewMessage } = props;
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSendMessage = () => {
-    const MessageRef = collection(db, "Chats", chatId, "Messages");
-    setDoc(doc(MessageRef), {
-      photo_url: student.photo_url,
-      sender_id: student.id,
-      sender_name: student.name,
-      text: message,
-      time: serverTimestamp(),
-    })
+    (async() => {
+      const MessageRef = collection(db, "Chats", chatId, "Messages");
 
-    // ChatIDからメッセージIDを全部取得
-    const NewMessagesRef = collection(db, "Chats", chatId, "Messages");
-    const q = query(NewMessagesRef, orderBy("time", "desc"));
-
-    // Messageを送信時間の降順にしたものを配列として出力
-    getDocs(q).then(snapshot => {
-      const getMessages = snapshot.docs.map((doc) => {
-      const id = doc.id;
-      const text = doc.data().text;
-      const time = doc.data().time;
-      const sender_name = doc.data().sender_name;
-      return { id: id, text: text, time: time, sender_name: sender_name }
+      if (file) {
+        // (async() => {
+          const storage = getStorage();
+          const storageRef = ref(storage, `chat/${chatId}/${file.name}`);
+          const uploadTask = uploadBytesResumable(storageRef, file);
+  
+          uploadTask.on(`state_changed`,
+          (snapshot) => {
+            switch (snapshot.state) {
+              case `running` :
+                setIsLoading(true);
+            }
+          },
+          (error) => alert(error.message),
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+              setDoc(doc(MessageRef), {
+                photo_url: student.photo_url,
+                sender_id: student.id,
+                sender_name: student.name,
+                text: message,
+                time: serverTimestamp(),
+                file_url: url,
+              })
+            })
+          })
+        // })()
+      }
+      
+      
+      if (!file) {
+      await setDoc(doc(MessageRef), {
+        photo_url: student.photo_url,
+        sender_id: student.id,
+        sender_name: student.name,
+        text: message,
+        time: serverTimestamp(),
+        file_url: "",
       })
-      setMessages(getMessages);
+      }
+
+      // ChatIDからメッセージIDを全部取得, Messageを送信時間の降順にしたものを配列として出力
+      const NewMessagesRef = collection(db, "Chats", chatId, "Messages");
+      const q = query(NewMessagesRef, orderBy("time", "desc"));
+      const messages = await getDocs(q).then(snapshot => {
+        const messagesArray = [];
+        snapshot.docs.forEach((doc) => {
+        const id = doc.id;
+        const text = doc.data().text;
+        const time = doc.data().time;
+        const sender_name = doc.data().sender_name;
+        const file_url = doc.data().file_url;
+        messagesArray.push({ id: id, text: text, time: time, sender_name: sender_name, file_url: file_url })
+        })
+        return messagesArray;
+      })
+
+      setMessages(messages);
       setNewMessage("");
-    })
+    }
+    
+    )()
   }
 
   return (  
     <>
+    {console.log("test2")}
      { message !== "" ? (
         <button 
         onClick={() => handleSendMessage()}
