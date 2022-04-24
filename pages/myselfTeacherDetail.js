@@ -57,7 +57,7 @@ export default function MyselfTeacherDetail() {
       {(isLoading || userId || teacher.flag == "teacher" ) && (
         <>
           <Header />
-          <div className="bg-top-bg h-screen w-screen ">
+          <div className="w-screen ">
             <div className="flex max-w-6xl mx-auto py-10">
               <TeacherLeftMenu />
               <TeacherProfileDetail countRecords={countRecords} />

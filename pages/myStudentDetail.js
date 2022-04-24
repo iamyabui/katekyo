@@ -95,7 +95,7 @@ export default function TopTeacherDetail() {
   return (
     <>
       <Header />
-      <div className="bg-top-bg h-screen w-screen">
+      <div className="w-screen">
         <div className="flex max-w-6xl mx-auto py-10">
           <TeacherLeftMenu />
           <div className="max-w-3xl mx-auto">

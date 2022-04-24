@@ -39,7 +39,7 @@ export default function TopTeacherDetail() {
       {(isLoading || userId) && (
         <>
           <Header />
-          <div className="bg-top-bg h-screen w-screen">
+          <div className="w-screen">
             <div className="flex max-w-6xl mx-auto py-10">
               <StudentLeftMenu />
               <StudentProfileEditCard />
