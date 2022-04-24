@@ -6,6 +6,7 @@ import FlagPulldown from "../components/login/FlagPulldown";
 import { useRecoilState } from "recoil";
 import { userState, errorState } from "../components/common/atoms";
 import { useState } from "react";
+import Router from "next/router";
 
 export default function Login() {
   // ログインページ及び新規登録画面かを判別
@@ -38,6 +39,10 @@ export default function Login() {
     });
   };
 
+  const handlePasswordReset = () => {
+    Router.push("/passwordReset");
+  }
+
   return (
     <>
       <Header />
@@ -58,10 +63,14 @@ export default function Login() {
             </div>
             <p
               onClick={handleSwitch}
-              className="underline mx-auto mt-5 hover:cursor-pointer"
+              className="underline mx-auto mt-5 hover:cursor-pointer text-sm"
             >
               {loginPage ? "新規登録はこちら" : "ログインはこちら"}
             </p>
+            <p
+              onClick={handlePasswordReset}
+              className="underline mx-auto mt-5 hover:cursor-pointer text-sm"
+            >{loginPage && "パスワードをお忘れの方はこちら" }</p>
           </div>
         </div>
       </div>
