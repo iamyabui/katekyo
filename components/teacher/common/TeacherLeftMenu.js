@@ -48,6 +48,14 @@ export default function TeacherLeftMenu() {
             実績
           </p>
         </li>
+        <li 
+        onClick={() => Router.push("/teacherPasswordChange")}
+        className="list-none text-base py-2 flex items-center">
+          <img src="/password.png" className="h-4 w-4 ml-3"/>
+          <p className="pl-3 pr-2 hover:text-origin-purple hover:cursor-pointer">
+            パスワード変更
+          </p>
+        </li>
       </ul>
     </div>
   );

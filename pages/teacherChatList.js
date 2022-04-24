@@ -135,7 +135,7 @@ export default function TeacherChatRoom() {
   return (
     <>
       <Header />
-      <div className="bg-top-bg h-screen w-screen text-gray-700">
+      <div className="w-screen text-gray-700">
         <div className="flex max-w-6xl mx-auto py-10 h-screen">
           <TeacherLeftMenu />
           <div>

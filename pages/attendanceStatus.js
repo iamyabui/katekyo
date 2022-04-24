@@ -75,7 +75,7 @@ export default function AttendanceStatus() {
   return (
     <>
       <Header />
-      <div className="bg-top-bg h-screen w-screen">
+      <div className="w-screen">
         <div className="flex max-w-6xl mx-auto py-10">
           <StudentLeftMenu />
           <div className="w-[40rem] text-gray-700 bg-white px-10 py-10 rounded">

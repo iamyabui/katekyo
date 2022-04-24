@@ -115,7 +115,7 @@ export default function TopTeacherDetail() {
   return (
     <>
       <Header />
-      <div className='bg-top-bg h-screen'>
+      <div>
         <div className='flex max-w-4xl m-auto py-10'>
           <TopTeacherProfileDetailCard teacher={teacher} countRecords={countRecords} />
           <div className='flex-column mx-10 px-10 w-[40rem] text-gray-700'>

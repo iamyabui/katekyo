@@ -12,7 +12,6 @@ import { db } from "../src/firabase";
 export default function MyselfTeacherDetail() {
   const [isLoading, setIsLoading] = useState(true);
   const [teacher, setTeacher] = useRecoilState(teacherUserState)
-  console.log(teacher)
   const userId = teacher.id;
   const teacherRef = doc(db, "TeacherUsers", userId);  
   const [countRecords, setCountRecords] = useState([]);
@@ -58,7 +57,7 @@ export default function MyselfTeacherDetail() {
       {(isLoading || userId || teacher.flag == "teacher" ) && (
         <>
           <Header />
-          <div className="bg-top-bg h-screen w-screen ">
+          <div className="w-screen ">
             <div className="flex max-w-6xl mx-auto py-10">
               <TeacherLeftMenu />
               <TeacherProfileDetail countRecords={countRecords} />

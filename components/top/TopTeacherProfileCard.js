@@ -16,7 +16,7 @@ export default function TopProfile(props) {
   return (
     <div 
       onClick={() => handleMoveToDetailPage(teacher.id)}
-      className="w-52 h-72 py-3 mx-3 mb-3 bg-card-gray rounded-md flex flex-col justify-center items-center text-gray-700 shadow">
+      className="w-52 h-72 py-3 mx-3 bg-card-gray rounded-md flex flex-col justify-center items-center text-gray-700 shadow">
         { !teacher.photo_url ? (
           <NoIcon />
         ):(

@@ -1,13 +1,5 @@
 import Header from "../components/common/header/header";
 import TeacherLeftMenu from "../components/teacher/common/TeacherLeftMenu";
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-} from "@chakra-ui/react";
 import { db } from "../src/firabase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
@@ -35,7 +27,7 @@ export default function Achievement() {
   return (
     <>
       <Header />
-      <div className="bg-top-bg w-screen h-screen">
+      <div className="w-screen">
         <div className="flex max-w-6xl mx-auto py-10 h-screen">
           <TeacherLeftMenu />
           <div className="max-w-3xl text-sm px-10 py-5 bg-white rounded-md">
