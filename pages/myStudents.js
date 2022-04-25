@@ -16,6 +16,7 @@ export default function MyStudents() {
   const teacher = useRecoilValue(teacherUserState);
   const [myStudentList, setMyStudentList] = useState([]);
   const [applyStatus, setApplyStatus] = useState([]);
+  const [finishApplyStatus, setFinishApplyStatus] = useState([]);
   const [pendingStatus, setPendingStatus] = useState([]);
   
   useEffect(() => {
@@ -61,6 +62,9 @@ export default function MyStudents() {
 
       // 受講状況が申請中のコースをフィルター
       setApplyStatus(coursesArray.filter(course => course.studentRef.status == "申請中"));
+
+      // 受講状況が終了申請中のコースをフィルター
+      setFinishApplyStatus(coursesArray.filter(course => course.studentRef.status == "終了申請中"));
       
       // 受講状況が受講中かつ、生徒Idが重複するものはフィルター
       const pendingStatus = coursesArray.filter(course => course.studentRef.status == "受講中");
@@ -92,7 +96,7 @@ export default function MyStudents() {
             <div>
               <h1 className="font-bold text-sm">申請中のコース</h1>
               {applyStatus.length > 0 ? (
-              <table className="mt-5 text-sm">
+              <table className="mt-3 text-sm">
                 <thead>
                   <tr>
                     <td className="w-[200px] py-2">コース名</td>
@@ -121,6 +125,42 @@ export default function MyStudents() {
               ):(
                 <div className="bg-gray-200 text-sm p-3 mt-3 rounded">
                   <p>申請中の生徒はいません。</p>
+                </div>
+              )}
+            </div>
+
+            <div>
+              <h1 className="mt-5 font-bold text-sm">終了申請中のコース</h1>
+              {finishApplyStatus.length > 0 ? (
+              <table className="mt-3 text-sm">
+                <thead>
+                  <tr>
+                    <td className="w-[200px] py-2">コース名</td>
+                    <td className="w-[100px]">生徒名</td>
+                    <td className="w-[100px]">申請日</td>
+                    <td className="w-[100px]">ステータス</td>
+                    <td></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                    {finishApplyStatus.map((course, index) => (
+                    <tr key={index}>
+                    <td className="py-2">{course.name}</td>
+                    <td
+                    onClick={() => handleMoveToStudentDetail(course.studentId)}
+                    className="cursor-pointer text-origin-purple"
+                    >{course.studentRef.name}</td>
+                    <td>{`${course.studentRef.apply_date.toDate().getMonth()+1}月${course.studentRef.apply_date.toDate().getDate()}日`}</td>
+                    <td><ApplyStatus /></td>
+                    <td><SendMessageButton studentName={course.studentRef.name} studentId={course.studentId} /></td>
+                    </tr>
+                    ))}
+                </tbody>
+              </table>
+              ):(
+                <div className="bg-gray-200 text-sm p-3 mt-3 rounded">
+                  <p>終了申請中の生徒はいません。</p>
                 </div>
               )}
             </div>

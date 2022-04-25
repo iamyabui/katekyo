@@ -138,12 +138,18 @@ export default function TeacherChatRoom() {
       <div className="w-screen text-gray-700">
         <div className="flex max-w-6xl mx-auto py-10 h-screen">
           <TeacherLeftMenu />
-          <div>
-          {latestMessageWithStudentInfo.map((student, index) => (
-              <div onClick={() => handleMoveToChatroom(student.studentId)} key={index} className="text-sm my-2">
-              <ChatNameList student={student}/>
-              </div>
-          ))}
+          <div className="w-[40rem]">
+          {latestMessageWithStudentInfo.length ==0 ? (
+            <div className="bg-gray-200 text-sm p-3 mt-3 rounded">
+            <p>チャット履歴のある生徒はいません。</p>
+            </div>
+          ) : (
+            latestMessageWithStudentInfo.map((student, index) => (
+                <div onClick={() => handleMoveToChatroom(student.studentId)} key={index} className="text-sm my-2">
+                <ChatNameList student={student}/>
+                </div>
+            ))
+          )}
           </div>
         </div>
       </div>
