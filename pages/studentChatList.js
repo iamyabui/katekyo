@@ -16,17 +16,30 @@ export default function StudentChatRoom() {
 
   // ①該当ログインユーザーIDのcontactサブコレクションを一旦取得
   useEffect(() => {
-    const studentRef = doc(db, "StudentUsers", student.id);
-    const contactsRef = getDocs(collection(studentRef, "contacts"));
-
-    contactsRef.then(snapshot => {
-        const contacts = snapshot.docs.map((doc) => {
-            const teacherId = doc.id;
-            const name = doc.data().name;
-            return { id: teacherId, name: name }
+    (async() => {
+      const studentRef = doc(db, "StudentUsers", student.id);
+      const contactsRef = collection(studentRef, "contacts");
+      const teacherRef = collection(db, "TeacherUsers");
+      
+      const teachers = await getDocs(teacherRef).then(snapshot => {
+        const teacherArray = [];
+        snapshot.docs.forEach((doc) => {
+          const id = doc.id;
+          const name = doc.data().name;
+          teacherArray.push({id: id, name: name})
         })
-        setContactList(contacts);
-    })
+        return teacherArray;
+      })
+
+      await getDocs(contactsRef).then(snapshot => {
+          const contacts = snapshot.docs.map((doc) => {
+              const teacherId = doc.id;
+              const teacherInfo = teachers.find((teacher) => (teacher.id == teacherId))
+              return teacherInfo
+          })
+          setContactList(contacts);
+      })
+      })()
   }, [])
 
   // ②chatコレクションの全内容を、chatIdとフィールドをオブジェクトとして一旦取得

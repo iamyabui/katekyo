@@ -6,8 +6,7 @@ import { teacherUserState } from "../../common/TeacherAtoms";
 
 export default function SendMessageButton(props) {
     const teacher = useRecoilValue(teacherUserState);
-    // const [message, setMessage] = useState("");
-    const { studentName, studentId } = props;
+    const { studentEmail, studentId } = props;
 
     const handleMessageSend = async() => {
         // 先生と生徒両方に対して連絡先リストに追加
@@ -15,11 +14,11 @@ export default function SendMessageButton(props) {
         const contactsTeacherCollectionRef = doc(db, "TeacherUsers", teacher.id, "contacts", studentId);
 
         setDoc(contactsStudentCollectionRef, {
-        name: teacher.name,
+        email: teacher.email,
         });
 
         setDoc(contactsTeacherCollectionRef, {
-        name: studentName,
+        email: studentEmail,
         });
 
         // Chatsコレクション内sender_userとreceive_userに、生徒と先生が既に登録されていないかを確認する。

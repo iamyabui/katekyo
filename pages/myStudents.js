@@ -1,14 +1,12 @@
-import { collection, doc, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import Router from "next/router";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import ApplyStatus from "../components/common/buttons/ApplyStatusButton";
-import FinishApplyStatus from "../components/common/buttons/FinishApplyStatusButton";
 import Header from "../components/common/header/header";
 import { teacherUserState } from "../components/common/TeacherAtoms";
 import TeacherLeftMenu from "../components/teacher/common/TeacherLeftMenu";
 import MyStudentProfile from "../components/teacher/myStudentDetail/MyStudentProfileCard";
-import FilterStatus from "../components/teacher/myStudentList/StatusPulldown";
 import SendMessageButton from "../components/teacher/myStudentDetail/SendMessageButton"
 import { db } from "../src/firabase";
 
@@ -38,21 +36,25 @@ export default function MyStudents() {
       await Promise.all(courseWithStudentsArray.map(async (course) => {
         // 受講が終了している生徒（複数）情報を取得。
         const studentsRef = collection(db, "Courses", course.courseId, "students");
-        const studentFinish = await getDocs(studentsRef);
+        const studentData = await getDocs(studentsRef);
         const studentsInfo = await getDocs(collection(db, "StudentUsers"));
         const studentsInfoArray = studentsInfo.docs.map((doc) => {
           const id = doc.id;
+          const email = doc.data().email;
+          const name = doc.data().name;
           const photo_url = doc.data().photo_url;
-          return { id, photo_url }
+          return { id, email, name, photo_url }
         })
 
         // 生徒一人ずつの情報とコース（course)情報をオブジェクトとして取得。
-        studentFinish.docs.map((doc) => {
+        studentData.docs.forEach((doc) => {
           const studentId = doc.id;
           const studentRef =doc.data();
           const studentInfo = studentsInfoArray.find((student) => student.id == studentId);
           const photo_url = studentInfo.photo_url;
-          coursesArray.push({ ...course, studentRef, studentId, photo_url })
+          const student_name = studentInfo.name;
+          const student_email = studentInfo.email;
+          coursesArray.push({ ...course, studentRef, studentId, photo_url, student_name, student_email });
         })
 
       }))
@@ -114,10 +116,10 @@ export default function MyStudents() {
                     <td
                     onClick={() => handleMoveToStudentDetail(course.studentId)}
                     className="cursor-pointer text-origin-purple"
-                    >{course.studentRef.name}</td>
+                    >{course.student_name}</td>
                     <td>{`${course.studentRef.apply_date.toDate().getMonth()+1}月${course.studentRef.apply_date.toDate().getDate()}日`}</td>
                     <td><ApplyStatus /></td>
-                    <td><SendMessageButton studentName={course.studentRef.name} studentId={course.studentId} /></td>
+                    <td><SendMessageButton studentEmail={course.student_email} studentId={course.studentId} /></td>
                     </tr>
                     ))}
                 </tbody>
@@ -150,10 +152,10 @@ export default function MyStudents() {
                     <td
                     onClick={() => handleMoveToStudentDetail(course.studentId)}
                     className="cursor-pointer text-origin-purple"
-                    >{course.studentRef.name}</td>
+                    >{course.student_name}</td>
                     <td>{`${course.studentRef.apply_date.toDate().getMonth()+1}月${course.studentRef.apply_date.toDate().getDate()}日`}</td>
                     <td><ApplyStatus /></td>
-                    <td><SendMessageButton studentName={course.studentRef.name} studentId={course.studentId} /></td>
+                    <td><SendMessageButton studentEmail={course.student_email} studentId={course.studentId} /></td>
                     </tr>
                     ))}
                 </tbody>
