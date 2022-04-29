@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { userState } from "../atoms";
 import { getAuth, signOut } from "firebase/auth";
-import { auth } from "../../../src/firabase";
 import Router from "next/router";
 import IconSmall from "../icon/SmallIcon";
 import { teacherUserState } from "../TeacherAtoms";
@@ -11,7 +9,6 @@ import NoIconSmall from "../icon/NoIconSmall"
 
 export default function BurgerMenu() {
   const [menuAppear, setMenuAppear] = useState(false);
-  // const [user, setUser] = useRecoilState(userState);
   const [teacher, setTeacher] = useRecoilState(teacherUserState)
   const [student, setStudent] = useRecoilState(studentUserState)
 

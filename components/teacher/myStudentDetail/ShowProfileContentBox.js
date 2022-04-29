@@ -80,7 +80,7 @@ export default function ShowProfileContent(props) {
               </div>
             </div>
             <div className="flex flex-col">
-              <FinishApprove course={course} setStudent={setStudent}/>
+              <FinishApprove course={course} setStudent={setStudent} student={student}/>
               <FinishCancel course={course} setStudent={setStudent}/>
             </div>
           </div>
