@@ -20,11 +20,11 @@ export default function Consultation(props) {
     const contactsTeacherCollectionRef = doc(db, "TeacherUsers", teacher.id, "contacts", student.id);
 
     setDoc(contactsStudentCollectionRef, {
-      name: teacher.name,
+      email: teacher.email,
     });
 
     setDoc(contactsTeacherCollectionRef, {
-      name: student.name,
+      email: student.email,
     });
 
     // Chatsコレクション内sender_userとreceive_userに、生徒と先生が既に登録されていないかを確認する。

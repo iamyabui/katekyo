@@ -6,7 +6,7 @@ import { studentUserState } from "../../common/StudentAtoms";
 
 export default function Apply(props) {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { courseName, courseId, coursePrice , teacherId, teacherName, setCourseList } = props;
+  const { courseName, courseId, coursePrice , teacherId, teacherEmail, setCourseList } = props;
   const student = useRecoilValue(studentUserState);
 
   const handleApply = async (courseId) => {
@@ -16,7 +16,6 @@ export default function Apply(props) {
     
     // Courseコレクションにログイン生徒IDドキュメントとフィールドを追加する。
     setDoc(CourseRef, {
-      name: student.name,
       status: "申請中",
       apply_date: serverTimestamp()
     })
@@ -31,11 +30,11 @@ export default function Apply(props) {
     const contactsTeacherCollectionRef = doc(db, "TeacherUsers", teacherId, "contacts", student.id);
 
     setDoc(contactsStudentCollectionRef, {
-      name: teacherName,
+      email: teacherEmail,
     });
 
     setDoc(contactsTeacherCollectionRef, {
-      name: student.name,
+      email: student.email,
     });
 
     // Chatsコレクション内sender_userとreceive_userに、生徒と先生が既に登録されていないかを確認する。

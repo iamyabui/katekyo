@@ -16,17 +16,30 @@ export default function TeacherChatRoom() {
 
   // ①該当ログイン先生ユーザーIDのcontactサブコレクションを一旦取得
   useEffect(() => {
-    const teacherRef = doc(db, "TeacherUsers", teacher.id);
-    const contactsRef = getDocs(collection(teacherRef, "contacts"));
+    (async() => {
+      const teacherRef = doc(db, "TeacherUsers", teacher.id);
+      const contactsRef = collection(teacherRef, "contacts");
+      const studentRef = collection(db, "StudentUsers");
 
-    contactsRef.then(snapshot => {
-        const contacts = snapshot.docs.map((doc) => {
-            const studentId = doc.id;
-            const name = doc.data().name;
-            return { id: studentId, name: name }
+      const students = await getDocs(studentRef).then(snapshot => {
+        const studentArray = [];
+        snapshot.docs.forEach((doc) => {
+          const id = doc.id;
+          const name = doc.data().name;
+          studentArray.push({id: id, name: name})
         })
-        setContactList(contacts);
-    })
+        return studentArray;
+      })
+
+      await getDocs(contactsRef).then(snapshot => {
+          const contacts = snapshot.docs.map((doc) => {
+              const studentId = doc.id;
+              const studentInfo = students.find((student) => (student.id == studentId))
+              return studentInfo
+          })
+          setContactList(contacts);
+      })
+    })()
   }, [])
 
   // ②chatコレクションの全内容を、chatIdとフィールドをオブジェクトとして一旦取得
@@ -105,8 +118,9 @@ export default function TeacherChatRoom() {
           const messageArray = [];
           snapshot.docs.forEach((doc) => {
             const message = doc.data().text;
+            const file_url = doc.data().file_url;
             const time = doc.data().time;
-            messageArray.push({ message, time });
+            messageArray.push({ message, time, file_url });
           });
           return messageArray;                    
         })
@@ -138,12 +152,18 @@ export default function TeacherChatRoom() {
       <div className="w-screen text-gray-700">
         <div className="flex max-w-6xl mx-auto py-10 h-screen">
           <TeacherLeftMenu />
-          <div>
-          {latestMessageWithStudentInfo.map((student, index) => (
-              <div onClick={() => handleMoveToChatroom(student.studentId)} key={index} className="text-sm my-2">
-              <ChatNameList student={student}/>
-              </div>
-          ))}
+          <div className="w-[40rem]">
+          {latestMessageWithStudentInfo.length ==0 ? (
+            <div className="bg-gray-200 text-sm p-3 mt-3 rounded">
+            <p>チャット履歴のある生徒はいません。</p>
+            </div>
+          ) : (
+            latestMessageWithStudentInfo.map((student, index) => (
+                <div onClick={() => handleMoveToChatroom(student.studentId)} key={index} className="text-sm my-2">
+                <ChatNameList student={student}/>
+                </div>
+            ))
+          )}
           </div>
         </div>
       </div>

@@ -26,7 +26,7 @@ export default function MyStudentProfile(props) {
       ):(
         <IconBig photo_url={course.photo_url} />
       )}
-      <p className="mt-3 mb-3">{course.studentRef.name}</p>
+      <p className="mt-3 mb-3">{course.student_name}</p>
       <Status />
       <p className="mt-2 mb-1 text-sm">{start_date}から受講</p>
     </div>
