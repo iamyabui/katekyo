@@ -101,33 +101,53 @@ export default function CourseEditForm() {
         }
     }
 
-    const handleDeleteCourse = (id, index) => {
-        const teacherRef = doc(db, "TeacherUsers", loginUser.id, "courses", id);
-        deleteDoc(teacherRef);
+    const handleDeleteCourse = (id) => {
+        (async () => {
+            const studentsWithCourse = await getDocs(collection(db, "Courses", id, "students"));
+            const studentsCount = studentsWithCourse.docs.length;
+        
+            if(studentsCount == 0){
+                const teacherRef = doc(db, "TeacherUsers", loginUser.id, "courses", id);
+                deleteDoc(teacherRef);
 
-        const courseRef = doc(db, "Courses", id)
-        deleteDoc(courseRef);
+                const courseRef = doc(db, "Courses", id)
+                deleteDoc(courseRef);
 
-        const NewTeacherRef = doc(db, "TeacherUsers", loginUser.id);
-        const NewCoursesRef = getDocs(collection(NewTeacherRef, "courses"));
-       
-        // コース削除後の設定コース一覧を取得
-        NewCoursesRef.then(snapshot => {
-            const courses = snapshot.docs.map((doc) => {
-                const id = doc.id;
-                const name = doc.data().name;
-                const price = doc.data().price;
-                return { id: id, name: name, price: price };
-            })
-            setCourseList(courses);
-        })
+                const NewTeacherRef = doc(db, "TeacherUsers", loginUser.id);
+                const NewCoursesRef = getDocs(collection(NewTeacherRef, "courses"));
+            
+                // コース削除後の設定コース一覧を取得
+                NewCoursesRef.then(snapshot => {
+                    const courses = snapshot.docs.map((doc) => {
+                        const id = doc.id;
+                        const name = doc.data().name;
+                        const price = doc.data().price;
+                        return { id: id, name: name, price: price };
+                    })
+                    setCourseList(courses);
+                })
+            }else{
+                alert("受講している生徒がいるため削除することはできません。")
+            }
+            
+        })()
     }
 
     const handleEditCourse = (course) => {
-        setCourse(course.name);
-        setPrice(course.price);
-        setEditId(course.id);
-        setIsEdit(true);
+        (async () => {
+            const studentsWithCourse = await getDocs(collection(db, "Courses", course.id, "students"));
+            const studentsCount = studentsWithCourse.docs.length;
+
+            if(studentsCount == 0){
+                setCourse(course.name);
+                setPrice(course.price);
+                setEditId(course.id);
+                setIsEdit(true);
+            }else{
+                alert("受講している生徒がいるためコース名を変更することはできません。")
+            }
+        })()
+            
     }
     
     return (

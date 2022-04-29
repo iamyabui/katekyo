@@ -33,7 +33,6 @@ export default function Send(props) {
               setDoc(doc(MessageRef), {
                 photo_url: student.photo_url,
                 sender_id: student.id,
-                sender_name: student.name,
                 text: message,
                 time: serverTimestamp(),
                 file_url: url,
@@ -48,7 +47,6 @@ export default function Send(props) {
       await setDoc(doc(MessageRef), {
         photo_url: student.photo_url,
         sender_id: student.id,
-        sender_name: student.name,
         text: message,
         time: serverTimestamp(),
         file_url: "",
@@ -64,9 +62,9 @@ export default function Send(props) {
         const id = doc.id;
         const text = doc.data().text;
         const time = doc.data().time;
-        const sender_name = doc.data().sender_name;
+        const sender_id = doc.data().sender_id;
         const file_url = doc.data().file_url;
-        messagesArray.push({ id: id, text: text, time: time, sender_name: sender_name, file_url: file_url })
+        messagesArray.push({ id: id, text: text, time: time, sender_id: sender_id, file_url: file_url })
         })
         return messagesArray;
       })

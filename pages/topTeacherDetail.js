@@ -35,6 +35,7 @@ export default function TopTeacherDetail() {
         return {
           id: snapshot.id,
           name: user.name,
+          email: user.email,
           photo_url: user.photo_url,
           occupation: user.occupation,
           occupationName: user.occupationName,
@@ -146,7 +147,7 @@ export default function TopTeacherDetail() {
                       <Th>
                       {student.id !== "" && (
                         value.status == "undefined" ? (
-                          <Apply key={index} courseName={value.name} courseId={value.courseId} coursePrice={value.price} teacherId={id} teacherName={teacher.name} setCourseList={setCourseList} />
+                          <Apply key={index} courseName={value.name} courseId={value.courseId} coursePrice={value.price} teacherId={id} teacherEmail={teacher.email} setCourseList={setCourseList} />
                         ) : (
                           <p>{value.status}</p>
                         )

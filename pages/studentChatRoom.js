@@ -51,9 +51,6 @@ export default function StudentChatRoom() {
 
     })();
   },[])
-
-  console.log(teacher)
-  console.log(chats)
   
   useEffect(() => {
     if (chats.length > 0) {
@@ -84,9 +81,9 @@ export default function StudentChatRoom() {
         const id = doc.id;
         const text = doc.data().text;
         const time = doc.data().time;
-        const sender_name = doc.data().sender_name;
+        const sender_id = doc.data().sender_id;
         const file_url = doc.data().file_url;
-        messageArray.push({ id: id, text: text, time: time, sender_name: sender_name, file_url: file_url });
+        messageArray.push({ id: id, text: text, time: time, sender_id: sender_id, file_url: file_url });
         })
         return messageArray;
       });
@@ -95,8 +92,6 @@ export default function StudentChatRoom() {
     })()
     }
   },[chatId])
-
-  console.log(messages)
 
   return (
     <>
@@ -119,7 +114,7 @@ export default function StudentChatRoom() {
             </div>
             {messages.map((message, index) => (
               <div key={index}>
-              <ChatMessage message={message.text} file_url={message.file_url} senderName={message.sender_name} teacher={teacher} />
+              <ChatMessage message={message.text} file_url={message.file_url} senderId={message.sender_id} teacher={teacher} />
               </div>
             ))}
           </div>

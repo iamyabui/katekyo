@@ -62,9 +62,9 @@ export default function TeacherChatRoom() {
           const id = doc.id;
           const text = doc.data().text;
           const time = doc.data().time;
-          const sender_name = doc.data().sender_name;
+          const sender_id = doc.data().sender_id;
           const file_url = doc.data().file_url;
-          return { id: id, text: text, time: time, sender_name: sender_name, file_url: file_url };
+          return { id: id, text: text, time: time, sender_id: sender_id, file_url: file_url };
           })
           setMessages(getMessages);
         })
@@ -91,7 +91,7 @@ export default function TeacherChatRoom() {
             </div>
             {messages.map((message, index) => (
               <div key={index}>
-              <ChatMessage message={message.text} file_url={message.file_url} senderName={message.sender_name} student={student} />
+              <ChatMessage message={message.text} file_url={message.file_url} senderId={message.sender_id} student={student} studentId={studentId} />
               </div>
             ))}
           </div>
