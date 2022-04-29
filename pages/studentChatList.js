@@ -66,6 +66,11 @@ export default function StudentChatRoom() {
         const teacherId = teacher.id;
         const teacherName = teacher.name;
 
+        // 0,生徒の写真URLを取得する。
+        const teacherRef = doc(db, "TeacherUsers", teacherId);
+        const teacherInfo = await getDoc(teacherRef);
+        const photo_url = teacherInfo.data().photo_url;
+
         // １，先生の担当コースで、受講しているコースがあればステータスをtrueにしておく。
         //    受講中のものがあれば、受講中というステータスを表示したいため。
         const CoursesRef = collection(db, "Courses");
@@ -113,8 +118,9 @@ export default function StudentChatRoom() {
           const messageArray = [];
           snapshot.docs.forEach((doc) => {
             const message = doc.data().text;
+            const file_url = doc.data().file_url;
             const time = doc.data().time;
-            messageArray.push({ message, time });
+            messageArray.push({ message, time, file_url });
           });
           return messageArray;                    
         })
@@ -123,7 +129,7 @@ export default function StudentChatRoom() {
         const latestMessage = messages[0];
 
         // ３，１と２で取得した値をオブジェクトとして登録（表示で利用するため）
-        return({ teacherId: teacherId, teacherName: teacherName, latestMessage: latestMessage, isStatus: isStatus})
+        return({ teacherId: teacherId, teacherName: teacherName, latestMessage: latestMessage, isStatus: isStatus, photo_url: photo_url})
         }
 
       }));
@@ -144,12 +150,18 @@ export default function StudentChatRoom() {
       <div className="w-screen text-gray-700">
         <div className="flex max-w-6xl mx-auto py-10 h-screen">
           <StudentLeftMenu />
-          <div>
-          {latestMessageWithStudentInfo.map((teacher, index) => (
+          <div className="w-[40rem]">
+          {latestMessageWithStudentInfo.length ==0 ? (
+            <div className="bg-gray-200 text-sm p-3 mt-3 rounded">
+            <p>チャット履歴のある生徒はいません。</p>
+            </div>
+          ) : (
+            latestMessageWithStudentInfo.map((teacher, index) => (
               <div onClick={() => handleMoveToChatroom(teacher.teacherId)} key={index} className="text-sm my-2">
               <ChatNameList teacher={teacher} />
               </div>
-          ))}
+            ))
+          )}
           </div>
         </div>
       </div>

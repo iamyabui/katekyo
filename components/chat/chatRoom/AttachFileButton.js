@@ -5,9 +5,8 @@ export default function AttachFile(props) {
   
   const handleDeleteFile = () => {
     setFile("");
+    document.getElementById("inputFile").value="";
   }
-
-  console.log(file)
 
   return (
     <>
@@ -17,6 +16,7 @@ export default function AttachFile(props) {
         <input 
         type="file" 
         className="hidden"
+        id="inputFile"
         onChange={(e) => (setFile(e.target.files[0]))}
         ></input>
         ファイルを添付する
@@ -26,15 +26,15 @@ export default function AttachFile(props) {
         className="
         flex 
         items-center
-        ml-3 bg-transparent text-red-400 border border-red-400 px-2 rounded-full
+        ml-3 bg-transparent text-gray-500 border border-gray-500 px-2 rounded-full
         ">
         <p 
-        className="">
+        className="pb-1">
           {file.name}
         </p>
         <img 
         src="/close.png" 
-        className="h-3 w-3 fill-red-400 ml-1 cursor-pointer"
+        className="h-2 w-2 fill-red-400 ml-2 mr-1 cursor-pointer"
         onClick={() => handleDeleteFile()}
         ></img>
         </div>

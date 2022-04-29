@@ -118,8 +118,9 @@ export default function TeacherChatRoom() {
           const messageArray = [];
           snapshot.docs.forEach((doc) => {
             const message = doc.data().text;
+            const file_url = doc.data().file_url;
             const time = doc.data().time;
-            messageArray.push({ message, time });
+            messageArray.push({ message, time, file_url });
           });
           return messageArray;                    
         })

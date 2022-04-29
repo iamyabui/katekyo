@@ -11,6 +11,7 @@ import { studentUserState } from "../components/common/StudentAtoms";
 import { Textarea } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { Spinner } from '@chakra-ui/react'
 
 export default function StudentChatRoom() {
   const student = useRecoilValue(studentUserState);
@@ -18,12 +19,12 @@ export default function StudentChatRoom() {
   const teacherId = router.query.id;
   const studentId = student.id;
   const [chats, setChats] = useState([]);
-  const [chat, setChat] = useState([]);
   const [chatId, setChatId] = useState("");
   const [teacher, setTeacher] = useState("");
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [file, setFile] = useState("");
+  const [progress, setProgress] = useState(100);
 
   useEffect(() => {
     (async () => {
@@ -54,18 +55,14 @@ export default function StudentChatRoom() {
   
   useEffect(() => {
     if (chats.length > 0) {
-      console.log(chats)
       // contact1とcontact2に、先生IDと生徒DIが該当するChatを検索して、そのChatIDを取得
       chats.forEach((chat) => {
         if((chat.contact1 == studentId && chat.contact2 == teacherId) || (chat.contact1 == teacherId && chat.contact2 == studentId)) {
           setChatId(chat.id);
-          console.log(chat.id)
         }
       })
     }
   },[chats])
-
-  console.log(chatId)
   
   useEffect(() => {
     if (chatId){ 
@@ -95,7 +92,6 @@ export default function StudentChatRoom() {
 
   return (
     <>
-    {console.log("test1")}
       <Header />
       <div className="w-screen text-gray-700">
         <div className="flex max-w-6xl mx-auto py-10 h-screen">
@@ -109,14 +105,21 @@ export default function StudentChatRoom() {
               <Textarea h={150} onChange={(e)=>(setNewMessage(e.target.value))} value={newMessage}></Textarea>
               <div className="w-[40rem] py-2 flex justify-between mb-8">
                 <AttachFile file={file} setFile={setFile} />
-                <Send message={newMessage} file={file} chatId={chatId} setChatId={setChatId} setMessages={setMessages} setNewMessage={setNewMessage} />
+                <Send message={newMessage} file={file} setFile={setFile} chatId={chatId} setChatId={setChatId} setMessages={setMessages} setNewMessage={setNewMessage} progress={progress} setProgress={setProgress} />
               </div>
             </div>
-            {messages.map((message, index) => (
+            {progress !== "100" ? (
+            messages.map((message, index) => (
               <div key={index}>
-              <ChatMessage message={message.text} file_url={message.file_url} senderId={message.sender_id} teacher={teacher} />
+              <ChatMessage message={message.text} file_url={message.file_url} senderId={message.sender_id} teacher={teacher} teacherId={teacherId} />
               </div>
-            ))}
+            ))
+            ):(
+              <div className="flex">
+              <Spinner />
+              <p className="ml-4">loading...</p>
+              </div>
+            )}
           </div>
         </div>
       </div>

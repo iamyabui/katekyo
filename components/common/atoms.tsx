@@ -23,6 +23,11 @@ type error = {
   gradeError: string;
   occupationError: string;
   occupationNameError: string;
+  categoryError: string;
+  supportError: string;
+  titleError: string;
+  detailError: string;
+  consultError: string;
 };
 
 export const errorState = atom<error>({
@@ -34,5 +39,10 @@ export const errorState = atom<error>({
     gradeError: "",
     occupationError: "",
     occupationNameError: "",
+    categoryError: "",
+    supportError: "",
+    titleError: "",
+    detailError: "",
+    consultError: "",
   },
 });
