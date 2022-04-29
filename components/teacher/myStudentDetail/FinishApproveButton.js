@@ -5,7 +5,7 @@ import { teacherUserState } from "../../common/TeacherAtoms";
 
 export default function FinishApprove(props) {
   const teacher = useRecoilValue(teacherUserState);
-  const { course, setStudent } = props;
+  const { course, setStudent, student } = props;
 
   const handleApprove = () => {
     (async () => {
@@ -17,13 +17,14 @@ export default function FinishApprove(props) {
       const StudentCourseRef = doc(db, "StudentUsers", course.studentId, "courses", course.courseId);
 
       const RecordsRef = doc(collection(db, "Records"));
+      console.log(RecordsRef)
       await setDoc(RecordsRef, { 
         courseID: course.courseId, 
         course_name: course.courseName, 
         course_price: course.coursePrice, 
         teacherID: teacher.id,
         studentID: course.studentId, 
-        student_name: student_status.name, 
+        // student_name: student.name, 
         start_date: Timestamp.fromDate(new Date(start_date)),
         finish_date: Timestamp.fromDate(new Date(finish_date)),
       })

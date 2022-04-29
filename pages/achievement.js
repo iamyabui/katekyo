@@ -13,10 +13,29 @@ export default function Achievement() {
   useEffect(() => {
     (async () => {
       const RecordsRef = collection(db, "Records");
+      const StudentsRef = collection(db, "StudentUsers");
+
+      const students = await getDocs(StudentsRef).then(snapshot => {
+        const studentArray = [];
+        snapshot.docs.forEach((doc) => {
+          const id = doc.id;
+          const name = doc.data().name;
+          studentArray.push({id: id, name: name})
+        })
+        return studentArray;
+      })
+
       const q = query(RecordsRef, where("teacherID", "==", teacher.id));
       getDocs(q).then((snapshot) => {
         const records = snapshot.docs.map((doc) => {
-          return doc.data();
+          const studentId = doc.data().studentID;
+          const studentInfo = students.find((student) => (student.id == studentId))
+          console.log(studentInfo.name)
+          const student_name = studentInfo.name;
+          const record = doc.data();
+          const recordWithName = { ...record, student_name }
+          console.log(recordWithName)
+          return recordWithName;
         })
         setAchievement(records);
     })
