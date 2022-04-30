@@ -1,4 +1,3 @@
-import Subject from "../common/selectButtons/SubjectButton";
 import IconBig from "./BigIcon";
 import NoIcon from "./NoIcon"
 import Router from "next/router";
@@ -24,7 +23,7 @@ export default function TopProfile(props) {
         )}
         <p className="mt-3 mb-1">{teacher.name}</p>
         <p className="my-1 px-6 text-center">{teacher.title}</p>
-        <Subject />
+        {/* <Subject /> */}
     </div>
   );
 }

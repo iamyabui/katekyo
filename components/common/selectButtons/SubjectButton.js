@@ -7,7 +7,6 @@ export default function Subject(props) {
 
   const normal = "inline-block bg-subject-gray hover:bg-origin-purple hover:text-white text-origin-purple px-1 my-1 mx-1 rounded hover:cursor-pointer"
   const selected = "inline-block bg-origin-purple text-white px-1 my-1 mx-1 rounded hover:cursor-pointer"
-  const test = editUser.subjects;
 
   const handleStyleButton = (subject) => {
     if (editUser.subjects.includes(subject)) {
