@@ -139,7 +139,7 @@ export default function MyStudents() {
                   <tr>
                     <td className="w-[200px] py-2">コース名</td>
                     <td className="w-[100px]">生徒名</td>
-                    <td className="w-[100px]">申請日</td>
+                    <td className="w-[100px]">終了申請日</td>
                     <td className="w-[100px]">ステータス</td>
                     <td></td>
                   </tr>
@@ -153,7 +153,7 @@ export default function MyStudents() {
                     onClick={() => handleMoveToStudentDetail(course.studentId)}
                     className="cursor-pointer text-origin-purple"
                     >{course.student_name}</td>
-                    <td>{`${course.studentRef.apply_date.toDate().getMonth()+1}月${course.studentRef.apply_date.toDate().getDate()}日`}</td>
+                    <td>{`${course.studentRef.finish_date.toDate().getMonth()+1}月${course.studentRef.finish_date.toDate().getDate()}日`}</td>
                     <td><ApplyStatus /></td>
                     <td><SendMessageButton studentEmail={course.student_email} studentId={course.studentId} /></td>
                     </tr>
