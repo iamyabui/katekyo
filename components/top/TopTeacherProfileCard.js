@@ -23,7 +23,15 @@ export default function TopProfile(props) {
         )}
         <p className="mt-3 mb-1">{teacher.name}</p>
         <p className="my-1 px-6 text-center">{teacher.title}</p>
-        {/* <Subject /> */}
+        <div className="flex flex-wrap mx-3 mx-auto">
+        {teacher.subjects.map((subject, index) => (
+          <div 
+          key ={index}
+          className="inline-block bg-subject-gray hover:bg-origin-purple hover:text-white text-origin-purple px-1 my-1 mx-1 rounded hover:cursor-pointer text-xs">
+            {subject}
+          </div>
+        ))}
+        </div>
     </div>
   );
 }
