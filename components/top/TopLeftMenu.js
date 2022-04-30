@@ -1,8 +1,8 @@
 import Category from "./CategoryPulldown";
-// import SubjectSelectButtons from "./selectButtons/SubjectSelectButtons";
+import SubjectSelectButtons from "./selectButtons/SubjectSelectButtons";
 import Budget from "./BudgetPulldown";
 import ConsultMethodCheckbox from "./ConsultMethodCheckbox"
-// import SearchButton from "./SearchButton"
+import SearchButton from "./SearchButton"
 
 export default function TopLeftMenu() {
   return (
@@ -14,13 +14,13 @@ export default function TopLeftMenu() {
       <div className="flex flex-col mb-5">
         <label className="py-2 font-bold">科目</label>
         <div className="flex flex-wrap">
-          {/* <SubjectSelectButtons /> */}
+          <SubjectSelectButtons />
         </div>
       </div>
 
       <ConsultMethodCheckbox />
       <Budget />
-      {/* <SearchButton /> */}
+      <SearchButton />
     </div>
   );
 }

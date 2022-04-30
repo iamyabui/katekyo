@@ -1,20 +1,8 @@
 import Router from "next/router";
-import { useRecoilValue } from "recoil";
-import IconBig from "../../common/icon/BigIcon";
-import { teacherUserState } from "../../common/TeacherAtoms";
-import NoIcon from "../../common/icon/NoIcon";
-
 export default function TeacherLeftMenu() {
-  const teacher = useRecoilValue(teacherUserState);
 
   return (
     <div className="min-w-[20rem] text-gray-800 flex flex-col items-center pl-10">
-      {!teacher.photo_url ? (
-        <NoIcon />
-      ):(
-        <IconBig photo_url={teacher.photo_url} />
-      )}
-      <p className="text-lg py-2">{teacher.name}</p>
       <ul className="mt-4">
         <li 
         onClick={() => Router.push("/myselfTeacherDetail")}
@@ -49,7 +37,7 @@ export default function TeacherLeftMenu() {
           </p>
         </li>
         <li 
-        onClick={() => Router.push("/teacherPasswordChange")}
+        onClick={() => Router.push("/passwordChange")}
         className="list-none text-base py-2 flex items-center">
           <img src="/password.png" className="h-4 w-4 ml-3"/>
           <p className="pl-3 pr-2 hover:text-origin-purple hover:cursor-pointer">

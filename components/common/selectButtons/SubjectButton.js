@@ -22,11 +22,16 @@ export default function Subject(props) {
 
   return (
     <>
-    {editUser.subjects.includes(subject) ? (
+    {editUser.subjects.length > 0 ? (
+    editUser.subjects.includes(subject) ? (
       <p key={index} onClick={() => handleStyleButton(subject)} className={selected}>
         {subject}
       </p>
      ):(
+      <p key={index} onClick={() => handleStyleButton(subject)} className={normal}>
+        {subject}
+      </p>
+    )):(
       <p key={index} onClick={() => handleStyleButton(subject)} className={normal}>
         {subject}
       </p>
