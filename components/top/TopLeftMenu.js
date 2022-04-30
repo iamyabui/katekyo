@@ -14,7 +14,7 @@ export default function TopLeftMenu() {
       <div className="flex flex-col mb-5">
         <label className="py-2 font-bold">科目</label>
         <div className="flex flex-wrap">
-          <SubjectSelectButtons />
+          {/* <SubjectSelectButtons /> */}
         </div>
       </div>
 
