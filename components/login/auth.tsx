@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import { db, auth } from "../../src/firabase";
-import { doc, getDoc, getDocs, collection } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { useRecoilState } from "recoil";
-import { userState } from "../common/atoms";
 import { studentUserState } from "../common/StudentAtoms";
 import { teacherUserState } from "../common/TeacherAtoms";
 
 export const UserAuth = () => {
-  // const [LoginUser, setLoginUser] = useRecoilState(userState);
   const [isLoading, setIsLoading] = useState(true);
   const [teacher, setTeacher] = useRecoilState(teacherUserState)
   const [student, setStudent] = useRecoilState(studentUserState)

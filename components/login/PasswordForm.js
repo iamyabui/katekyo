@@ -17,7 +17,7 @@ export default function Password() {
       <input
         className="w-full h-9 appearance-none border border-gray-300 block rounded py-3 px-4 mb-3 focus:outline-none"
         id="password"
-        type="text"
+        type="password"
         placeholder=""
         onChange={handlePassword}
         value={user.password}

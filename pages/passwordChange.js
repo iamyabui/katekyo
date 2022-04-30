@@ -2,8 +2,11 @@ import Header from "../components/common/header/header";
 import TeacherLeftMenu from "../components/teacher/common/TeacherLeftMenu";
 import { EmailAuthProvider, getAuth, reauthenticateWithCredential, updatePassword } from "firebase/auth";
 import { useState } from "react";
+import { useRecoilValue } from "recoil";
+import { teacherUserState } from "../components/common/TeacherAtoms";
+import StudentLeftMenu from "../components/student/common/StudentLeftMenu";
 
-export default function TeacherPasswordChange() {
+export default function PasswordChange() {
     const [newPassword, setNewPassword] = useState("");
     const [checkPassword, setCheckPassword] = useState("");
     const [currentPassword, setCurrentPassword] = useState("");
@@ -11,6 +14,7 @@ export default function TeacherPasswordChange() {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState("");
     const [currentPasswordError, setCurrentPasswordError] = useState("")
+    const teacher = useRecoilValue(teacherUserState);
 
     const handleCurrentPassword = (e) => {
         setCurrentPassword(e.target.value);
@@ -65,7 +69,12 @@ export default function TeacherPasswordChange() {
       <Header />
       <div className="w-screen text-gray-700">
         <div className="flex max-w-6xl mx-auto py-10 h-screen">
+        {teacher.id ? (
           <TeacherLeftMenu />
+        ):(
+          <StudentLeftMenu />
+        
+        )}
         
         <div className="w-full px-10 flex flex-col">
             <p>パスワード変更</p>
@@ -86,7 +95,7 @@ export default function TeacherPasswordChange() {
                         <input
                         className="w-[250px] h-9 appearance-none border border-gray-300 block rounded py-3 px-4 mb-3 focus:outline-none"
                         id="password"
-                        type="text"
+                        type="password"
                         placeholder=""
                         onChange={handleCurrentPassword}
                         value={currentPassword}
@@ -104,7 +113,7 @@ export default function TeacherPasswordChange() {
                     <input
                     className="w-full h-9 appearance-none border border-gray-300 block rounded py-3 px-4 mb-3 focus:outline-none"
                     id="password"
-                    type="text"
+                    type="password"
                     placeholder=""
                     onChange={handleNewPassword}
                     value={newPassword}
@@ -121,7 +130,7 @@ export default function TeacherPasswordChange() {
                     <input
                     className="w-[250px] h-9 appearance-none border border-gray-300 block rounded py-3 px-4 mb-3 focus:outline-none"
                     id="password"
-                    type="text"
+                    type="password"
                     placeholder=""
                     onChange={handleCheckPassword}
                     value={checkPassword}
