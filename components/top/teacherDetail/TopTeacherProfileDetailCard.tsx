@@ -1,6 +1,6 @@
 import Consultation from "../../top/teacherDetail/ConsultationButton";
 import IconBig from "../BigIcon";
-import NoIcon from "../NoIcon"
+import NoIcon from "../../common/icon/NoIcon"
 import { useRecoilValue } from "recoil";
 import { teacherUserState } from "../../common/TeacherAtoms";
 

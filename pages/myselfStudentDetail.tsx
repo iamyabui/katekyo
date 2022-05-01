@@ -13,7 +13,6 @@ export default function MyselfStudentDetail() {
   const [isLoading, setIsLoading] = useState(true);
   const [student, setStudent] =useRecoilState(studentUserState)
   const userId = student.id;
-  console.log(student)
   const studentRef = doc(db, "StudentUsers", userId);
 
   useEffect(() => {

@@ -14,7 +14,11 @@ export default function SwitchForm() {
         <FormLabel htmlFor="switch">
           <p className="text-base font-bold">表示ステータス</p>
         </FormLabel>
-        <Switch id="switch" onChange={handleSwitch} value={editUser.status} />
+        {editUser.status ? (
+          <Switch id="switch" onChange={handleSwitch} value={editUser.status} isChecked />
+        ) : (
+          <Switch id="switch" onChange={handleSwitch} value={editUser.status} />
+        )}
       </FormControl>
       <p className="text-sm w-52">
         先生一覧に表示する場合はON、表示しない場合はOFFにしてください。

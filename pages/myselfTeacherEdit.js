@@ -13,6 +13,7 @@ import TitleForm from "../components/teacher/profileEdit/TitleForm"
 import CourseEditForm from "../components/teacher/profileEdit/CourseEditForm"
 import { teacherUserState } from "../components/common/TeacherAtoms";
 import TextForm from "../components/teacher/profileEdit/textForm";
+import CancelButton from "../components/teacher/profileEdit/CancelButton"
 
 export default function MyselfTeacherEdit() {
   const [isLoading, setIsLoading] = useState(true);
@@ -29,7 +30,6 @@ export default function MyselfTeacherEdit() {
 
   return (
     <>
-    {console.log(loginUser)}
       {(isLoading || userId || flag == "teacher") && (
         <>
           <Header />
@@ -65,6 +65,7 @@ export default function MyselfTeacherEdit() {
                   <CourseEditForm />
                 </div>
                 <div className="mt-10 flex justify-end">
+                  <CancelButton />
                   <Save />
                 </div>
               </div>
