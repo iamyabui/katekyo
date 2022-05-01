@@ -3,16 +3,12 @@ import { editUserState } from "../atoms";
 import { teacherUserState } from "../TeacherAtoms";
 
 export default function ConsultMethod() {
-  // const [user, setUser] = useRecoilState(teacherUserState);
   const [editUser, setEditUser] = useRecoilState(editUserState);
-  // const { consult, setConsult } = props;
 
   const handleChat = (e) => {
     editUser.consult.chat ? (
-      // setConsult({...consult, [e.target.value]: false})
       setEditUser({...editUser, consult : {...editUser.consult, [e.target.value]: false}})
     ) : (
-      // setConsult({...consult, [e.target.value]: true})
       setEditUser({...editUser, consult : {...editUser.consult, [e.target.value]: true}})
     );
     
@@ -20,10 +16,8 @@ export default function ConsultMethod() {
   
   const handleVideo = (e) => {
     editUser.consult.video ? (
-      // setConsult({...consult, [e.target.value]: false})
       setEditUser({...editUser, consult : {...editUser.consult, [e.target.value]: false}})
     ) : (
-      // setConsult({...consult, [e.target.value]: true})
       setEditUser({...editUser, consult : {...editUser.consult, [e.target.value]: true}})
     );
     
@@ -31,7 +25,6 @@ export default function ConsultMethod() {
 
   return (
     <>
-    {console.log(editUser.consult)}
       <label className="font-bold">相談方法</label>
       <div className="mt-2 ml-2 mb-5" >
         <div>

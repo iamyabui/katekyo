@@ -15,7 +15,7 @@ export default function UpdateIcon() {
   const [fileError, setFileError] = useState("");
   const [src, setSrc] = useState("");
   const [myFiles, setMyFiles] = useState([]);
-  const [progress, setProgress] = useState("");
+  const [progress, setProgress] = useState(100);
   const userId = student.id;
 
   const onDrop = useCallback(async(acceptedFiles) => {
@@ -75,7 +75,7 @@ export default function UpdateIcon() {
     uploadTask.on(
       'state_changed',
       (snapshot) => {
-        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setProgress(progress);
       },
       (err) => alert(err.message),
@@ -91,7 +91,7 @@ export default function UpdateIcon() {
           }).then(() => {
             onClose();
             setMyFiles([]);
-            setProgress("");
+            setProgress(100);
           });
         })
       }
@@ -138,9 +138,9 @@ export default function UpdateIcon() {
             
             <ModalFooter>
             <div className="mx-auto mb-5 flex flex-col">
-            {progress && (
+            {progress !== 100 && (
                 <p className="text-sm text-gray-500 mx-auto">
-                ...Loading {progress}%
+                ...Loading
                 </p>
             )}
             {myFiles.length !== 0 ? (

@@ -7,6 +7,7 @@ import Router from "next/router";
 import { studentUserState } from "../components/common/StudentAtoms";
 import { editUserState } from "../components/common/atoms";
 import SaveButton from "../components/student/profileEdit/SaveButton";
+import CancelButton from "../components/student/profileEdit/CancelButton";
 
 export default function TopTeacherDetail() {
   const [editUser, setEditUser] = useRecoilState(editUserState);
@@ -106,6 +107,7 @@ export default function TopTeacherDetail() {
                   ></textarea>
                 </div>
                 <div className="mt-5 flex justify-end">
+                  <CancelButton />
                   <SaveButton />
                 </div>
               </div>

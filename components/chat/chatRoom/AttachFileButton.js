@@ -1,11 +1,27 @@
 
 
 export default function AttachFile(props) {
-  const {file, setFile} = props;
+  const {file, setFile, setFileError} = props;
   
   const handleDeleteFile = () => {
     setFile("");
     document.getElementById("inputFile").value="";
+  }
+
+  const handleAttachFile = (e) => {
+    const new_file = e.target.files[0];
+    
+    if(!new_file.type.includes("image")) {
+      setFileError("imageファイルを選択してください。")
+      return;
+    }
+    if(new_file.size > 200000) {
+      setFileError("200kb以下の写真を選択してください。")
+      return;
+    }
+
+    setFile(new_file);
+    setFileError("");
   }
 
   return (
@@ -17,9 +33,9 @@ export default function AttachFile(props) {
         type="file" 
         className="hidden"
         id="inputFile"
-        onChange={(e) => (setFile(e.target.files[0]))}
+        onChange={handleAttachFile}
         ></input>
-        ファイルを添付する
+        画像を添付する
       </label>
       {file && (
         <div 
@@ -40,7 +56,7 @@ export default function AttachFile(props) {
         </div>
       )}
       
-    </div>
+    </div>    
     </>
   );
 }

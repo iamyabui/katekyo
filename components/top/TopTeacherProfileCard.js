@@ -1,6 +1,6 @@
 import IconBig from "./BigIcon";
-import NoIcon from "./NoIcon"
 import Router from "next/router";
+import NoIcon from "../common/icon/NoIcon";
 
 export default function TopProfile(props) {
   const { teacher } = props;
@@ -15,7 +15,7 @@ export default function TopProfile(props) {
   return (
     <div 
       onClick={() => handleMoveToDetailPage(teacher.id)}
-      className="w-52 h-72 py-3 mx-3 bg-card-gray rounded-md flex flex-col justify-center items-center text-gray-700 shadow">
+      className="w-52 h-72 py-5 mx-3 bg-card-gray rounded-md flex flex-col items-center text-gray-700 shadow">
         { !teacher.photo_url ? (
           <NoIcon />
         ):(

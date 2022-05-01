@@ -134,7 +134,6 @@ export default function AttendanceStatus() {
                   </div>
                   <div className="flex">
                     <p className="font-bold text-gray-600 mr-3">受講開始日</p>
-                    {console.log(course)}
                     <p>{`${course.studentInfo.start_date.toDate().getMonth()+1}月${course.studentInfo.start_date.toDate().getDate()}日`}</p>
                   </div>
                 </div>

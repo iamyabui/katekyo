@@ -12,7 +12,7 @@ export default function Category() {
     <>
     <div className="inline-block relative w-32">
       <select onChange={handleCategory} className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-        <option value="">選択</option>
+        <option value="">全て</option>
         <option value="大学受験">大学受験</option>
         <option value="中学受験">中学受験</option>
         <option value="高校受験">高校受験</option>

@@ -22,7 +22,7 @@ export default function ChatNameList(props) {
       {student.latestMessage ? (
         <p className="px-5">
           {(!student.latestMessage.message && student.latestMessage.file_url) && <p>画像が送信されました</p>}
-          {student.latestMessage.message && student.latestMessage.message}
+          {student.latestMessage.message && <p className="truncate">{student.latestMessage.message}</p>}
         </p>
       ) : (
         <p className="px-5">

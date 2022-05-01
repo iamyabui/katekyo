@@ -18,7 +18,7 @@ export default function TeacherProfileEdit(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [src, setSrc] = useState("");
   const [myFiles, setMyFiles] = useState([]);
-  const [progress, setProgress] = useState("");
+  const [progress, setProgress] = useState(100);
 
   const onDrop = useCallback(async(acceptedFiles) => {
     if (!acceptedFiles[0]) return;
@@ -77,7 +77,7 @@ export default function TeacherProfileEdit(props) {
     uploadTask.on(
       'state_changed',
       (snapshot) => {
-        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setProgress(progress);
       },
       (err) => alert(err.message),
@@ -93,7 +93,7 @@ export default function TeacherProfileEdit(props) {
           }).then(() => {
             onClose();
             setMyFiles([]);
-            setProgress("");
+            setProgress(100);
           });
         })
       }
@@ -144,9 +144,9 @@ export default function TeacherProfileEdit(props) {
          
         <ModalFooter>
           <div className="mx-auto mb-5 flex flex-col">
-          {progress && (
+          {progress !== 100 && (
             <p className="text-sm text-gray-500 mx-auto">
-            ...Loading {progress}%
+            ...Loading
             </p>
           )}
           {myFiles.length !== 0 ? (

@@ -25,6 +25,7 @@ export default function StudentChatRoom() {
   const [newMessage, setNewMessage] = useState("");
   const [file, setFile] = useState("");
   const [progress, setProgress] = useState(100);
+  const [fileError, setFileError] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -97,18 +98,31 @@ export default function StudentChatRoom() {
         <div className="flex max-w-6xl mx-auto py-10 h-screen">
           <StudentLeftMenu />
           <div >
-            <div>
+            <div className="mb-5">
               <div className="flex items-center py-2 mb-5">
                 <h1 className="text-lg font-bold mr-5">{teacher.name}</h1>
                 <Status />
               </div>
               <Textarea h={150} onChange={(e)=>(setNewMessage(e.target.value))} value={newMessage}></Textarea>
-              <div className="w-[40rem] py-2 flex justify-between mb-8">
-                <AttachFile file={file} setFile={setFile} />
-                <Send message={newMessage} file={file} setFile={setFile} chatId={chatId} setChatId={setChatId} setMessages={setMessages} setNewMessage={setNewMessage} progress={progress} setProgress={setProgress} />
+              <div className="w-[40rem] py-2 flex justify-between">
+                <AttachFile file={file} setFile={setFile} setFileError={setFileError} />
+                <Send 
+                message={newMessage} 
+                file={file} 
+                setFile={setFile} 
+                chatId={chatId} 
+                setChatId={setChatId} 
+                setMessages={setMessages} 
+                setNewMessage={setNewMessage} 
+                progress={progress} 
+                setProgress={setProgress}
+                />
               </div>
+              {fileError && (
+                <p className="text-xs text-red-500">{fileError}</p>
+              )}
             </div>
-            {progress !== "100" ? (
+            {progress == 100 ? (
             messages.map((message, index) => (
               <div key={index}>
               <ChatMessage message={message.text} file_url={message.file_url} senderId={message.sender_id} teacher={teacher} teacherId={teacherId} />

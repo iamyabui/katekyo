@@ -34,7 +34,6 @@ export default function Send(props) {
                 time: serverTimestamp(),
                 file_url: url,
               })
-
               updateMessages();
             })
           })

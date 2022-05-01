@@ -18,7 +18,6 @@ export default function ChatMessage(props) {
           </>
         ):(
           <>
-          {console.log(teacher)}
           <IconSmall photo_url={teacher.photo_url} />
           <p className="ml-4">{teacher.name}</p>
           </>
