@@ -6,6 +6,7 @@ export default function SelectSubjects() {
   const [editUser, setEditUser] = useRecoilState(editUserState);
 
   const subjects = [
+    "#英語",
     "#算数",
     "#国語",
     "#理科",

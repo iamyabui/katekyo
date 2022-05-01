@@ -24,6 +24,7 @@ export default function TeacherChatRoom() {
   const [newMessage, setNewMessage] = useState("");
   const [file, setFile] = useState("");
   const [progress, setProgress] = useState(100);
+  const [fileError, setFileError] = useState("");
 
   useEffect(() => {
     (async() => {
@@ -102,11 +103,14 @@ export default function TeacherChatRoom() {
               </div>
               <Textarea h={150} onChange={(e)=>(setNewMessage(e.target.value))} value={newMessage}></Textarea>
               <div className="w-[40rem] py-2 flex justify-between mb-8">
-                <AttachFile file={file} setFile={setFile} />
+                <AttachFile file={file} setFile={setFile} setFileError={setFileError} />
                 <Send message={newMessage} file={file} setFile={setFile} chatId = {chatId} setMessages={setMessages} setNewMessage={setNewMessage} progress={progress} setProgress={setProgress} />
               </div>
+              {fileError && (
+                <p className="text-xs text-red-500">{fileError}</p>
+              )}
             </div>
-            {progress !== "100" ? (
+            {progress == 100 ? (
             messages.map((message, index) => (
               <div key={index}>
               <ChatMessage message={message.text} file_url={message.file_url} senderId={message.sender_id} student={student} studentId={studentId} />

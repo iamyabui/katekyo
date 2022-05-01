@@ -124,12 +124,12 @@ export default function TopTeacherDetail() {
             <div className='mb-5 flex-column p-5'>
               <p className='font-bold'>{teacher.title}</p>
             </div>
-            <p className='mb-5 ml-2'>自己紹介</p>
+            <p className='mb-5 ml-2 font-bold text-sm'>自己紹介</p>
             <div className='mb-5 flex-column bg-white p-5 rounded '>
               <p className='whitespace-pre-wrap text-sm'>{teacher.detail}</p>
             </div>
 
-            <p className='mb-5 ml-2'>コース内容</p>
+            <p className='mb-5 ml-2 font-bold text-sm'>コース内容</p>
             <div className='mb-5 flex-column bg-white p-5 rounded '>
               <Table>
                 <Thead>

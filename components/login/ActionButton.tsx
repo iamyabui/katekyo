@@ -76,7 +76,6 @@ export default function Action(props: loginPageType) {
         getDoc(teacherRef).then((snapshot) => {
           if (snapshot.data()) {
             const user = snapshot.data();
-            console.log(user)
             setTeacher({
               ...teacher,
               id: snapshot.id,
@@ -104,7 +103,6 @@ export default function Action(props: loginPageType) {
           });
         })
         .catch((error) => {
-          console.log(error.message);
           setError({
             ...error,
             emailError:
@@ -169,7 +167,6 @@ export default function Action(props: loginPageType) {
 
   // 新規登録：名前と学年が空欄でないことを確認後、新規ユーザーのパスワードとemailをAuthenticationに登録
   async function handleCreateUser() {
-    console.log(user);
     // 生徒としてユーザ登録した場合
     if (user.flag == "student") {
       // ユーザが登録成功した場合

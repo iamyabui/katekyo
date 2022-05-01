@@ -17,8 +17,6 @@ export default function Save() {
       })
     }
 
-    console.log(editUser)
-
     if(editUser.status == true) {
       if( editUser.category == "" || editUser.subjects.length == 0 || editUser.title == "" || (editUser.consult.chat==false && editUser.consult.video==false) || editUser.detail == "") {
       return alert("表示ステータスをONにする場合は、全てのフォームの入力を完了させてください。")
