@@ -26,7 +26,8 @@ export default function SearchButton() {
                 const method = doc.data().method;
                 const status = doc.data().status;
                 const consult = doc.data().consult;
-                return { id, name, title, category, subjects, method, status, consult }
+                const photo_url = doc.data().photo_url;
+                return { id, name, title, category, subjects, method, status, consult, photo_url };
             })
             return teachers
             })
