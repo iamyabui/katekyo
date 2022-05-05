@@ -5,7 +5,7 @@ import ShowProfileContent from "../components/teacher/myStudentDetail/ShowProfil
 import { useRouter } from "next/router";
 import Router from "next/router";
 import { useEffect, useState } from "react";
-import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
+import { collection, doc, DocumentData, DocumentReference, getDoc, getDocs, query, QueryDocumentSnapshot, SnapshotOptions, where } from "firebase/firestore";
 import { db } from "../src/firabase";
 import { useRecoilValue } from "recoil";
 import { teacherUserState } from "../components/common/TeacherAtoms";
@@ -20,9 +20,62 @@ export default function TopTeacherDetail() {
   const [records, setRecords] = useState([]);
   const [photo_url, setPhoto_url] = useState([]);
 
+  // type StudentUsers = {
+  //   name: string;
+  //   email: string;
+  //   photo_url: string;
+  //   flag: string;
+  //   school: string;
+  //   grade: string;
+  //   text: string;
+  //   goal: string;
+  //   request: string;
+  // }
+
+  // const StudentUsersConverter = {
+  //   toFirestore(user: StudentUsers): DocumentData {
+  //     return {
+  //       name: user.name, 
+  //       email: user.email, 
+  //       photo_url: user.photo_url, 
+  //       flag: user.flag, 
+  //       school: user.school, 
+  //       grade: user.grade,
+  //       text: user.text, 
+  //       goal: user.goal,
+  //       request: user.request
+  //     };
+  //   },
+  //   fromFirestore(
+  //     snapshot: QueryDocumentSnapshot,
+  //     options: SnapshotOptions
+  //   ): StudentUsers {
+  //     const data = snapshot.data(options)!;
+
+  //     return {
+  //       name: data.name, 
+  //       email: data.email, 
+  //       photo_url: data.photo_url, 
+  //       flag: data.flag, 
+  //       school: data.school, 
+  //       grade: data.grade,
+  //       text: data.text, 
+  //       goal: data.goal,
+  //       request: data.request
+  //     };;
+  //   }
+  // };
+
+
+// const createdocument = <T = DocumentData>(collectionName: string, documentName: string) => {
+//   return doc(db, collectionName, documentName) as DocumentReference<T>
+// }
+
   useEffect(() => {
     // 生徒情報を取得
-      const StudentRef = getDoc(doc(db, "StudentUsers", studentId))
+      // const test = doc(db, "StudentUsers", studentId).withConverter(StudentUsersConverter);
+      const test = doc(db, "StudentUsers", studentId);
+      const StudentRef = getDoc(test)
       StudentRef.then(snapshot => {
         if (snapshot.data()) {
           const studentId = snapshot.id;
