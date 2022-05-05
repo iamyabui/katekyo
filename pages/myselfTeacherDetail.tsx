@@ -14,7 +14,7 @@ export default function MyselfTeacherDetail() {
   const [teacher, setTeacher] = useRecoilState(teacherUserState)
   const userId = teacher.id;
   const teacherRef = doc(db, "TeacherUsers", userId);  
-  const [countRecords, setCountRecords] = useState([]);
+  const [countRecords, setCountRecords] = useState(0);
 
   useEffect(() => {
     // ログインユーザを確認し、ログインできてなかったらLoginページへ遷移する。

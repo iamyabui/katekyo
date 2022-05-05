@@ -2,6 +2,7 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { db } from "../../src/firabase";
 import { categoryState, consultState, highestBudgetState, lowestBudgetState, subjectsState, topState } from "../common/TopAtoms";
+import { useSubjectFilter } from "./useSubjectFilter";
 
 export default function SearchButton() {
     const [teachers, setTeachers] = useRecoilState(topState);
@@ -16,7 +17,7 @@ export default function SearchButton() {
             const teacherRef = collection(db, "TeacherUsers");
             const displayList = query(teacherRef, where("status", "==", true));
 
-            const resetFilter = await getDocs(displayList).then(snapshot => {
+            const all = await getDocs(displayList).then(snapshot => {
             const teachers = snapshot.docs.map((doc) => {
                 const id = doc.id;
                 const name = doc.data().name;
@@ -33,37 +34,37 @@ export default function SearchButton() {
             })
 
         // 科目のフィルター
-        function subjectFilter() {
-            if (subjects.length !== 0){
-                // filteredSubjects: 選択した科目に該当する先生を出力。
-                const filteredSubjects = subjects.map((subject) => {
-                    const checkInclude = resetFilter.filter(function (teacher) {
-                        return teacher.subjects.includes(subject)
-                    })
-                    return checkInclude
-                })
+        // function subjectFilter() {
+        //     if (subjects.length !== 0){
+        //         // filteredSubjects: 選択した科目に該当する先生を出力。
+        //         const filteredSubjects = subjects.map((subject) => {
+        //             const checkInclude = all.filter(function (teacher) {
+        //                 return teacher.subjects.includes(subject)
+        //             })
+        //             return checkInclude
+        //         })
 
-                // 複数選択されていた場合に、一つでも合致しない教科があるか確認。（もし、合致しない場合は、条件に当てはまらないとしてから配列を後で返すため。）
-                const test3 = filteredSubjects.map((value) => {
-                    if (value.length == 0) {
-                        return "NG"
-                    }else{
-                        return "OK"
-                    }
-                })
+        //         // 複数選択されていた場合に、一つでも合致しない教科があるか確認。（もし、合致しない場合は、条件に当てはまらないとしてから配列を後で返すため。）
+        //         const test3 = filteredSubjects.map((value) => {
+        //             if (value.length == 0) {
+        //                 return "NG"
+        //             }else{
+        //                 return "OK"
+        //             }
+        //         })
 
-                // もしひとつでも合致しなかった科目がある場合は、から配列を返す。
-                // 合致した場合は、最初に出力したフィルター結果を返す。
-                if (test3.includes("NG")) {
-                    return [];
-                } else {
-                    return filteredSubjects[0];
-                }
-            } else {
-                return resetFilter;
-            }
+        //         // もしひとつでも合致しなかった科目がある場合は、から配列を返す。
+        //         // 合致した場合は、最初に出力したフィルター結果を返す。
+        //         if (test3.includes("NG")) {
+        //             return [];
+        //         } else {
+        //             return filteredSubjects[0];
+        //         }
+        //     } else {
+        //         return all;
+        //     }
 
-        }
+        // }
 
         // カテゴリのフィルター
         function categoryFilter(filter1st) {
@@ -152,7 +153,7 @@ export default function SearchButton() {
         }
        
 
-        const filter1st = await subjectFilter();
+        const filter1st = await useSubjectFilter(all);
         if (filter1st !== []){
         const filter2nd = await categoryFilter(filter1st);
         const filter3rd = await consultFilter(filter2nd);
