@@ -18,14 +18,7 @@ export default function Home() {
     getDocs(displayList).then(snapshot => {
      const teachers = snapshot.docs.map((doc) => {
         const id = doc.id;
-        const name = doc.data().name;
-        const title = doc.data().title;
-        const category = doc.data().category;
-        const subjects = doc.data().subjects;
-        const method = doc.data().method;
-        const status = doc.data().status;
-        const consult = doc.data().consult;
-        const photo_url = doc.data().photo_url;
+        const { name, title, category, subjects, method, status, consult, photo_url } = doc.data();
          return { id, name, title, category, subjects, method, status, consult, photo_url };
       })
       setTeachers(teachers);
