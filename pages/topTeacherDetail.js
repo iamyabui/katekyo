@@ -134,7 +134,7 @@ export default function TopTeacherDetail() {
               <Table>
                 <Thead>
                   <Tr>
-                    <Th>コース名</Th>
+                    <Th className="w-[250px]">コース名</Th>
                     <Th>値段</Th>
                     <Th></Th>
                   </Tr>

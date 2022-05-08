@@ -121,20 +121,20 @@ export default function AttendanceStatus() {
                 <div key={index} className="mx-auto items-center px-5 py-4 my-2 flex justify-between w-[30rem] bg-card-blue rounded">
                   <div className="text-sm">
                   <div className="flex">
-                    <p className="font-bold text-gray-600 mr-3">コース名</p>
-                    <p>{course.courseInfo.name}</p>
+                    <p className="w-[100px] font-bold text-gray-600 mr-3">コース名</p>
+                    <p className="w-[250px]">{course.courseInfo.name}</p>
                   </div>
                   <div className="flex">
-                    <p className="font-bold text-gray-600 mr-3">値段</p>
-                    <p>{course.courseInfo.price}円</p>
+                    <p className="w-[100px] font-bold text-gray-600 mr-3">値段</p>
+                    <p className="w-[250px]">{course.courseInfo.price}円</p>
                   </div>
                   <div className="flex">
-                    <p className="font-bold text-gray-600 mr-3">講師名</p>
-                    <p>{course.teacherName}</p>
+                    <p className="w-[100px] font-bold text-gray-600 mr-3">講師名</p>
+                    <p className="w-[250px]">{course.teacherName}</p>
                   </div>
                   <div className="flex">
-                    <p className="font-bold text-gray-600 mr-3">受講開始日</p>
-                    <p>{`${course.studentInfo.start_date.toDate().getMonth()+1}月${course.studentInfo.start_date.toDate().getDate()}日`}</p>
+                    <p className="w-[100px] font-bold text-gray-600 mr-3">受講開始日</p>
+                    <p className="w-[250px]">{`${course.studentInfo.start_date.toDate().getMonth()+1}月${course.studentInfo.start_date.toDate().getDate()}日`}</p>
                   </div>
                 </div>
                   <div>
