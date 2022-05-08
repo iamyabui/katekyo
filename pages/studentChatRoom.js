@@ -4,7 +4,7 @@ import Send from "../components/student/chat/chatRoom/SendButton";
 import AttachFile from "../components/chat/chatRoom/AttachFileButton";
 import Status from "../components/common/buttons/StatusButton";
 import StudentLeftMenu from "../components/student/common/StudentLeftMenu";
-import { collection, doc, getDoc, getDocs, orderBy, query } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, orderBy, query, where } from "firebase/firestore";
 import { db } from "../src/firabase";
 import { useRecoilValue } from "recoil";
 import { studentUserState } from "../components/common/StudentAtoms";
@@ -26,6 +26,36 @@ export default function StudentChatRoom() {
   const [file, setFile] = useState("");
   const [progress, setProgress] = useState(100);
   const [fileError, setFileError] = useState("");
+  const [isStatus, setIsStatus] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      // 先生の担当コースで、受講しているコースがあればステータスをtrueにしておく。
+      // 受講中のものがあれば、受講中というステータスを表示したいため。
+      const coursesRef = collection(db, "Courses")
+      const q = query(coursesRef, where("teacherID", "==", teacherId));
+      const coursesArray = [];
+      await getDocs(q).then(snapshot => {
+        snapshot.forEach((doc) => {
+          const id = doc.id;
+          coursesArray.push(id);
+        })
+      })
+
+      const statusArray = await Promise.all(coursesArray.map(async (course) =>{
+        const StudentStatusRef = doc(db, "Courses", course, "students", studentId);
+        const courseInfo = await getDoc(StudentStatusRef);
+        const getStatus = courseInfo.data();
+        if(getStatus){
+          return getStatus.status;
+        }
+      }))
+      
+      const isStatus = statusArray.includes("受講中");
+      setIsStatus(isStatus);
+
+    })()
+  },[])
 
   useEffect(() => {
     (async () => {
@@ -101,7 +131,9 @@ export default function StudentChatRoom() {
             <div className="mb-5">
               <div className="flex items-center py-2 mb-5">
                 <h1 className="text-lg font-bold mr-5">{teacher.name}</h1>
-                <Status />
+                {isStatus && (
+                  <Status />
+                )}
               </div>
               <Textarea h={150} onChange={(e)=>(setNewMessage(e.target.value))} value={newMessage}></Textarea>
               <div className="w-[40rem] py-2 flex justify-between">

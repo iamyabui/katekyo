@@ -17,8 +17,8 @@ export default function Login() {
   // ログインと新規登録ページへ切り替え、切替時にエラーメッセージとフォーム入力値を初期化
   const handleSwitch = () => {
     loginPage ? setLoginPage(false) : setLoginPage(true);
-    setUser({
-      ...user,
+
+    const user_reset = {
       email: "",
       password: "",
       flag: "",
@@ -27,16 +27,24 @@ export default function Login() {
       grade: "",
       occupation: "",
       occupationName: "",
-    });
-    setError({
-      ...error,
+    }
+
+    const error_reset = {
       emailError: "",
       passwordError: "",
       nameError: "",
       gradeError: "",
       occupationError: "",
       occupationNameError: "",
-    });
+      categoryError: "",
+      supportError: "",
+      titleError: "",
+      detailError: "",
+      consultError: "",
+    }
+
+    setUser(user_reset);
+    setError(error_reset);
   };
 
   const handlePasswordReset = () => {
