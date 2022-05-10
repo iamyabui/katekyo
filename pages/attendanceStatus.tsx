@@ -12,7 +12,6 @@ import Finish from "../components/student/attendanceStatus/FinishButton";
 export default function AttendanceStatus() {
   const student = useRecoilValue(studentUserState);
   const [courses, setCourses] = useState([]);
-  const [courseListWithStudent, setCourseListWithStudent] = useState([]);
   const [applyStatus, setApplyStatus] = useState([]);
   const [pendingStatus, setPendingStatus] = useState([]);
   const [finishStatus, setFinishStatus] = useState([]);
@@ -51,8 +50,7 @@ export default function AttendanceStatus() {
         }
         }))
       
-      const courseListWithStudentInfo = courseListWithStudentInfoArray.filter(Boolean)
-      setCourseListWithStudent(courseListWithStudentInfo)      
+      const courseListWithStudentInfo = courseListWithStudentInfoArray.filter(Boolean)  
 
       setApplyStatus(courseListWithStudentInfo.filter(course => course.studentInfo.status == "申請中"));
       setPendingStatus(courseListWithStudentInfo.filter(course => course.studentInfo.status == "受講中" || course.studentInfo.status == "終了申請中"));

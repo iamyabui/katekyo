@@ -12,39 +12,52 @@ import {
   query,
   where,
 } from 'firebase/firestore';
-import { Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
+import { Table, Tbody, Th, Thead, Tr } from '@chakra-ui/react';
 import { studentUserState } from '../components/common/StudentAtoms';
 import { useRecoilValue } from 'recoil';
+import { user } from '../components/common/TeacherAtoms';
 
 export default function TopTeacherDetail() {
   const router = useRouter();
   const id = router.query.id;
-  const [teacher, setTeacher] = useState({});
+  const [teacher, setTeacher] = useState<user>({
+      id: "",
+      email: "",
+      flag: "",
+      name: "",
+      status: false,
+      photo_url: "",
+      occupation: "",
+      occupationName: "",
+      category: "",
+      subjects: [],
+      title: "",
+      detail: "",
+      consult: { video: false, chat: false },
+  });
   const [courseList, setCourseList] = useState([]);
   const student = useRecoilValue(studentUserState);
   const [loginStudentStatus, setLoginStudentStatus] = useState([]);
-  const [countRecords, setCountRecords] = useState([]);
+  const [countRecords, setCountRecords] = useState(0);
+
+  type student = {
+    apply_date:any;
+    finish_date:any;
+    start_date:any;
+    status: string;
+    studentId: string;
+  }
 
   // ①コース情報を各コースオブジェクト毎に配列で取得。
   useEffect(() => {
     (async () => {
+      if(typeof id == "string") {
       const teacherRef = doc(db, 'TeacherUsers', id);
 
       const teacherInfo = await getDoc(teacherRef).then((snapshot) => {
-        const user = snapshot.data();
-        return {
-          id: snapshot.id,
-          name: user.name,
-          email: user.email,
-          photo_url: user.photo_url,
-          occupation: user.occupation,
-          occupationName: user.occupationName,
-          category: user.category,
-          subjects: user.subjects,
-          title: user.title,
-          detail: user.detail,
-          consult: user.consult,
-        };
+        const id = snapshot.id;
+        const { name, email, photo_url, occupation, occupationName, category,subjects, title, detail, consult, flag, status } = snapshot.data();
+        return { id, name, email, photo_url, occupation, occupationName, category, subjects, title, detail, consult, flag, status }
       });
       setTeacher(teacherInfo);
 
@@ -63,6 +76,7 @@ export default function TopTeacherDetail() {
       });
 
       setCourseList(coursesInfo);
+      }
     })();
   }, []);
 
@@ -85,7 +99,7 @@ export default function TopTeacherDetail() {
       });
 
       // ログイン生徒ユーザーのオブジェクトを取得。
-      const loginStudentRef = courseWithStudentsArray.find(function (value) {
+      const loginStudentRef:any = courseWithStudentsArray.find(function (value) {
           return value.studentId == student.id
       })
 
