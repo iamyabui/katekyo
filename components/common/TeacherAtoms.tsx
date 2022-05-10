@@ -4,7 +4,7 @@ import { recoilPersist } from "recoil-persist";
 const { persistAtom } = recoilPersist();
 
 //TeacherUser
-type user = {
+export type user = {
     id: string;
     email: string;
     flag: string;

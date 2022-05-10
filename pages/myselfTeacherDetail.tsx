@@ -8,13 +8,15 @@ import Router from "next/router";
 import { teacherUserState } from "../components/common/TeacherAtoms";
 import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { db } from "../src/firabase";
+// import useGetRecords from "../components/hooks/useGetRecords"
 
 export default function MyselfTeacherDetail() {
   const [isLoading, setIsLoading] = useState(true);
   const [teacher, setTeacher] = useRecoilState(teacherUserState)
   const userId = teacher.id;
   const teacherRef = doc(db, "TeacherUsers", userId);  
-  const [countRecords, setCountRecords] = useState([]);
+  const [countRecords, setCountRecords] = useState(0);
+  // const { result } = useGetRecords(teacher.id); 
 
   useEffect(() => {
     // ログインユーザを確認し、ログインできてなかったらLoginページへ遷移する。
@@ -47,6 +49,8 @@ export default function MyselfTeacherDetail() {
       const RecordsRef = collection(db, 'Records');
       const q = query(RecordsRef, where("teacherID", "==", teacher.id));
       const records = await getDocs(q);
+      // const records = result(teacher.id)
+
       const count = records.docs.length;
       setCountRecords(count);
     })()

@@ -1,6 +1,5 @@
 import TeacherLeftMenu from "../components/teacher/common/TeacherLeftMenu";
 import TeacherProfileEdit from "../components/teacher/profileEdit/TeacherProfileEditCard";
-import Category from "../components/common/pulldown/CategoryPulldown";
 import Save from "../components/teacher/profileEdit/SaveButton";
 import ConsultMethods from "../components/common/checkbox/ConsultMethodCheckbox";
 import SelectSubjects from "../components/common/selectButtons/SubjectSelectButtons";
@@ -14,6 +13,7 @@ import CourseEditForm from "../components/teacher/profileEdit/CourseEditForm"
 import { teacherUserState } from "../components/common/TeacherAtoms";
 import TextForm from "../components/teacher/profileEdit/textForm";
 import CancelButton from "../components/teacher/profileEdit/CancelButton"
+import Category from "../components/teacher/profileEdit/CategoryPulldown";
 
 export default function MyselfTeacherEdit() {
   const [isLoading, setIsLoading] = useState(true);

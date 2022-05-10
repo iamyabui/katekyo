@@ -64,7 +64,7 @@ export default function TeacherProfileEdit(props) {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      setSrc(reader.result);
+      setSrc(reader.result as string);
     }
   }
   
