@@ -2,7 +2,7 @@ import Header from "../components/common/header/header";
 import StudentProfileDetailCard from "../components/student/profileDetail/StudentProfileDetailCard";
 import StudentLeftMenu from "../components/student/common/StudentLeftMenu";
 import ProfileContentBox from "../components/student/profileDetail/ProfileContentBox";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { useState, useEffect } from "react";
 import Router from "next/router";
 import { studentUserState } from "../components/common/StudentAtoms";

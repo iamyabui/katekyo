@@ -30,11 +30,9 @@ export default function Achievement() {
         const records = snapshot.docs.map((doc) => {
           const studentId = doc.data().studentID;
           const studentInfo = students.find((student) => (student.id == studentId))
-          console.log(studentInfo.name)
           const student_name = studentInfo.name;
           const record = doc.data();
           const recordWithName = { ...record, student_name }
-          console.log(recordWithName)
           return recordWithName;
         })
         setAchievement(records);

@@ -15,6 +15,8 @@ export default function TopTeacherDetail() {
   const loginUser = useRecoilValue(studentUserState);
   const userId = loginUser.id;
   const flag = loginUser.flag;
+  const style1 = "form-control block w-full h-[130px] my-3 px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded";
+  const style2 = "form-control block w-full my-3 px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded";
 
   useEffect(() => {
     // ログインユーザを確認し、ログインできてなかったらLoginページへ遷移する。
@@ -48,20 +50,7 @@ export default function TopTeacherDetail() {
                 <div className="mb-5">
                   <label>自己紹介</label>
                   <textarea
-                    className="form-control
-            block
-            w-full
-            h-[130px]
-            my-3
-            px-3
-            py-1.5
-            text-base
-            font-normal
-            text-gray-700
-            bg-white bg-clip-padding
-            border border-solid border-gray-300
-            rounded
-            "
+                    className={style1}
                     value={editUser.text}
                     onChange={handleText}
                   ></textarea>
@@ -69,19 +58,7 @@ export default function TopTeacherDetail() {
                 <div>
                   <label>目標</label>
                   <textarea
-                    className="form-control
-            block
-            w-full
-            my-3
-            px-3
-            py-1.5
-            text-base
-            font-normal
-            text-gray-700
-            bg-white bg-clip-padding
-            border border-solid border-gray-300
-            rounded
-            "
+                    className={style2}
                     value={editUser.goal}
                     onChange={handleGoal}
                   ></textarea>
@@ -89,19 +66,7 @@ export default function TopTeacherDetail() {
                 <div>
                   <label>先生へのリクエスト</label>
                   <textarea
-                    className="form-control
-            block
-            w-full
-            my-3
-            px-3
-            py-1.5
-            text-base
-            font-normal
-            text-gray-700
-            bg-white bg-clip-padding
-            border border-solid border-gray-300
-            rounded
-            "
+                    className={style2}
                     value={editUser.request}
                     onChange={handleRequest}
                   ></textarea>

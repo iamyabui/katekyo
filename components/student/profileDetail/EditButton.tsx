@@ -8,7 +8,6 @@ export default function Edit() {
   const [EditUser, setEditUser] = useRecoilState(editUserState);
 
   const handleGoEditPage = () => {
-    console.log(student)
     setEditUser({
       ...EditUser,
       name: student.name,

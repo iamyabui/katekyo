@@ -19,7 +19,7 @@ export default function BurgerMenu() {
   async function handleLogout() {
     const auth = getAuth();
     signOut(auth)
-      .then(
+      .then(async() => {
         await Router.push("/login"),
         setTeacher({
           id: "",
@@ -47,7 +47,9 @@ export default function BurgerMenu() {
         goal: "",
         request: "",
         photo_url: "",
-      }),
+      })
+    }
+      ,
       )
       .catch((error) => {
         alert("ログアウトできませんでした。");
