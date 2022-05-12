@@ -11,7 +11,7 @@ export default function ShowProfileContent(props) {
   const finishApply_status = courses.filter(course => course.studentInfo?.status == "終了申請中");
 
   return (
-    <div className="flex-column mx-10 w-[40rem] bg-white p-8 rounded text-gray-700">
+    <div className="flex-column mx-10 w-[40rem] bg-white rounded text-gray-700">
       <div>
         <p className="font-bold mb-3">自己紹介</p>
         <p className="text-sm">{student.student?.text}</p>
@@ -40,9 +40,9 @@ export default function ShowProfileContent(props) {
             <Table>
             <Thead>
               <Tr>
-                <Th>コース名</Th>
-                <Th>値段</Th>
-                <Th>開始日</Th>
+                <Th w="200px">コース名</Th>
+                <Th w="100px">値段</Th>
+                <Th w="150px">開始日</Th>
                 <Th></Th>
               </Tr>
             </Thead>
@@ -94,10 +94,10 @@ export default function ShowProfileContent(props) {
             <Table>
             <Thead>
               <Tr>
-                <Th>コース名</Th>
-                <Th>値段</Th>
-                <Th>開始日</Th>
-                <Th>終了日</Th>
+                <Th w="200px">コース名</Th>
+                <Th w="100px">値段</Th>
+                <Th w="100px">開始日</Th>
+                <Th w="100px">終了日</Th>
               </Tr>
             </Thead>
             <Tbody>

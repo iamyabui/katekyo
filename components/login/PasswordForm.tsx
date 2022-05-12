@@ -22,7 +22,7 @@ export default function Password() {
         onChange={handlePassword}
         value={user.password}
       />
-      {!error.passwordError == "" && (
+      {error.passwordError && (
         <p className="text-red-500 text-xs pl-2 mb-3">{error.passwordError}</p>
       )}
     </>

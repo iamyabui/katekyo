@@ -5,7 +5,8 @@ export default function AttachFile(props) {
   
   const handleDeleteFile = () => {
     setFile("");
-    document.getElementById("inputFile").value="";
+    const element: HTMLInputElement = document.getElementById("inputFile") as HTMLInputElement;
+    element.value="";
   }
 
   const handleAttachFile = (e) => {

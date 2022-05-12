@@ -72,7 +72,8 @@ export default function Send(props) {
       })
       setNewMessage("");
       setFile("");
-      document.getElementById("inputFile").value="";
+      const element: HTMLInputElement = document.getElementById("inputFile") as HTMLInputElement;
+      element.value="";
     })()
   }
 

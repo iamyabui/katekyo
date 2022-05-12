@@ -22,7 +22,7 @@ export default function Email() {
         onChange={handleEmail}
         value={user.email}
       />
-      {!error.emailError == "" && (
+      {error.emailError && (
         <p className="text-red-500 text-xs pl-2 mb-3">{error.emailError}</p>
       )}
     </>

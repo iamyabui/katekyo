@@ -10,7 +10,6 @@ import { teacherUserState } from "../../common/TeacherAtoms";
 export default function Consultation(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {teacher} = props;
-  const [message, setMessage] = useState("");
   const student = useRecoilValue(studentUserState);
   const login_teacher = useRecoilValue(teacherUserState);
 

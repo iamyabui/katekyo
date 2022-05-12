@@ -11,8 +11,7 @@ export default function PasswordReset() {
         setEmail(e.target.value);
     }
 
-    const handleSendPasswordChangeForm = () => {
-        (async () => {
+    const handleSendPasswordChangeForm = async() => {
             try {
                 await sendPasswordResetEmail(getAuth(), email)
                 setFirebaseError("")
@@ -21,7 +20,6 @@ export default function PasswordReset() {
                 setFirebaseError("入力されたメールアドレスは登録されていません。");
                 setSuccessMsg("")
             }
-        })()
     }
 
   return (

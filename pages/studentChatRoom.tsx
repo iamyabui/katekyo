@@ -4,7 +4,7 @@ import Send from "../components/student/chat/chatRoom/SendButton";
 import AttachFile from "../components/chat/chatRoom/AttachFileButton";
 import Status from "../components/common/buttons/StatusButton";
 import StudentLeftMenu from "../components/student/common/StudentLeftMenu";
-import { collection, doc, getDoc, getDocs, orderBy, query } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, orderBy, query, where } from "firebase/firestore";
 import { db } from "../src/firabase";
 import { useRecoilValue } from "recoil";
 import { studentUserState } from "../components/common/StudentAtoms";
@@ -20,21 +20,54 @@ export default function StudentChatRoom() {
   const studentId = student.id;
   const [chats, setChats] = useState([]);
   const [chatId, setChatId] = useState("");
-  const [teacher, setTeacher] = useState("");
+  const [teacher, setTeacher] = useState({});
+  const [teacher_name, setTeacher_name] = useState("");
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [file, setFile] = useState("");
   const [progress, setProgress] = useState(100);
   const [fileError, setFileError] = useState("");
+  const [isStatus, setIsStatus] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      // 先生の担当コースで、受講しているコースがあればステータスをtrueにしておく。
+      // 受講中のものがあれば、受講中というステータスを表示したいため。
+      const coursesRef = collection(db, "Courses")
+      const q = query(coursesRef, where("teacherID", "==", teacherId));
+      const coursesArray = [];
+      await getDocs(q).then(snapshot => {
+        snapshot.forEach((doc) => {
+          const id = doc.id;
+          coursesArray.push(id);
+        })
+      })
+
+      const statusArray = await Promise.all(coursesArray.map(async (course) =>{
+        const StudentStatusRef = doc(db, "Courses", course, "students", studentId);
+        const courseInfo = await getDoc(StudentStatusRef);
+        const getStatus = courseInfo.data();
+        if(getStatus){
+          return getStatus.status;
+        }
+      }))
+      
+      const isStatus = statusArray.includes("受講中");
+      setIsStatus(isStatus);
+
+    })()
+  },[])
 
   useEffect(() => {
     (async () => {
     // 生徒情報を取得
+    if(typeof teacherId == "string"){
     const teacherRef = doc(db, "TeacherUsers", teacherId);
     
     const teacher = await getDoc(teacherRef).then(snapshot => {
         return snapshot.data();
     })
+    setTeacher_name(teacher.name);
     setTeacher(teacher);
 
     // すべてのチャット情報をFirebaseから取得
@@ -50,7 +83,7 @@ export default function StudentChatRoom() {
       return chatsArray;
     })
     setChats(chats)
-
+    }
     })();
   },[])
   
@@ -77,10 +110,7 @@ export default function StudentChatRoom() {
         const messageArray = [];
         snapshot.docs.forEach((doc) => {
         const id = doc.id;
-        const text = doc.data().text;
-        const time = doc.data().time;
-        const sender_id = doc.data().sender_id;
-        const file_url = doc.data().file_url;
+        const { text, time, sender_id, file_url } = doc.data();
         messageArray.push({ id: id, text: text, time: time, sender_id: sender_id, file_url: file_url });
         })
         return messageArray;
@@ -100,8 +130,10 @@ export default function StudentChatRoom() {
           <div >
             <div className="mb-5">
               <div className="flex items-center py-2 mb-5">
-                <h1 className="text-lg font-bold mr-5">{teacher.name}</h1>
-                <Status />
+                <h1 className="text-lg font-bold mr-5">{teacher_name}</h1>
+                {isStatus && (
+                  <Status />
+                )}
               </div>
               <Textarea h={150} onChange={(e)=>(setNewMessage(e.target.value))} value={newMessage}></Textarea>
               <div className="w-[40rem] py-2 flex justify-between">

@@ -22,6 +22,7 @@ export default function TopTeacherDetail() {
 
   useEffect(() => {
     // 生徒情報を取得
+    if(typeof studentId == "string") {
       const StudentRef = getDoc(doc(db, "StudentUsers", studentId))
       StudentRef.then(snapshot => {
         if (snapshot.data()) {
@@ -29,6 +30,7 @@ export default function TopTeacherDetail() {
           const student = snapshot.data();
           setStudent({studentId, student});
       }})
+    }
   },[])
 
   useEffect(() => {
@@ -54,6 +56,7 @@ export default function TopTeacherDetail() {
   useEffect(() => {
     (async () => {
     const courseListWithStudentInfo = await Promise.all(coursesList.map(async (course) => {
+      if(typeof studentId == "string") {
       const studentRef = doc(db,"Courses", course.courseId, "students", studentId);
       const studentInfo = await getDoc(studentRef).then((snapshot) => {
         return snapshot.data()
@@ -63,7 +66,7 @@ export default function TopTeacherDetail() {
       const coursePrice = course.price;
 
       return { courseId, courseName, coursePrice, studentInfo, studentId }
-      
+      }
     }))
     setCourses(courseListWithStudentInfo)
   })()
@@ -85,10 +88,12 @@ export default function TopTeacherDetail() {
   // 生徒の写真データを取得
   useEffect(() => {
     (async() => {
+      if(typeof studentId == "string") {
       const studentRef = doc(db, "StudentUsers", studentId);
       const studentInfo = await getDoc(studentRef);
       const photo_url = studentInfo.data().photo_url;
       setPhoto_url(photo_url);
+      }
     })()
   },[records]);
 
