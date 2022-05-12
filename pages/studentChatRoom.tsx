@@ -20,7 +20,8 @@ export default function StudentChatRoom() {
   const studentId = student.id;
   const [chats, setChats] = useState([]);
   const [chatId, setChatId] = useState("");
-  const [teacher, setTeacher] = useState("");
+  const [teacher, setTeacher] = useState({});
+  const [teacher_name, setTeacher_name] = useState("");
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [file, setFile] = useState("");
@@ -60,11 +61,13 @@ export default function StudentChatRoom() {
   useEffect(() => {
     (async () => {
     // 生徒情報を取得
+    if(typeof teacherId == "string"){
     const teacherRef = doc(db, "TeacherUsers", teacherId);
     
     const teacher = await getDoc(teacherRef).then(snapshot => {
         return snapshot.data();
     })
+    setTeacher_name(teacher.name);
     setTeacher(teacher);
 
     // すべてのチャット情報をFirebaseから取得
@@ -80,7 +83,7 @@ export default function StudentChatRoom() {
       return chatsArray;
     })
     setChats(chats)
-
+    }
     })();
   },[])
   
@@ -127,7 +130,7 @@ export default function StudentChatRoom() {
           <div >
             <div className="mb-5">
               <div className="flex items-center py-2 mb-5">
-                <h1 className="text-lg font-bold mr-5">{teacher.name}</h1>
+                <h1 className="text-lg font-bold mr-5">{teacher_name}</h1>
                 {isStatus && (
                   <Status />
                 )}

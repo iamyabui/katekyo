@@ -62,7 +62,7 @@ export default function UpdateIcon() {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      setSrc(reader.result);
+      setSrc(reader.result as string);
     }
   }
   

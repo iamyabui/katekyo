@@ -23,7 +23,7 @@ export default function Name(props) {
           placeholder=""
           value={editUser.name}
         />
-        {!error.nameError == "" && (
+        {error.nameError && (
           <p className="text-red-500 text-xs pl-2 mt-3 mb-3">
             {error.nameError}
           </p>
