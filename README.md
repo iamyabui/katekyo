@@ -4,8 +4,13 @@
 URL：https://katekyo-cd0cojmx8-iamyabui.vercel.app/
 
 ## テストユーザー
-先生ユーザー：taro@test.com/testtest
-生徒ユーザー：hanako@test.com/testuser
+先生ユーザー
+メールアドレス：taro@test.com
+password：testtest
+
+生徒ユーザー
+メールアドレス：hanako@test.com
+password：testuser
 
 ## 開発経緯
 私自身受験生のときに、塾でたくさんの講義を受けてきたが、勉強の仕方が確立せず成績が伸び悩んだ経験があった。
